@@ -398,6 +398,20 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
 .eng-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.4);opacity:0;width:138px;height:138px;border-radius:50%;display:grid;place-items:center;z-index:3;text-align:center;
   background:radial-gradient(circle at 40% 35%,rgba(167,139,250,.4),rgba(56,189,248,.16) 70%);border:1px solid var(--violet);box-shadow:0 0 50px -8px var(--violet);font-family:var(--font-disp);font-weight:700;color:#fff;font-size:1.1rem;line-height:1.2}
 @media(max-width:680px){.eng-node{width:130px;padding:14px 10px}.eng-node .gnum{font-size:1.7rem}.eng-field{height:360px}}
+/* ===== 55-DIM GALAXY ===== */
+.gx-counts{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:34px 0 18px}
+.gx-count{font-family:var(--font-disp);font-size:1.08rem;font-weight:600;display:flex;align-items:center;gap:9px}
+.gx-count .gd{width:12px;height:12px;border-radius:50%}
+.gx-stage{position:relative;width:min(94vw,var(--maxw));height:clamp(430px,58vh,540px);margin:0 auto;border:1px solid var(--bd);border-radius:20px;background:radial-gradient(120% 120% at 50% 0%,rgba(56,189,248,.05),transparent 60%),linear-gradient(180deg,var(--bg-2),var(--bg-1));overflow:hidden;box-shadow:var(--card-shadow)}
+.gx-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.gx-link{stroke-width:1}
+.gx-clabel{position:absolute;transform:translate(-50%,-50%);font-family:var(--font-disp);font-weight:700;font-size:1.15rem;opacity:.32;pointer-events:none;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.gx-star{position:absolute;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;cursor:pointer;background:var(--ac);box-shadow:0 0 8px var(--ac);transition:transform .2s,box-shadow .2s;animation:gxTw var(--tw,3s) ease-in-out infinite}
+@keyframes gxTw{0%,100%{opacity:.55}50%{opacity:1}}
+.gx-star:hover,.gx-star.lit{transform:translate(-50%,-50%) scale(2.4);box-shadow:0 0 16px var(--ac),0 0 32px var(--ac);z-index:6;animation:none;opacity:1}
+.gx-tip{position:absolute;z-index:20;pointer-events:none;background:var(--bg-3);border:1px solid var(--bd-strong);border-radius:11px;padding:10px 14px;max-width:250px;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;box-shadow:0 12px 34px -12px rgba(0,0,0,.85)}
+.gx-tip.show{opacity:1;transform:none}
+.gx-tip .tt{font-weight:600;color:var(--ink);font-size:1.02rem}.gx-tip .tl{font-size:.95rem;color:var(--ink-dim);margin-top:3px}
 /* ===== ECOSYSTEM ORBIT ===== */
 .eco-stage{position:relative;width:min(94vw,900px);height:clamp(440px,62vh,560px);margin:42px auto 0}
 .eco-core{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:128px;height:128px;border-radius:50%;display:grid;place-items:center;z-index:50;background:radial-gradient(circle at 40% 35%,rgba(167,139,250,.5),rgba(56,189,248,.18) 70%);box-shadow:0 0 56px -6px var(--violet);font-family:var(--font-disp);font-weight:700;text-align:center;color:#fff;font-size:1.05rem;line-height:1.2}
@@ -609,6 +623,25 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
         <div class="eng-node m" id="engF"><div class="glab"><span class="zh">可行性 F</span><span class="en">Feasibility</span></div><div class="gnum" data-t="71">0</div><div class="gbadge"><span class="zh">獨立評分</span><span class="en">isolated</span></div></div>
         <div class="eng-node s" id="engV"><div class="glab"><span class="zh">存續性 V</span><span class="en">Viability</span></div><div class="gnum" data-t="58">0</div><div class="gbadge"><span class="zh">獨立評分</span><span class="en">isolated</span></div></div>
         <div class="eng-core" id="engCore"><span class="zh">合成<br>判斷</span><span class="en">Synthesis</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 55-DIMENSION GALAXY ============ -->
+  <section class="block" id="galaxy">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker"><span class="en">The 55 dimensions</span><span class="zh">55 個維度</span></div>
+        <h2><span class="en">Every star is a solid algorithm</span><span class="zh">每一顆星，都是一套扎實的演算法</span></h2>
+        <p class="section-lede"><span class="en">Trinity scores a startup across 55 weighted dimensions, split across the three lenses. Not vibes, not one prompt. Hover any star to see the dimension behind it.</span><span class="zh">Trinity 用 55 個加權維度評一家新創，分屬三個透鏡。不是感覺，也不是一句提示詞。把滑鼠移到任一顆星，看背後的維度。</span></p>
+      </div>
+      <div class="reveal">
+        <div class="gx-counts">
+          <span class="gx-count" style="color:var(--earth)"><span class="gd" style="background:var(--earth)"></span><span class="en">Desirability · 19</span><span class="zh">欲求性 · 19</span></span>
+          <span class="gx-count" style="color:var(--moon)"><span class="gd" style="background:var(--moon)"></span><span class="en">Feasibility · 17</span><span class="zh">可行性 · 17</span></span>
+          <span class="gx-count" style="color:var(--sun)"><span class="gd" style="background:var(--sun)"></span><span class="en">Viability · 19</span><span class="zh">存續性 · 19</span></span>
+        </div>
+        <div class="gx-stage" id="gxStage"><svg class="gx-svg" id="gxSvg"></svg><div class="gx-tip" id="gxTip"></div></div>
       </div>
     </div>
   </section>
@@ -1470,6 +1503,31 @@ if(fine&&!RM){
     }});
   }
   if(window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);ScrollTrigger.create({trigger:'#fit',start:'top 70%',once:true,onEnter:play});}else play();
+})();
+
+/* ===== 55-DIM GALAXY ===== */
+(function(){
+  const stage=document.getElementById('gxStage');if(!stage)return;
+  const svg=document.getElementById('gxSvg'),tip=document.getElementById('gxTip');const NS='http://www.w3.org/2000/svg';
+  const GX=[
+   {ac:'var(--earth)',col:'#38bdf8',nm:['Desirability','欲求性'],dims:[['Painkiller vs vitamin','止痛藥 vs 維他命'],['Tar-pit test','Tar Pit 焦油坑檢驗'],['Venture-backable','創投可投性'],['Three eternal markets','三大永恆市場對齊'],['Perfect-market traits','完美市場四特徵'],['Six pain tests','痛點六驗'],['Top-down vs bottom-up','Top-Down vs Bottom-Up'],['Fermi pain cost','痛點量化代價（費米）'],['ICP / HXC specificity','Persona→ICP→HXC 具體度'],['B2B stakeholder matrix','B2B 利益關係人矩陣'],['JTBD three layers','JTBD 三層'],['Five-layer insight','五層洞察'],['TPO scenarios','TPO 場景'],['Perceived-value 3D','感知價值三維'],['Octalysis drivers','八角化驅動力'],['North-star + bowling pin','北極星 2×2＋保齡球'],['Golden intersection','黃金交集'],['Founder-market fit','Founder-Market Fit'],['Geo & policy targeting','瞄準市場地理與政策']]},
+   {ac:'var(--moon)',col:'#cbd5e1',nm:['Feasibility','可行性'],dims:[['Stage placement','階段定位'],['PSF→PMF→Scaling gates','三驗證關卡'],['Willingness-to-pay','付費意願驗證'],['PMF three signals','PMF 三訊號'],['Four MVP types','四種 MVP＋Solid Data'],['Technical first-principles','技術合理性（第一性原理）'],['Business Model Canvas loop','BMC 九格閉環'],['Model & multi-side needs','商業模式選擇與各端需求%'],['Ecosystem & competition','生態系角色與競合'],['Five moat types','護城河五型'],['Team three traits','團隊三特質'],['FMF (execution)','Founder-Market Fit（執行面）'],['Technical gross margin','技術性毛利'],['Runway & valley of death','Runway 與死亡谷'],['Riskiest assumption (48hr)','最高風險假設（48hr）'],['Demo-ability','可 demo 程度'],['AI gap positioning','缺口定位 Gap Positioning（AI）']]},
+   {ac:'var(--sun)',col:'#fbbf24',nm:['Viability','存續性'],dims:[['TAM/SAM/SOM + momentum','市場量體 TAM/SAM/SOM＋動能'],['PMF three pillars','PMF 三支柱'],['Six key numbers','六關鍵數字'],['Unit economics','單位經濟'],['Rule of 40','Rule of 40'],['Burn multiple','Burn Multiple'],['Stage / round thresholds','階段與輪次門檻對照'],['Customer-funded (CFA)','CFA 客戶自融資'],['Hormozi value equation','Hormozi 價值公式'],['Pricing strategy','定價策略'],['Break-even point','損益平衡點'],['Multi-method valuation','多元估值交叉'],['Exit paths','退出路徑'],['Liquidation preference','清算優先權影響'],['VC return lens (10x?)','VC 報酬視角（撐得起 10×?）'],['D2C trap / B2B margin','D2C 困境 / B2B 利潤'],['Pitch ten elements','Pitch 十元素完整度'],['Valuation vs comparables','估值合理性（comparables）'],['AI-durable value','價值耐久性 抗模型收斂（AI）']]}];
+  let rng=99;function rnd(){rng=(rng*1103515245+12345)&0x7fffffff;return rng/0x7fffffff;}
+  const stars=[];GX.forEach((L,li)=>{const seeds=L.dims.map((d,i)=>{const a=(i*2.399963)+li;const rad=0.18+rnd()*0.82;return {d,ang:a,rad};});L._seeds=seeds;
+    seeds.forEach((s,i)=>{const el=document.createElement('div');el.className='gx-star';el.style.setProperty('--ac',L.ac);el.style.setProperty('--tw',(2.4+rnd()*2.6).toFixed(2)+'s');
+      el.addEventListener('pointerenter',e=>{el.classList.add('lit');tip.style.borderColor=L.col;tip.innerHTML=`<div class="tt"><span class="en">${s.d[0]}</span><span class="zh">${s.d[1]}</span></div><div class="tl" style="color:${L.col}"><span class="en">${L.nm[0]} lens</span><span class="zh">${L.nm[1]}透鏡</span></div>`;tip.classList.add('show');posTip(el);});
+      el.addEventListener('pointerleave',()=>{el.classList.remove('lit');tip.classList.remove('show');});
+      stage.appendChild(el);stars.push({el,L,li,s});});});
+  function posTip(star){const sr=stage.getBoundingClientRect();const x=parseFloat(star.style.left),y=parseFloat(star.style.top);let tx=x+14,ty=y+14;if(tx>sr.width-260)tx=x-tip.offsetWidth-14;if(ty>sr.height-90)ty=y-tip.offsetHeight-10;tip.style.left=Math.max(6,tx)+'px';tip.style.top=Math.max(6,ty)+'px';}
+  const labels=GX.map((L,li)=>{const el=document.createElement('div');el.className='gx-clabel';el.style.color=L.col;el.innerHTML=`<span class="en">${L.nm[0]}</span><span class="zh">${L.nm[1]}</span>`;stage.appendChild(el);return el;});
+  function layout(){const w=stage.clientWidth,h=stage.clientHeight;svg.setAttribute('viewBox','0 0 '+w+' '+h);svg.innerHTML='';
+    const cxs=[w*0.22,w*0.5,w*0.78],cy=h*0.52,clrx=Math.min(w*0.15,150),clry=h*0.34;
+    GX.forEach((L,li)=>{labels[li].style.left=cxs[li]+'px';labels[li].style.top=(cy-clry-22)+'px';
+      const pts=L._seeds.map(s=>({x:cxs[li]+Math.cos(s.ang)*clrx*s.rad,y:cy+Math.sin(s.ang)*clry*s.rad}));
+      L._seeds.forEach((s,i)=>{const st=stars.find(z=>z.L===L&&z.s===s);st.el.style.left=pts[i].x+'px';st.el.style.top=pts[i].y+'px';});
+      for(let i=0;i<pts.length-1;i++){const ln=document.createElementNS(NS,'line');ln.setAttribute('x1',pts[i].x);ln.setAttribute('y1',pts[i].y);ln.setAttribute('x2',pts[i+1].x);ln.setAttribute('y2',pts[i+1].y);ln.setAttribute('class','gx-link');ln.setAttribute('stroke',L.col);ln.setAttribute('opacity','0.14');svg.appendChild(ln);}});}
+  layout();addEventListener('resize',layout);
 })();
 
 /* ===== ECOSYSTEM ORBIT ===== */
