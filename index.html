@@ -659,7 +659,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
       <div class="reveal">
         <div class="kicker"><span class="en">The 55 dimensions</span><span class="zh">55 個維度</span></div>
         <h2><span class="en">Every star is a solid algorithm</span><span class="zh">每一顆星，都是一套扎實的演算法</span></h2>
-        <p class="section-lede"><span class="en">Trinity scores a startup across 55 weighted dimensions, split across the three lenses. Not vibes, not one prompt. Hover any star to see the dimension behind it.</span><span class="zh">Trinity 用 55 個加權維度評一家新創，分屬三個透鏡。不是感覺，也不是一句提示詞。把滑鼠移到任一顆星，看背後的維度。</span></p>
+        <p class="section-lede"><span class="en">Trinity scores a startup across 55 weighted dimensions, split across the three lenses. Not vibes, not one prompt. Hover any star to see the dimension behind it; click a lens to isolate it.</span><span class="zh">Trinity 用 55 個加權維度評一家新創，分屬三個透鏡。不是感覺，也不是一句提示詞。滑過任一顆星看背後的維度，點上方任一透鏡可單獨聚焦。</span></p>
       </div>
       <div class="reveal">
         <div class="gx-counts">
@@ -1603,13 +1603,26 @@ if(fine&&!RM){
       stage.appendChild(el);stars.push({el,L,li,s});});});
   function posTip(star){const sr=stage.getBoundingClientRect();const x=parseFloat(star.style.left),y=parseFloat(star.style.top);let tx=x+14,ty=y+14;if(tx>sr.width-260)tx=x-tip.offsetWidth-14;if(ty>sr.height-90)ty=y-tip.offsetHeight-10;tip.style.left=Math.max(6,tx)+'px';tip.style.top=Math.max(6,ty)+'px';}
   const labels=GX.map((L,li)=>{const el=document.createElement('div');el.className='gx-clabel';el.style.color=L.col;el.innerHTML=`<span class="en">${L.nm[0]}</span><span class="zh">${L.nm[1]}</span>`;stage.appendChild(el);return el;});
-  function layout(){const w=stage.clientWidth,h=stage.clientHeight;svg.setAttribute('viewBox','0 0 '+w+' '+h);svg.innerHTML='';
-    const cxs=[w*0.22,w*0.5,w*0.78],cy=h*0.52,clrx=Math.min(w*0.15,150),clry=h*0.34;
-    GX.forEach((L,li)=>{labels[li].style.left=cxs[li]+'px';labels[li].style.top=(cy-clry-22)+'px';
-      const pts=L._seeds.map(s=>({x:cxs[li]+Math.cos(s.ang)*clrx*s.rad,y:cy+Math.sin(s.ang)*clry*s.rad}));
-      L._seeds.forEach((s,i)=>{const st=stars.find(z=>z.L===L&&z.s===s);st.el.style.left=pts[i].x+'px';st.el.style.top=pts[i].y+'px';});
-      for(let i=0;i<pts.length-1;i++){const ln=document.createElementNS(NS,'line');ln.setAttribute('x1',pts[i].x);ln.setAttribute('y1',pts[i].y);ln.setAttribute('x2',pts[i+1].x);ln.setAttribute('y2',pts[i+1].y);ln.setAttribute('class','gx-link');ln.setAttribute('stroke',L.col);ln.setAttribute('opacity','0.14');svg.appendChild(ln);}});}
-  layout();addEventListener('resize',layout);
+  const clusterStart=[0,GX[0].dims.length,GX[0].dims.length+GX[1].dims.length];
+  const lineEls=GX.map(L=>{const arr=[];for(let i=0;i<L.dims.length-1;i++){const ln=document.createElementNS(NS,'line');ln.setAttribute('class','gx-link');ln.setAttribute('stroke',L.col);svg.appendChild(ln);arr.push(ln);}return arr;});
+  let W=stage.clientWidth,H=stage.clientHeight;function size(){W=stage.clientWidth;H=stage.clientHeight;svg.setAttribute('viewBox','0 0 '+W+' '+H);}size();addEventListener('resize',size);
+  let mx=0,my=0,hoverLi=-1,focus=-1;
+  stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-0.5;my=(e.clientY-r.top)/r.height-0.5;},{passive:true});
+  stage.addEventListener('pointerleave',()=>{mx=0;my=0;});
+  stars.forEach(st=>{st.el.addEventListener('pointerenter',()=>hoverLi=st.li);st.el.addEventListener('pointerleave',()=>hoverLi=-1);});
+  document.querySelectorAll('.gx-count').forEach((c,li)=>{c.style.cursor='pointer';c.addEventListener('click',()=>{focus=(focus===li?-1:li);c.style.textShadow=focus===li?'0 0 12px currentColor':'';});});
+  const rot=[0,0,0],rv=[0.00060,-0.00052,0.00068];
+  function geo(){return {cxs:[W*0.22,W*0.5,W*0.78],cy:H*0.52,clrx:Math.min(W*0.15,150),clry:H*0.34};}
+  function frame(){if(document.hidden){requestAnimationFrame(frame);return;}
+    const {cxs,cy,clrx,clry}=geo();
+    GX.forEach((L,li)=>{rot[li]+=rv[li];const dim=(focus>=0&&focus!==li)||(hoverLi>=0&&hoverLi!==li);const px=mx*(16+li*6),py=my*12;
+      labels[li].style.left=(cxs[li]+px)+'px';labels[li].style.top=(cy-clry-22)+'px';labels[li].style.opacity=dim?'0.1':'0.34';
+      const pts=L._seeds.map(s=>{const a=s.ang+rot[li];return {x:cxs[li]+Math.cos(a)*clrx*s.rad+px,y:cy+Math.sin(a)*clry*s.rad+py};});
+      for(let i=0;i<L.dims.length;i++){const st=stars[clusterStart[li]+i].el;st.style.left=pts[i].x+'px';st.style.top=pts[i].y+'px';if(dim)st.style.opacity='0.14';else st.style.removeProperty('opacity');}
+      lineEls[li].forEach((ln,i)=>{ln.setAttribute('x1',pts[i].x);ln.setAttribute('y1',pts[i].y);ln.setAttribute('x2',pts[i+1].x);ln.setAttribute('y2',pts[i+1].y);ln.setAttribute('opacity',dim?'0.04':(hoverLi===li||focus===li?'0.3':'0.13'));});});
+    requestAnimationFrame(frame);}
+  if(RM){const {cxs,cy,clrx,clry}=geo();GX.forEach((L,li)=>{labels[li].style.left=cxs[li]+'px';labels[li].style.top=(cy-clry-22)+'px';L._seeds.forEach((s,i)=>{const st=stars[clusterStart[li]+i].el;st.style.left=(cxs[li]+Math.cos(s.ang)*clrx*s.rad)+'px';st.style.top=(cy+Math.sin(s.ang)*clry*s.rad)+'px';});lineEls[li].forEach((ln,i)=>{const a=L._seeds[i],b=L._seeds[i+1];ln.setAttribute('x1',cxs[li]+Math.cos(a.ang)*clrx*a.rad);ln.setAttribute('y1',cy+Math.sin(a.ang)*clry*a.rad);ln.setAttribute('x2',cxs[li]+Math.cos(b.ang)*clrx*b.rad);ln.setAttribute('y2',cy+Math.sin(b.ang)*clry*b.rad);ln.setAttribute('opacity','0.13');});});}
+  else requestAnimationFrame(frame);
 })();
 
 /* ===== ECOSYSTEM ORBIT ===== */
