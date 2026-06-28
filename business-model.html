@@ -155,6 +155,15 @@ td .lx{font-family:var(--mono);font-size:1em;color:var(--ink-dim)}
 .tblwrap{overflow-x:auto;margin-top:22px;border:1px solid var(--bd);border-radius:var(--r)}table{width:100%;border-collapse:collapse;font-size:1.0rem;min-width:520px}
 th,td{padding:13px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}th{font-family:var(--font-disp);font-weight:600;color:var(--ink);background:rgba(255,255,255,.03);white-space:nowrap}td{color:var(--ink-soft)}tr:last-child td{border-bottom:none}td b{color:var(--ink)}.cr{font-family:var(--font-disp);font-weight:700;color:var(--sun)}
 /* roadmap */
+/* date roadmap */
+.tline{position:relative;margin-top:30px;padding-left:34px}
+.tline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--sun),var(--earth),var(--violet))}
+.tmile{position:relative;padding:0 0 26px}
+.tmile::before{content:"";position:absolute;left:-30px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--ac,var(--earth));box-shadow:0 0 0 4px var(--bg),0 0 14px var(--ac,var(--earth))}
+.tmile .tdate{font-family:var(--mono);font-size:1rem;color:var(--ac,var(--earth));font-weight:600;letter-spacing:.03em}
+.tmile .ttitle{font-family:var(--font-disp);font-size:1.2rem;font-weight:600;margin:3px 0 6px}
+.tmile .tbody{font-size:1.02rem;color:var(--ink-soft);max-width:50em}
+.tmile .tnow{display:inline-block;font-size:.92rem;font-weight:700;color:#04231a;background:var(--green);border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:middle}
 .phase{border:1px solid var(--bd);border-radius:var(--r);padding:24px;background:var(--panel);position:relative;overflow:hidden;box-shadow:var(--card-shadow)}
 .phase::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}.phase.p1::before{background:var(--earth)}.phase.p2::before{background:var(--violet)}.phase.p3::before{background:var(--sun)}
 .phase .pn{font-family:var(--font-disp);font-size:1rem;letter-spacing:.08em;color:var(--ink-dim);font-weight:600}.phase h4{font-family:var(--font-disp);font-size:1.25rem;margin:6px 0 12px}
@@ -177,7 +186,7 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
 <div id="prog"></div>
 <nav><div class="navin">
   <a class="brand" href="backend-hub.html" style="text-decoration:none;color:inherit"><svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="8" fill="#38bdf8"/><circle cx="16" cy="13" r="5" fill="#cbd5e1" stroke="#06060f" stroke-width="1.4"/><circle cx="16" cy="8" r="3" fill="#fbbf24"/></svg><span>TRINITY</span><span style="font-size:1rem;color:var(--ink-dim);font-weight:500;letter-spacing:0;margin-left:4px">／ Hub</span></a>
-  <div class="tabs"><a href="#frame">定位</a><a href="#self">自我評估</a><a href="#ledger">證據帳本</a><a href="#dims">全維度</a><a href="#learn">學習vs重力</a><a href="#cross">交叉推導</a><a href="#ceiling">天花板</a><a href="#model">免費起手</a><a href="#price">定價</a><a href="#fix">改進清單</a><a href="#rev">營收線</a><a href="#road">路線圖</a><a href="#moat">護城河</a><a href="backend-architecture.html" style="color:var(--earth)">架構 ↗</a><a href="cis.html" style="color:var(--sun)">CIS ↗</a></div>
+  <div class="tabs"><a href="#timeline">時間藍圖</a><a href="#frame">定位</a><a href="#self">自我評估</a><a href="#ledger">證據帳本</a><a href="#dims">全維度</a><a href="#learn">學習vs重力</a><a href="#cross">交叉推導</a><a href="#ceiling">天花板</a><a href="#model">免費起手</a><a href="#price">定價</a><a href="#fix">改進清單</a><a href="#rev">營收線</a><a href="#road">路線圖</a><a href="#moat">護城河</a><a href="backend-architecture.html" style="color:var(--earth)">架構 ↗</a><a href="cis.html" style="color:var(--sun)">CIS ↗</a></div>
 </div></nav>
 
 <header class="hero"><div class="wrap">
@@ -188,6 +197,19 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
 </div></header>
 
 <!-- FRAME -->
+<section id="timeline"><div class="wrap reveal">
+  <div class="kick">時間藍圖</div>
+  <h2>從今天，往下鋪到平台</h2>
+  <p class="lead">一條以日期為軸的路線，對應下面的三階段。今天是 2026 年 6 月。</p>
+  <div class="tline">
+    <div class="tmile" style="--ac:var(--sun)"><div class="tdate">2026 Q3（7 至 9 月）<span class="tnow">現在</span></div><div class="ttitle">Phase 1 楔入：MVP 上線</div><div class="tbody">沿用 deal-lens 引擎只出中立層，fork apply.html intake，HITL 交付，免費 Round 01 ＋ US$29 解鎖（Stripe＋KV／D1 帳本）。目標 3 至 5 個免費試點 → 量化證言。</div></div>
+    <div class="tmile" style="--ac:var(--sun)"><div class="tdate">2026 Q4（10 至 12 月）</div><div class="ttitle">首批付費 ＋ 案例庫</div><div class="tbody">把試點轉成付費包，建立 case library，談第一個加速器／大學 cohort 授權試點，發第一篇趨勢文章。</div></div>
+    <div class="tmile" style="--ac:var(--earth)"><div class="tdate">2027 H1（1 至 6 月）</div><div class="ttitle">Phase 2 自動化 ＋ 訂閱</div><div class="tbody">標準報告前段改即時 Claude API，premium 仍 HITL；階段分類器與投資人配對成一等模組；上線 US$29／月、re-score 迴路、餘額與花費上限。</div></div>
+    <div class="tmile" style="--ac:var(--earth)"><div class="tdate">2027 H2（7 至 12 月）</div><div class="ttitle">B2B 規模化</div><div class="tbody">加速器／大學 cohort 授權放量（真正的利潤池），匿名基準語料成形，白標給 VC／天使會試水。</div></div>
+    <div class="tmile" style="--ac:var(--violet)"><div class="tdate">2028（H1 起）</div><div class="ttitle">Phase 3 平台：兩扇門一引擎</div><div class="tbody">完整多代理 D／F／V＋查核＋中立合成，創辦人側＋投資人側（EaseLens）＋加速器側同台一引擎，數據與洞察成獨立基準產品線，深化台灣到與美國同等可用。</div></div>
+  </div>
+</div></section>
+
 <section id="frame"><div class="wrap reveal">
   <div class="kick">策略定位</div>
   <h2>一顆 Deal Lens，兩種賣法</h2>
