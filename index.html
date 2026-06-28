@@ -77,6 +77,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:cent
 .brand .wm{font-family:var(--font-disp);font-weight:700;font-size:1.16rem;letter-spacing:.16em}
 .brand .cap{font-family:var(--font-body);font-weight:600;font-size:1rem;letter-spacing:.2em;color:var(--ink-dim);margin-left:2px}
 @media(max-width:620px){.brand .cap{display:none}}
+@media(max-width:560px){nav{padding:12px 14px}.brand .wm{font-size:1rem}.brand svg{width:26px;height:26px}.menu{gap:1px}.menu button{padding:8px 9px;font-size:1rem}.lang{margin-left:2px;padding:6px 10px}}
+@media(max-width:440px){.brand .wm{display:none}.menu button{padding:7px 8px;font-size:1rem}}
 .menu{display:flex;align-items:center;gap:6px;position:relative}
 .menu-ind{position:absolute;top:50%;left:0;width:0;height:38px;transform:translateY(-50%);border-radius:11px;z-index:0;
   background:linear-gradient(120deg,rgba(56,189,248,.18),rgba(167,139,250,.18));border:1px solid rgba(255,255,255,.12);
@@ -1239,7 +1241,7 @@ let heroBrightness={earth:0,moon:0,sun:0};
     stars1.position.x=mx*0.5;stars2.position.x=mx*0.9;stars1.position.y=-my*0.4;
     // drag-to-orbit camera rig (azimuth/elevation around the earth) + gentle parallax
     if(!dragging&&!window.gsap){drag.az*=0.975;drag.el*=0.975;}
-    const TX=0.4,TY=0.05,RAD=9;const az=drag.az+mx*0.4,elv=Math.max(-0.55,Math.min(0.75,drag.el-my*0.3+0.06));
+    const mob=innerWidth<700;const TX=mob?0.8:0.4,TY=mob?-1.7:0.05,RAD=mob?13.5:9;const az=drag.az+mx*0.4,elv=Math.max(-0.55,Math.min(0.75,drag.el-my*0.3+0.06));
     cam.position.x=TX+Math.sin(az)*RAD*Math.cos(elv);
     cam.position.y=TY+Math.sin(elv)*RAD+0.4;
     cam.position.z=Math.cos(az)*RAD*Math.cos(elv);
