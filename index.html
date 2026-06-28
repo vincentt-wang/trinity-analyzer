@@ -183,6 +183,7 @@ h2{font-family:var(--font-disp);font-weight:700;font-size:var(--fs-h2);line-heig
 
 /* ===== ANALYZE ===== */
 .av-head{padding:clamp(120px,16vh,170px) 0 0}
+.av-head .wrap{display:flex;flex-direction:column}.av-head .flow{order:2}.av-head .price-grid{order:3;margin-top:50px}
 .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
 @media(max-width:880px){.price-grid{grid-template-columns:1fr}}
 .price{border:1px solid var(--bd);border-radius:var(--r);padding:32px 28px;background:var(--panel);display:flex;flex-direction:column;min-height:360px;position:relative;box-shadow:var(--card-shadow);transition:transform var(--d-base) var(--ease-out),border-color var(--d-base);overflow:hidden;will-change:transform}
@@ -832,8 +833,8 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
   <section class="av-head">
     <div class="wrap">
       <div class="kicker"><span class="zh">分析・第一輪免費</span><span class="en">Analyze · First round free</span></div>
-      <h2><span class="zh">先免費跑一輪，看到價值再決定</span><span class="en">Run round one free, then decide</span></h2>
-      <p class="section-lede"><span class="zh">第一輪完整報告免費：給你三元評分、所處階段、以及前三個最該修的地方。第二輪解鎖完整改進清單、具名機構聯絡與可匯出檔案。</span><span class="en">Round one is a full free report: your Trinity scores, your stage, and the top three things to fix. Round two unlocks the full fix playbook, named institution contacts, and exports.</span></p>
+      <h2><span class="zh">先看引擎跑一遍，付費在最後</span><span class="en">Watch the engine run, pay later</span></h2>
+      <p class="section-lede"><span class="zh">下面這段會自動跑一次，讓你看到 Trinity 實際分析什麼。看到價值，再滑到最下面上傳你的 deck 與付費。第一輪完整報告免費。</span><span class="en">The panel below runs itself so you can see what Trinity actually analyzes. Like what you see, then scroll to the bottom to upload your deck and pay. Round one is a full free report.</span></p>
 
       <div class="price-grid">
         <div class="price"><div class="pname"><span class="zh">第一輪</span><span class="en">Round 01</span></div>
@@ -1023,6 +1024,7 @@ function go(v){
     window.scrollTo({top:0,behavior:'instant'});currentView=v;
     document.getElementById('readProg').style.display=v==='article'?'block':'none';
     staggerIn(document.getElementById(views[v]));
+    if(v==='analyze')setTimeout(()=>{try{runPipe(true);}catch(e){}},700);
     wipe.style.transformOrigin='top';
     wipe.animate([{transform:'scaleY(1)'},{transform:'scaleY(0)'}],{duration:D,easing:EASE,fill:'forwards'});
     setTimeout(()=>{transitioning=false;},D);
@@ -1283,10 +1285,10 @@ const rail=document.getElementById('rail');
 rail.innerHTML=RAIL.map(n=>`<div class="rnode" data-k="${n[0]}"><div class="dot"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div class="rl"><span class="zh">${n[1]}</span><span class="en">${n[2]}</span></div></div>`).join('');
 const railStatus=document.getElementById('railStatus');
 let running=false;
-function runPipe(){
+function runPipe(noScroll){
   if(running)return;running=true;
   const demo=document.getElementById('demo');demo.classList.add('show');
-  demo.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(!noScroll)demo.scrollIntoView({behavior:'smooth',block:'nearest'});
   const nodes=[...rail.querySelectorAll('.rnode')];
   nodes.forEach(n=>n.classList.remove('on','done'));
   document.querySelectorAll('.score .v').forEach(v=>v.textContent='0');
