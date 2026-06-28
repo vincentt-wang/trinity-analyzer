@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Trinity｜上線藍圖</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a18'/%3E%3Ccircle cx='16' cy='19' r='7' fill='%2338bdf8'/%3E%3Ccircle cx='16' cy='13.5' r='4.4' fill='%23cbd5e1' stroke='%230a0a18' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='8.5' r='2.7' fill='%23fbbf24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#06060f;--bg-2:#0b0b1c;--bg-3:#11122a;--panel:rgba(255,255,255,.04);--panel-2:rgba(255,255,255,.06);--bd:rgba(255,255,255,.10);--bd-strong:rgba(255,255,255,.22);
+  --ink:#eef1ff;--ink-soft:#aab0d4;--ink-dim:#777fae;--earth:#38bdf8;--earth-2:#22d3ee;--moon:#cbd5e1;--sun:#fbbf24;--violet:#a78bfa;--green:#34d399;--rose:#fb7185;
+  --grad-title:linear-gradient(110deg,#fff 8%,var(--earth) 46%,var(--sun) 92%);--grad-h2:linear-gradient(100deg,#fff,var(--earth) 70%,var(--violet));--grad-axis:linear-gradient(180deg,var(--sun),var(--earth));
+  --card-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 20px 40px -28px rgba(0,0,0,.8);--font-disp:"Space Grotesk","Noto Sans TC",sans-serif;--font-body:"Inter","Noto Sans TC",sans-serif;--ease-out:cubic-bezier(.2,.7,.2,1);--maxw:1020px;--r:16px;}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;background:var(--bg)}
+body{background:transparent;color:var(--ink);font-family:var(--font-body);font-size:1.0625rem;line-height:1.72;-webkit-font-smoothing:antialiased}
+#aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background:radial-gradient(55% 45% at 18% 12%,rgba(56,189,248,.10),transparent 60%),radial-gradient(50% 40% at 84% 26%,rgba(167,139,250,.10),transparent 60%),radial-gradient(60% 50% at 50% 98%,rgba(251,146,60,.07),transparent 60%)}
+a{color:var(--earth);text-decoration:none}.wrap{width:min(92vw,var(--maxw));margin-inline:auto}
+nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:linear-gradient(to bottom,rgba(6,6,15,.9),rgba(6,6,15,.5));border-bottom:1px solid rgba(255,255,255,.07)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(16px,4vw,40px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-disp);font-weight:700;font-size:1.1rem;letter-spacing:.14em}.brand svg{width:27px;height:27px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}.tabs a{color:var(--ink-soft);font-size:1rem;font-weight:500;padding:7px 12px;border-radius:9px;white-space:nowrap;transition:.2s}.tabs a:hover,.tabs a.on{color:var(--ink);background:var(--panel-2)}
+.hero{padding:clamp(58px,10vh,108px) 0 clamp(28px,5vh,46px)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:1.1rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--earth-2);margin-bottom:18px}.eyebrow::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--earth),transparent)}
+h1{font-family:var(--font-disp);font-weight:700;font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.08;letter-spacing:-.01em;background:var(--grad-title);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:18px;font-size:1.2rem;color:var(--ink-soft);max-width:44em}
+section{padding:clamp(40px,6vh,66px) 0;border-top:1px solid rgba(255,255,255,.06)}
+.kick{font-size:1.05rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--violet);margin-bottom:12px}
+h2{font-family:var(--font-disp);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.4rem);line-height:1.15;letter-spacing:-.01em;background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin-top:12px;font-size:1.12rem;color:var(--ink-soft);max-width:46em}
+h3{font-family:var(--font-disp);font-weight:600;font-size:1.3rem;margin:24px 0 10px}
+p.body{margin:12px 0;color:var(--ink-soft)}p.body strong{color:var(--ink)}
+.tline{position:relative;margin-top:28px;padding-left:34px}.tline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--sun),var(--earth),var(--violet))}
+.tmile{position:relative;padding:0 0 24px}.tmile::before{content:"";position:absolute;left:-30px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--ac,var(--earth));box-shadow:0 0 0 4px var(--bg),0 0 14px var(--ac,var(--earth))}
+.tmile .td{font-family:"JetBrains Mono",monospace;font-size:1rem;color:var(--ac,var(--earth));font-weight:600}.tmile .tt{font-family:var(--font-disp);font-size:1.2rem;font-weight:600;margin:3px 0 6px}.tmile .tb{font-size:1.02rem;color:var(--ink-soft);max-width:52em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.card{border:1px solid var(--bd);border-radius:var(--r);background:var(--panel);padding:22px 24px;box-shadow:var(--card-shadow)}.card h3{margin-top:0}.card p{font-size:1.02rem;color:var(--ink-soft)}
+.clip{border:1px solid var(--bd);border-radius:14px;background:var(--panel);padding:18px;box-shadow:var(--card-shadow)}
+.clip .ct{font-family:var(--font-disp);font-weight:600;font-size:1.12rem;margin-bottom:4px}.clip .cs{font-size:1rem;color:var(--ink-dim)}
+.chk{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:10px}.chk li{display:flex;gap:12px;align-items:flex-start;font-size:1.04rem;color:var(--ink-soft)}.chk li svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--green)}
+.note{border:1px solid rgba(251,191,36,.3);background:rgba(251,191,36,.06);border-radius:var(--r);padding:20px 22px;margin-top:22px;font-size:1.04rem;color:var(--ink-soft)}
+footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink-dim);font-size:.98rem}
+</style>
+</head>
+<body>
+<div id="aurora"></div>
+<nav><div class="navin">
+  <a class="brand" href="backend-hub.html" style="color:inherit"><svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="8" fill="#38bdf8"/><circle cx="16" cy="13" r="5" fill="#cbd5e1" stroke="#06060f" stroke-width="1.4"/><circle cx="16" cy="8" r="3" fill="#fbbf24"/></svg><span>TRINITY</span></a>
+  <div class="tabs"><a href="backend-hub.html">Hub</a><a href="index.html">Site</a><a href="business-model.html">Business</a><a href="launch.html" class="on">Launch</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="eyebrow">上線藍圖・Launch</span>
+  <h1>用最小的東西，最快上線</h1>
+  <p>不等到完美才上線。第一輪免費報告就是產品本身，把它放出去、用影片自媒體放大、用試點換證言，邊跑邊修。</p>
+</div></header>
+
+<section id="seq"><div class="wrap">
+  <div class="kick">上線節奏</div>
+  <h2>三步，從 waitlist 到 B2B</h2>
+  <div class="tline">
+    <div class="tmile" style="--ac:var(--sun)"><div class="td">第 0 至 2 週・Pre-launch</div><div class="tt">候補名單 ＋ 3 至 5 個內測</div><div class="tb">先放一個 waitlist 落地頁（就用這個首頁＋一個 email 收集）。私下找 3 至 5 個創辦人朋友跑免費 Round 01，HITL 親自交付，收量化證言與第一批 case。</div></div>
+    <div class="tmile" style="--ac:var(--earth)"><div class="td">第 2 至 6 週・Soft launch</div><div class="tt">公開免費 Round 01 ＋ 內容引爆</div><div class="tb">開放公開免費分析（每驗證信箱一次）。同步發影片自媒體（見下），把每一支當成漏斗入口導到網站。第一批付費解鎖出現，建立 re-score 迴路。</div></div>
+    <div class="tmile" style="--ac:var(--violet)"><div class="td">第 6 週起・Growth / B2B</div><div class="tb">把案例庫拿去談第一個加速器／大學 cohort 授權（真正的利潤池）。這時才把訂閱、白標談起來。</div><div class="tt">B2B 授權 ＋ 訂閱</div></div>
+  </div>
+</div></section>
+
+<section id="video"><div class="wrap">
+  <div class="kick">配合影片自媒體</div>
+  <h2>網站本身就是素材庫</h2>
+  <p class="lead">這個網站的動畫，每一段都能直接剪成短影片。配合你的 video-studio 系統（繁中先行、招牌 D／F／V 判決），用同一套主視覺貫穿。</p>
+  <div class="grid2">
+    <div class="clip"><div class="ct">太陽月亮地球 hero</div><div class="cs">15 秒開場：三球＝D／F／V，一句話帶出「從點子到可投資的新創」。當帳號封面動畫。</div></div>
+    <div class="clip"><div class="ct">三元交叉引擎</div><div class="cs">30 秒解說：三透鏡先各自獨立、再交叉、再合成。講「我們不是一句提示詞」。</div></div>
+    <div class="clip"><div class="ct">55 維度銀河</div><div class="cs">短片證據：每顆星一個維度，秀「solid 演算法」，破除 AI 包殼質疑。</div></div>
+    <div class="clip"><div class="ct">生態系軌道</div><div class="cs">教學片：創辦人該認識的角色（加速器／天使／創投／補助），串回 Trinity 怎麼幫你定位。</div></div>
+  </div>
+  <div class="note">每支影片結尾固定 CTA：「免費跑你的第一輪，連結在簡介」導到 vincentt-wang.github.io/trinity-analyzer。用 worked-example（不具名案例）當最容易病毒的格式：填什麼 → 引擎怎麼判 → 拿到什麼。</div>
+</div></section>
+
+<section id="checklist"><div class="wrap">
+  <div class="kick">兩週上線清單</div>
+  <h2>最短路徑</h2>
+  <ul class="chk">
+    <li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>首頁加一個 email 收集（formsubmit.co，沿用 apply.html 那套），先當 waitlist。</li>
+    <li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>接真實 intake：fork B2B/worker（R2 直傳＋Resend），上傳 deck → 你用 deal-lens skill 出報告（HITL）。</li>
+    <li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>剪 4 支開場短片（上面四段動畫），繁中先行，固定結尾 CTA。</li>
+    <li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>跑 3 至 5 個內測，收證言＋case，放進首頁與 worked-example。</li>
+    <li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>掛 Stripe payment link 做 US$29 解鎖（先手動發 PDF／Docx 也行）。</li>
+    <li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>列 1 個加速器／大學窗口，準備 cohort 授權的一頁提案。</li>
+  </ul>
+  <div class="note">守住法律紅線：只說「被工具評估、最佳化過」，不說「幫你引薦／保證募到」。暖引薦未來才開（EvoScale／GVA／Bonhoe）。</div>
+</div></section>
+
+<footer><div class="wrap">Trinity｜上線藍圖・內部規劃・<a href="backend-hub.html">回 Hub</a></div></footer>
+</body>
+</html>
