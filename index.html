@@ -1076,7 +1076,7 @@ let heroBrightness={earth:0,moon:0,sun:0};
         float ocean=texture2D(specTex,vUv).r;
         vec3 Rd=reflect(-S,N);float spec=pow(max(dot(Rd,V),0.0),75.0)*ocean*lit;
         col+=vec3(1.0,0.9,0.7)*spec*1.0;
-        col=mix(col,vec3(1.0),cl*clamp(lit,0.0,1.0)*0.45);
+        col=mix(col,vec3(1.0),cl*clamp(lit,0.0,1.0)*0.4);
         float fres=pow(1.0-max(dot(N,V),0.0),4.0);
         col+=vec3(0.30,0.6,1.0)*fres*(0.25+0.6*lit);col*=1.0+hov*0.4;
         col=aces(col);col=pow(col,vec3(0.4545));gl_FragColor=vec4(col,1.0);}`});
@@ -1124,12 +1124,12 @@ let heroBrightness={earth:0,moon:0,sun:0};
   const bodyMap=new Map([[earth,'earth'],[moon,'moon'],[sun,'sun']]);
   const hov={earth:0,moon:0,sun:0};
   let mx=0,my=0;
-  let dragAz=0,dragEl=0,dragAzV=0,dragElV=0,dragging=false,dragLX=0,dragLY=0,dragMoved=0;
+  const drag={az:0,el:0};let dragging=false,dragLX=0,dragLY=0,dragMoved=0;
   if(fine)addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5);const r=mount.getBoundingClientRect();pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;},{passive:true});
-  // drag to orbit the whole system
-  mount.addEventListener('pointerdown',e=>{dragging=true;dragMoved=0;dragLX=e.clientX;dragLY=e.clientY;mount.style.cursor='grabbing';mount.setPointerCapture&&mount.setPointerCapture(e.pointerId);});
-  addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dragLX,dy=e.clientY-dragLY;dragMoved+=Math.abs(dx)+Math.abs(dy);dragAz+=-dx*0.005;dragEl+=dy*0.004;dragLX=e.clientX;dragLY=e.clientY;});
-  addEventListener('pointerup',()=>{dragging=false;mount.style.cursor='grab';});
+  // drag to orbit; on release ease back to the natural view over 2.5s
+  mount.addEventListener('pointerdown',e=>{if(window.gsap)gsap.killTweensOf(drag);dragging=true;dragMoved=0;dragLX=e.clientX;dragLY=e.clientY;mount.style.cursor='grabbing';mount.setPointerCapture&&mount.setPointerCapture(e.pointerId);});
+  addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dragLX,dy=e.clientY-dragLY;dragMoved+=Math.abs(dx)+Math.abs(dy);drag.az+=-dx*0.005;drag.el=Math.max(-0.5,Math.min(0.7,drag.el+dy*0.004));dragLX=e.clientX;dragLY=e.clientY;});
+  addEventListener('pointerup',()=>{if(!dragging)return;dragging=false;mount.style.cursor='grab';if(window.gsap)gsap.to(drag,{az:0,el:0,duration:2.5,ease:'power2.out'});});
   mount.addEventListener('click',()=>{if(dragMoved>6)return;if(hovered){const id=bodyMap.get(hovered);const el=document.getElementById('lens-'+id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse');}}});
   function setLit(id,on){const li=document.querySelector(`.legend .li[data-body="${id}"]`);if(li)li.classList.toggle('lit',on);}
 
@@ -1152,14 +1152,13 @@ let heroBrightness={earth:0,moon:0,sun:0};
     bodyMap.forEach((id,m)=>{const tgt=(hovered===m)?1:0;hov[id]+=(tgt-hov[id])*0.12;});
     earthMat.uniforms.hov.value=hov.earth;earth.scale.addScalar(hov.earth*0.06);
     moon.scale.setScalar(1+hov.moon*0.18);sunGroup.scale.addScalar(hov.sun*0.06);
-    earth.rotation.y+=.0014;atmo.rotation.y=earth.rotation.y;
+    earth.rotation.y+=.0009;atmo.rotation.y=earth.rotation.y;
     const a=el*0.4+0.4;moon.position.set(0.8+Math.cos(a)*2.4,-0.1+Math.sin(a)*2.2,Math.sin(a)*0.45);moon.rotation.y+=.006;
     stars1.rotation.y+=.00018;stars2.rotation.y+=.00032;stars2.rotation.x+=.00006;
     stars1.position.x=mx*0.5;stars2.position.x=mx*0.9;stars1.position.y=-my*0.4;
-    // drag-to-orbit camera rig (azimuth/elevation around the earth) + inertia + parallax
-    if(!dragging){dragAz+=(0-dragAz)*0.06;dragEl+=(0-dragEl)*0.06;}
-    dragEl=Math.max(-0.5,Math.min(0.7,dragEl));
-    const TX=0.4,TY=0.05,RAD=9;const az=dragAz+mx*0.4,elv=dragEl-my*0.3+0.06;
+    // drag-to-orbit camera rig (azimuth/elevation around the earth) + gentle parallax
+    if(!dragging&&!window.gsap){drag.az*=0.975;drag.el*=0.975;}
+    const TX=0.4,TY=0.05,RAD=9;const az=drag.az+mx*0.4,elv=Math.max(-0.55,Math.min(0.75,drag.el-my*0.3+0.06));
     cam.position.x=TX+Math.sin(az)*RAD*Math.cos(elv);
     cam.position.y=TY+Math.sin(elv)*RAD+0.4;
     cam.position.z=Math.cos(az)*RAD*Math.cos(elv);
