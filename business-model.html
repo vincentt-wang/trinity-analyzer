@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Trinity｜商業模式藍圖</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a18'/%3E%3Ccircle cx='16' cy='19' r='7' fill='%2338bdf8'/%3E%3Ccircle cx='16' cy='13.5' r='4.4' fill='%23cbd5e1' stroke='%230a0a18' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='8.5' r='2.7' fill='%23fbbf24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#06060f;--bg-1:#0a0a18;--bg-2:#0b0b1c;--bg-3:#11122a;--panel:rgba(255,255,255,.04);--panel-2:rgba(255,255,255,.06);--bd:rgba(255,255,255,.10);--bd-strong:rgba(255,255,255,.22);
+  --ink:#eef1ff;--ink-soft:#aab0d4;--ink-dim:#777fae;--ink-faint:#4d5480;
+  --earth:#38bdf8;--earth-2:#22d3ee;--earth-deep:#0369a1;--moon:#cbd5e1;--moon-deep:#64748b;--sun:#fbbf24;--sun-2:#fb923c;--sun-deep:#c2410c;
+  --violet:#a78bfa;--violet-2:#7c3aed;--green:#34d399;--rose:#fb7185;--ok:#34d399;--warn:#fbbf24;--bad:#fb7185;
+  --grad-h2:linear-gradient(100deg,#fff,var(--earth) 70%,var(--violet));--grad-axis:linear-gradient(180deg,var(--sun),var(--earth));--grad-cta:linear-gradient(100deg,var(--earth),var(--earth-2));
+  --card-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 20px 40px -28px rgba(0,0,0,.8);
+  --font-disp:"Space Grotesk","Noto Sans TC",sans-serif;--font-body:"Inter","Noto Sans TC",sans-serif;--mono:"JetBrains Mono",monospace;
+  --ease-out:cubic-bezier(.2,.7,.2,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);--maxw:1060px;--r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:1.0625rem;line-height:1.72;-webkit-font-smoothing:antialiased}
+a{color:var(--earth);text-decoration:none}.wrap{width:min(92vw,var(--maxw));margin-inline:auto}.tnum{font-variant-numeric:tabular-nums}
+nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:linear-gradient(to bottom,rgba(6,6,15,.9),rgba(6,6,15,.5));border-bottom:1px solid rgba(255,255,255,.07)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(16px,4vw,40px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-disp);font-weight:700;font-size:1.1rem;letter-spacing:.14em}.brand svg{width:27px;height:27px}
+.tabs{display:flex;gap:3px;flex-wrap:wrap}.tabs a{color:var(--ink-soft);font-size:1rem;font-weight:500;padding:7px 12px;border-radius:9px;white-space:nowrap;transition:.2s}.tabs a:hover{color:var(--ink);background:var(--panel-2)}
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:40;background:var(--grad-axis)}
+.hero{padding:clamp(64px,11vh,120px) 0 clamp(40px,7vh,64px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(900px 420px at 78% 0%,rgba(56,189,248,.14),transparent 60%),radial-gradient(700px 420px at 8% 30%,rgba(167,139,250,.10),transparent 60%)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:1.1rem;font-weight:600;letter-spacing:.14em;color:var(--earth-2);margin-bottom:18px;text-transform:uppercase}
+.eyebrow::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--earth),transparent)}
+h1{font-family:var(--font-disp);font-weight:700;font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.1;letter-spacing:-.01em;background:linear-gradient(110deg,#fff,var(--earth) 55%,var(--sun));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:20px;font-size:1.2rem;color:var(--ink-soft);max-width:44em}
+.meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}.tag{border:1px solid var(--bd);border-radius:999px;padding:6px 15px;font-size:1rem;color:var(--ink-soft)}
+section{padding:clamp(44px,7vh,76px) 0;border-top:1px solid rgba(255,255,255,.06)}
+.kick{font-size:1.05rem;font-weight:600;letter-spacing:.12em;color:var(--violet);margin-bottom:12px;text-transform:uppercase}
+h2{font-family:var(--font-disp);font-weight:700;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.15;letter-spacing:-.01em;background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin-top:14px;font-size:1.15rem;color:var(--ink-soft);max-width:46em}
+h3{font-family:var(--font-disp);font-weight:600;font-size:1.34rem;margin:26px 0 10px}
+p.body{margin:12px 0;color:var(--ink-soft)}p.body strong,li strong{color:var(--ink);font-weight:600}
+.hl-g{color:var(--green);font-weight:600}.hl-s{color:var(--sun);font-weight:600}.hl-e{color:var(--earth);font-weight:600}.hl-v{color:var(--violet);font-weight:600}.hl-r{color:var(--rose);font-weight:600}
+code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 7px;border-radius:6px;color:#cfe6ff}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}.reveal.in{opacity:1;transform:none}
+/* engine two-door */
+.doors{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-top:30px}
+@media(max-width:760px){.doors{grid-template-columns:1fr}}
+.door{border:1px solid var(--bd);border-radius:var(--r);padding:26px;background:var(--panel);display:flex;flex-direction:column;box-shadow:var(--card-shadow)}
+.door.a{border-color:rgba(56,189,248,.3)}.door.b{border-color:rgba(167,139,250,.4);background:linear-gradient(180deg,rgba(167,139,250,.08),var(--panel))}
+.door .lbl{font-size:1rem;letter-spacing:.08em;font-weight:600;margin-bottom:8px;text-transform:uppercase}.door.a .lbl{color:var(--earth)}.door.b .lbl{color:var(--violet)}
+.door h4{font-family:var(--font-disp);font-size:1.3rem;margin-bottom:10px}.door p{font-size:1.02rem;color:var(--ink-soft)}
+.door .foot{margin-top:auto;padding-top:16px;font-size:1rem;color:var(--ink-dim)}
+.door .pill{align-self:flex-start;font-size:1rem;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:10px}
+.door.a .pill{background:rgba(56,189,248,.14);color:var(--earth)}.door.b .pill{background:rgba(167,139,250,.16);color:var(--violet)}
+.engine{display:grid;place-items:center;padding:0 4px;position:relative}
+.engine .core{width:104px;height:104px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#fde68a,var(--sun-2) 82%);box-shadow:var(--glow-sun,0 0 56px -4px rgba(251,191,36,.6));display:grid;place-items:center;font-family:var(--font-disp);font-weight:700;color:#3a1d04;font-size:1rem;text-align:center;line-height:1.2;animation:corepulse 3s ease-in-out infinite}
+@keyframes corepulse{0%,100%{box-shadow:0 0 40px -6px rgba(251,191,36,.5)}50%{box-shadow:0 0 70px -2px rgba(251,191,36,.85)}}
+.flowline{position:absolute;top:50%;height:2px;width:42%;overflow:visible}
+.flowline.l{right:54%;background:linear-gradient(90deg,transparent,var(--earth))}
+.flowline.r{left:54%;background:linear-gradient(90deg,var(--sun),var(--violet))}
+.flowline .pkt{position:absolute;top:-3px;width:8px;height:8px;border-radius:50%}
+.flowline.l .pkt{background:var(--earth);box-shadow:0 0 10px var(--earth);animation:flowL 2.4s linear infinite}
+.flowline.r .pkt{background:var(--violet);box-shadow:0 0 10px var(--violet);animation:flowR 2.4s linear infinite}
+@keyframes flowL{0%{right:0;opacity:0}10%{opacity:1}100%{right:100%;opacity:0}}
+@keyframes flowR{0%{left:0;opacity:0}10%{opacity:1}100%{left:100%;opacity:0}}
+@media(max-width:760px){.flowline{display:none}}
+/* verdict self */
+.selfgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+@media(max-width:680px){.selfgrid{grid-template-columns:1fr}}
+.slens{border:1px solid var(--bd);border-radius:14px;padding:22px;background:var(--panel)}
+.slens .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.slens .nm{font-weight:600}.slens .vd{font-family:var(--font-disp);font-size:1.5rem;font-weight:700}
+.slens.e .nm{color:var(--earth)}.slens.m .nm{color:var(--moon)}.slens.s .nm{color:var(--sun)}
+.slens .bar{height:8px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden;margin:8px 0}
+.slens .bar i{display:block;height:100%;width:0;transition:width 1.1s var(--ease-out)}
+.slens.e .bar i{background:var(--earth)}.slens.m .bar i{background:var(--moon)}.slens.s .bar i{background:var(--sun)}
+.slens p{font-size:1rem;color:var(--ink-soft);margin-top:8px}
+.bigverdict{margin-top:20px;border:1px solid rgba(251,191,36,.3);background:rgba(251,191,36,.06);border-radius:var(--r);padding:24px}
+.bigverdict .vchip{display:inline-flex;gap:8px;align-items:center;background:rgba(251,191,36,.14);color:var(--sun);border:1px solid rgba(251,191,36,.4);border-radius:999px;padding:5px 14px;font-weight:700;font-size:1rem;margin-bottom:12px}
+.bigverdict p{color:var(--ink-soft)}
+/* score evolution strip */
+.stagestrip{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:12px;margin-top:26px}
+@media(max-width:760px){.stagestrip{grid-template-columns:1fr}.stagestrip .arr{display:none}}
+.stg{border:1px solid var(--bd);border-radius:14px;padding:18px 20px;background:var(--panel);display:flex;flex-direction:column}
+.stg.now{border-color:rgba(251,113,133,.32)}.stg.target{border-color:rgba(52,211,153,.4);background:linear-gradient(180deg,rgba(52,211,153,.07),var(--panel))}
+.stg .sl{font-size:1rem;letter-spacing:.06em;color:var(--ink-dim);font-weight:600;text-transform:uppercase;white-space:nowrap}
+.stg .sv{font-family:var(--font-disp);font-weight:700;font-size:1.7rem;margin:8px 0 4px;white-space:nowrap}
+.stg.now .sv{color:var(--rose)}.stg.target .sv{color:var(--green)}
+.stg .sd{font-size:1rem;color:var(--ink-soft);margin-top:auto;padding-top:8px}
+.arr{display:grid;place-items:center;font-family:var(--font-disp);font-size:1.5rem;color:var(--ink-faint)}
+/* enriched lens card */
+.slens .scoreline{display:flex;align-items:baseline;gap:10px;font-family:var(--font-disp);font-weight:700;margin:2px 0 4px;white-space:nowrap}
+.slens .scoreline .from{font-size:1.1rem;color:var(--ink-dim)}.slens .scoreline .to{font-size:1.7rem}
+.slens.e .scoreline .to{color:var(--earth)}.slens.m .scoreline .to{color:var(--moon)}.slens.s .scoreline .to{color:var(--sun)}
+.slens .arrow{color:var(--ink-faint);font-size:1.1rem}
+.moves{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0}
+.moves li{font-size:1rem;color:var(--ink-soft);padding-left:18px;position:relative;line-height:1.5}
+.moves li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%}
+.slens.e .moves li::before{background:var(--earth)}.slens.m .moves li::before{background:var(--moon)}.slens.s .moves li::before{background:var(--sun)}
+.capreason{margin-top:auto;padding-top:12px;border-top:1px solid var(--bd);font-size:1rem;color:var(--ink-dim)}.capreason b{color:var(--rose)}
+/* ledger status chips */
+.stat-now{color:var(--green);font-weight:700;white-space:nowrap}.stat-tgt{color:var(--sun);font-weight:700;white-space:nowrap}
+td .lx{font-family:var(--mono);font-size:.92em;color:var(--ink-dim)}
+/* generic cards/grids */
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{border:1px solid var(--bd);border-radius:var(--r);padding:24px;background:var(--panel);box-shadow:var(--card-shadow);display:flex;flex-direction:column}
+.card h3{margin-top:0}
+/* pricing */
+.prices{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}@media(max-width:900px){.prices{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.prices{grid-template-columns:1fr}}
+.price{border:1px solid var(--bd);border-radius:var(--r);padding:24px 22px;background:var(--panel);display:flex;flex-direction:column;min-height:300px;position:relative;box-shadow:var(--card-shadow)}
+.price.feat{border-color:rgba(56,189,248,.5);background:linear-gradient(180deg,rgba(56,189,248,.08),var(--panel))}
+.price.rev{border-color:rgba(167,139,250,.5);background:linear-gradient(180deg,rgba(167,139,250,.08),var(--panel))}
+.price .pn{font-family:var(--font-disp);font-size:1.2rem;font-weight:600;white-space:nowrap}
+.price .amt{font-family:var(--font-disp);font-size:1.9rem;font-weight:700;margin:8px 0 2px;white-space:nowrap}.price .amt span{font-size:1rem;color:var(--ink-dim);font-weight:500}
+.price .sub{font-size:1rem;color:var(--ink-soft);margin-bottom:12px}
+.price ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:4px}.price li{font-size:1rem;color:var(--ink-soft);display:flex;gap:8px;align-items:flex-start}.price li svg{width:16px;height:16px;flex:none;margin-top:4px;color:var(--earth)}
+.price .badge{position:absolute;top:14px;right:16px;font-size:1rem;font-weight:700;padding:4px 11px;border-radius:999px}
+.price.feat .badge{background:var(--grad-cta);color:#04121d}.price.rev .badge{background:rgba(167,139,250,.2);color:var(--violet)}
+/* fix surface */
+.fixrow{border:1px solid var(--bd);border-radius:14px;background:var(--panel);overflow:hidden;margin-top:14px}
+.fixrow .fh{display:grid;grid-template-columns:1.2fr 1.4fr 1.2fr 1.4fr;gap:0;background:var(--panel-2);font-family:var(--mono);font-size:1rem;color:var(--ink-dim)}
+.fixrow .fh div{padding:12px 16px;border-right:1px solid var(--bd)}.fixrow .fh div:last-child{border-right:none}
+.fixrow .fr{display:grid;grid-template-columns:1.2fr 1.4fr 1.2fr 1.4fr;border-top:1px solid var(--bd)}
+.fixrow .fr div{padding:14px 16px;border-right:1px solid var(--bd);font-size:1rem;color:var(--ink-soft)}.fixrow .fr div:last-child{border-right:none}
+.fixrow .fr b{color:var(--ink)}
+@media(max-width:760px){.fixrow .fh{display:none}.fixrow .fr{grid-template-columns:1fr}.fixrow .fr div{border-right:none}}
+.fr .free{color:var(--green);font-weight:600}.fr .paid{color:var(--sun);font-weight:600}
+.sevc{font-size:1rem;font-weight:700;border-radius:6px;padding:1px 9px;margin-right:9px;white-space:nowrap}.sevc.major{background:rgba(251,113,133,.16);color:var(--rose)}.sevc.minor{background:rgba(251,191,36,.16);color:var(--sun)}
+/* table */
+.tblwrap{overflow-x:auto;margin-top:22px;border:1px solid var(--bd);border-radius:var(--r)}table{width:100%;border-collapse:collapse;font-size:1.0rem;min-width:520px}
+th,td{padding:13px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}th{font-family:var(--font-disp);font-weight:600;color:var(--ink);background:rgba(255,255,255,.03);white-space:nowrap}td{color:var(--ink-soft)}tr:last-child td{border-bottom:none}td b{color:var(--ink)}.cr{font-family:var(--font-disp);font-weight:700;color:var(--sun)}
+/* roadmap */
+.phase{border:1px solid var(--bd);border-radius:var(--r);padding:24px;background:var(--panel);position:relative;overflow:hidden;box-shadow:var(--card-shadow)}
+.phase::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}.phase.p1::before{background:var(--earth)}.phase.p2::before{background:var(--violet)}.phase.p3::before{background:var(--sun)}
+.phase .pn{font-family:var(--font-disp);font-size:1rem;letter-spacing:.08em;color:var(--ink-dim);font-weight:600}.phase h4{font-family:var(--font-disp);font-size:1.25rem;margin:6px 0 12px}
+.phase ul{list-style:none;display:flex;flex-direction:column;gap:8px}.phase li{font-size:1.0rem;color:var(--ink-soft);padding-left:16px;position:relative}.phase li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--ink-soft)}
+.gate{margin-top:18px;border:1px solid rgba(251,113,133,.3);background:rgba(251,113,133,.06);border-radius:var(--r);padding:22px}
+.gate .gh{font-family:var(--font-disp);font-weight:600;font-size:1.12rem;color:var(--rose);margin-bottom:8px;display:flex;align-items:center;gap:9px}.gate .gh svg{width:20px;height:20px}.gate p{color:var(--ink-soft)}
+/* cac */
+.cac{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}@media(max-width:680px){.cac{grid-template-columns:1fr}}
+.metric{border:1px solid var(--bd);border-radius:14px;padding:22px;background:var(--panel);text-align:center}
+.metric .big{font-family:var(--font-disp);font-size:2.2rem;font-weight:700;background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.metric .ml{font-size:1rem;color:var(--ink-soft);margin-top:6px}
+.note{border:1px solid rgba(251,191,36,.3);background:rgba(251,191,36,.06);border-radius:var(--r);padding:22px 24px;margin-top:24px}
+.note .nh{font-family:var(--font-disp);font-weight:600;font-size:1.12rem;color:var(--sun);margin-bottom:8px;display:flex;align-items:center;gap:9px}.note .nh svg{width:20px;height:20px}.note p{color:var(--ink-soft)}
+footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink-dim);font-size:1rem}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#222244;border-radius:6px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav><div class="navin">
+  <a class="brand" href="backend-hub.html" style="text-decoration:none;color:inherit"><svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="8" fill="#38bdf8"/><circle cx="16" cy="13" r="5" fill="#cbd5e1" stroke="#06060f" stroke-width="1.4"/><circle cx="16" cy="8" r="3" fill="#fbbf24"/></svg><span>TRINITY</span><span style="font-size:1rem;color:var(--ink-dim);font-weight:500;letter-spacing:0;margin-left:4px">／ Hub</span></a>
+  <div class="tabs"><a href="#frame">定位</a><a href="#self">自我評估</a><a href="#ledger">證據帳本</a><a href="#cross">交叉推導</a><a href="#ceiling">天花板</a><a href="#model">免費起手</a><a href="#price">定價</a><a href="#fix">改進清單</a><a href="#rev">營收線</a><a href="#road">路線圖</a><a href="#moat">護城河</a><a href="backend-architecture.html" style="color:var(--earth)">架構 ↗</a><a href="cis.html" style="color:var(--sun)">CIS ↗</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="eyebrow">商業模式藍圖</span>
+  <h1>一顆引擎，兩扇門，一把誠實的尺</h1>
+  <p>Trinity 是 <strong style="color:#fff">Deal Lens 引擎</strong>的創辦人側賣法，EaseLens 是投資人側。我們先用自己的引擎、再加上對抗式複審評自己。結論很誠實：這門生意的存續性天花板是<strong style="color:#fff">高 △，不是滿分</strong>，我們把這份判決原文印在產品上。</p>
+  <div class="meta"><span class="tag">原型 v0.2</span><span class="tag">2026-06-28</span><span class="tag">內部規劃</span><span class="tag">引擎自評＋對抗複審</span></div>
+</div></header>
+
+<!-- FRAME -->
+<section id="frame"><div class="wrap reveal">
+  <div class="kick">策略定位</div>
+  <h2>一顆 Deal Lens，兩種賣法</h2>
+  <p class="lead"><span class="hl-s">Deal Lens</span> 是那顆引擎（創新三元 D／F／V 評案，含 knockout、六向交叉、階段判準、12 類投資人熱力表）。<span class="hl-e">Trinity</span> 把它包給<span class="hl-e">創辦人</span>，<span class="hl-v">EaseLens</span> 把它包給<span class="hl-v">投資人</span>。引擎自己判定：founder 側單獨看 willingness-to-pay 太弱，角色是 lead-gen、案例庫與品牌，<strong>真正的營收來自 B2B</strong>。被 Trinity 打磨過的 deck，就是 EaseLens VC 的乾淨案源。</p>
+  <div class="doors">
+    <div class="door a">
+      <span class="pill">漏斗入口・非主營收</span>
+      <div class="lbl">創辦人皮・TRINITY</div>
+      <h4>lead-gen ／ 案例庫 ／ 品牌</h4>
+      <p>自助式 PLG。第一輪免費創造價值，把 founder 變成乾淨的 deck 與口碑。願付低，但餵養上面那條線。</p>
+      <div class="foot">第一輪免費，一鍵解鎖 US$29</div>
+      <span class="flowline l"><span class="pkt"></span></span>
+    </div>
+    <div class="engine"><div class="core">Deal Lens<br>D / F / V</div></div>
+    <div class="door b">
+      <span class="pill">真正的營收引擎</span>
+      <div class="lbl">投資人皮・B2B ＋ EASELENS</div>
+      <h4>加速器 ／ 大學 ／ 白標 ／ AOR</h4>
+      <p>把引擎授權進機構的 intake。低流量、高客單、可預測。台灣大學與政府新創辦公室是天然首發。</p>
+      <div class="foot">B2B 授權＋ EaseLens AOR NT$9,900 至 14,900／月</div>
+      <span class="flowline r"><span class="pkt"></span></span>
+    </div>
+  </div>
+</div></section>
+
+<!-- SELF VERDICT -->
+<section id="self"><div class="wrap reveal">
+  <div class="kick">吃自己的狗糧</div>
+  <h2>我們用 Deal Lens 評了 Deal Lens</h2>
+  <p class="lead">把這份商業模式當成一個被 pitch 的新創，餵進自己的三透鏡引擎，再讓<strong>對抗式複審</strong>專門想把分數打回去。它沒有客氣。三個分數，三種誠實。</p>
+
+  <div class="stagestrip">
+    <div class="stg"><div class="sl">基線自評</div><div class="sv">54 · 70 · 48</div><div class="sd">D／F／V 初評，△ KEEP GOING。</div></div>
+    <div class="arr">→</div>
+    <div class="stg now"><div class="sl">對抗壓力・今天</div><div class="sv">55 · 59 · 49</div><div class="sd">懷疑 agent 把樂觀分壓回真實。地基＝「陌生人真金白銀重複付費今天為零」，落在 △／✕ 刀鋒。</div></div>
+    <div class="arr">→</div>
+    <div class="stg target"><div class="sl">證據閘控目標態</div><div class="sv">72 · 78 · 69</div><div class="sd">6 至 18 個月真實牽引落地後的誠實上限。不是滿分，因為有結構天花板。</div></div>
+  </div>
+
+  <div class="selfgrid" id="selfgrid">
+    <div class="slens e"><div class="top"><span class="nm">欲求性 Desirability</span><span class="scoreline"><span class="from">54</span><span class="arrow">→</span><span class="to">72</span></span></div><div class="bar"><i data-w="72"></i></div>
+      <ul class="moves">
+        <li>頭號買家從購買力最弱的 founder 換成<strong>有預算的機構</strong>（加速器／大學／政府新創辦）</li>
+        <li>cohort 面試前人工初篩「工時 × 件數」費米拆解，把計分卡定位成<strong>止痛藥</strong>而非維他命</li>
+        <li>灘頭鎖台灣大學＋政府新創辦：Vincent workshop 足跡直達，CAC 低</li>
+      </ul>
+      <p class="capreason">封頂在高 △：founder 側本質偏維他命、<b>capital-efficient 工具的創投可投性有限</b>。</p>
+    </div>
+    <div class="slens m"><div class="top"><span class="nm">可行性 Feasibility</span><span class="scoreline"><span class="from">70</span><span class="arrow">→</span><span class="to">78</span></span></div><div class="bar"><i data-w="78"></i></div>
+      <ul class="moves">
+        <li>引擎已在阿基里斯真案跑通、Cloudflare／Claude stack 成熟（今天已有）</li>
+        <li>解鎖地基：<strong>3 至 5 個機構付費試點</strong>＋陌生人重複付費 smoke test</li>
+        <li>成立法人同步簽 IP assignment（拆 knockout 炸彈）＋補互補 cofounder（拆 solo 風險）</li>
+      </ul>
+      <p class="capreason">封頂在 ●／強 △ 邊界：<b>護城河誠實上限約 7</b>，分析器與機構清單可複製，達 10 要數年級雙邊資料。</p>
+    </div>
+    <div class="slens s"><div class="top"><span class="nm">存續性 Viability</span><span class="scoreline"><span class="from">48</span><span class="arrow">→</span><span class="to">69</span></span></div><div class="bar"><i data-w="69"></i></div>
+      <ul class="moves">
+        <li><strong>首批機構合約</strong>是唯一鑰匙：解開 PMF／六關鍵數字／單位經濟三個 ×3 核心的 pre-revenue 封頂</li>
+        <li>B2B 高客單（US$6K+／年、AOR）＋兩扇門交叉補貼，撐起損平與單位經濟</li>
+        <li>Phase 2 自動化把 HITL 低毛利推向約 80% 軟體毛利</li>
+      </ul>
+      <p class="capreason">封頂在強 △：<b>創投報酬視角 ×2 權重</b>單獨封住上行，這是資本高效工具，不是 venture-scale。</p>
+    </div>
+  </div>
+
+  <div class="bigverdict">
+    <div class="vchip">△ CONDITIONAL（基線信心 mid-low → 目標態 mid-high）</div>
+    <p class="body" style="margin-top:0"><strong>白話：</strong>引擎是真的，Vincent 做得出來，但商業模式若以 founder-first PLG 當頭條，等於把賭注押在最弱的客戶身上。對抗複審把今天的誠實壓到 <strong>F59／V49</strong>，地基是「陌生人真金白銀重複付費今天為零」。我們不竄改今天，也不謊報 99：把每個高分背後需要的證據攤開（見下方<a href="#ledger">證據帳本</a>），把傷口怎麼互相傳染寫清楚（見<a href="#cross">交叉推導</a>），把為什麼到不了滿分講明白（見<a href="#ceiling">天花板</a>）。敢用同一把尺評自己、敢公開最弱的軸，才有資格替別人評案。</p>
+  </div>
+</div></section>
+
+<!-- EVIDENCE LEDGER -->
+<section id="ledger"><div class="wrap reveal">
+  <div class="kick">每個高分都要交代證據</div>
+  <h2>證據帳本：今天已有 vs 目標態待達成</h2>
+  <p class="lead">反幻覺鐵律：證據「未提供」該維封頂 3 分。所以任何 9 至 10 都必須點名具體證據，並誠實標記它今天是否存在。<span class="hl-g">今天已有</span>是真資產，<span class="hl-s">目標態待達成</span>是要靠真實牽引解鎖的承諾。</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>透鏡</th><th>維度・主張</th><th>需要的證據</th><th>狀態</th></tr></thead>
+    <tbody>
+      <tr><td><b class="hl-e">D</b></td><td><span class="lx">D18</span> FMF：domain＋網絡＋戰績三者具備</td><td>Vincent 課程／workshop 足跡＋EvoScale 網絡＋Deal Lens 引擎作者身分</td><td><span class="stat-now">今天已有</span></td></tr>
+      <tr><td><b class="hl-e">D</b></td><td><span class="lx">D5</span> 完美市場購買力：B2B-first 後買方有預算</td><td>機構 cohort intake 採購線與付費意向</td><td><span class="stat-tgt">目標態待達成</span></td></tr>
+      <tr><td><b class="hl-s">F</b></td><td><span class="lx">F6</span> 技術合理性＝9：管線已部署、真案跑通</td><td>deal-lens 在阿基里斯真案的實跑輸出＋Cloudflare／Claude 部署紀錄</td><td><span class="stat-now">今天已有</span></td></tr>
+      <tr><td><b class="hl-s">F</b></td><td><span class="lx">F16</span> 可 demo＝9：現場跑出中立三層報告</td><td>現場 demo deal-lens 出 a4-template-neutral 報告</td><td><span class="stat-now">今天已有</span></td></tr>
+      <tr><td><b class="hl-s">F</b></td><td><span class="lx">F3</span> 付費驗證→8：陌生人真金白銀重複付費</td><td>3 至 5 機構付費試點＋smoke test（今天為 0）</td><td><span class="stat-tgt">目標態待達成</span></td></tr>
+      <tr><td><b class="hl-s">F</b></td><td><span class="lx">F10</span> 護城河→誠實上限 7：校準 golden-set＋雙邊資料迴路</td><td>累積的雙邊（founder×investor）資料量（達 10 需數年級積累，不可硬編）</td><td><span class="stat-tgt">目標態待達成</span></td></tr>
+      <tr><td><b class="hl-s">F</b></td><td><span class="lx">F-KO-4</span> IP 指派＝0（不歸零）：條件式 knockout 炸彈</td><td>成立法人同步簽署 IP assignment（founding-doc 綁定），否則成立當下觸發 F 一票否決</td><td><span class="stat-tgt">目標態待達成</span></td></tr>
+      <tr><td><b class="hl-v">V</b></td><td><span class="lx">V11</span> 損益平衡＝8：固定成本近零，損平 ≪ SOM</td><td>現有 Cloudflare／Claude 帳單＝固定成本基線</td><td><span class="stat-now">今天已有</span></td></tr>
+      <tr><td><b class="hl-v">V</b></td><td><span class="lx">V2／V3／V4</span> 三個 ×3 核心：PMF／六關鍵數字／單位經濟</td><td>首批機構合約帶出的真實 cohort：續約／NRR／NPS／CAC／LTV／毛利</td><td><span class="stat-tgt">目標態待達成</span></td></tr>
+      <tr><td><b class="hl-v">V</b></td><td><span class="lx">V10</span> 定價→7：痛點代價錨定（對最弱客戶未測故封頂 7）</td><td>fake-door＋真實轉換測 WTP</td><td><span class="stat-tgt">目標態待達成</span></td></tr>
+      <tr><td><b class="hl-v">V</b></td><td><span class="lx">V15</span> 創投報酬→誠實上限約 6：非純 venture-scale</td><td>Phase 3 平台＋雙邊網路效應落地（即使全執行仍受本質封頂）</td><td><span class="stat-tgt">目標態待達成</span></td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<!-- CROSS DERIVATION -->
+<section id="cross"><div class="wrap reveal">
+  <div class="kick">透鏡不是各看各的</div>
+  <h2>六向交叉推導：傷口會傳染</h2>
+  <p class="lead">三透鏡先各自獨立打分（防錨定），再六向互推（D→F、F→V、V→D…）。最致命的連動，是單一透鏡看不到的。</p>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(251,113,133,.32)"><h3 style="margin-top:0;color:var(--rose)">F→V　最致命的傳導</h3><p class="body">F3 付費驗證今天＝0，<strong>直接封住 V2／V3／V4 三個 ×3 核心</strong>（pre-revenue 反幻覺封頂 3）。這是 V 聚合分鎖在 49% 的數學主因：能做、不能算帳。smoke test 跑出付費前，任何文件化修改都救不了 V。</p></div>
+    <div class="card"><h3 style="margin-top:0;color:var(--earth)">D→V　唯一的救生索</h3><p class="body">D 把買方從購買力最弱的 founder 改為有預算機構，直接解鎖 V 的 ARPU 與單位經濟（V4／V10／V11）。<strong>B2B 高毛利是把 V 從 49% 推向約 69% 天花板的唯一路徑。</strong></p></div>
+    <div class="card"><h3 style="margin-top:0;color:var(--violet)">V→D　逼出 B2B-first</h3><p class="body">V15／V13 顯示 capital-efficient 兩扇門工具的 venture 上行有限，回壓 D3 創投可投性，點破 founder-PLG 是「對的需求、錯的賣法」，逼出 B2B-first 重構。</p></div>
+    <div class="card"><h3 style="margin-top:0;color:var(--sun)">V→F　第三柱變必須</h3><p class="body">V19「能建難守」旗標（前沿模型收斂，Stanford AI Index 2026 美中差距 2.7%）逼 F17 第三柱 eval harness／what-good 紀錄成為必須，否則護城河被收斂侵蝕成薄殼。</p></div>
+  </div>
+</div></section>
+
+<!-- CEILING -->
+<section id="ceiling"><div class="wrap reveal">
+  <div class="kick">誠實的上限</div>
+  <h2>為什麼到不了 99</h2>
+  <p class="lead">99 不是改寫今天，是證據閘控的目標態。但即使所有目標態證據都到位，<strong>三個結構天花板</strong>讓這門生意誠實到不了滿分。這不是執行問題，是這門生意本質的問題。</p>
+  <div class="grid3">
+    <div class="card" style="border-color:rgba(251,113,133,.3)"><h3 style="margin-top:0;color:var(--rose)">V15　創投報酬視角</h3><p class="body" style="flex:1">這是<strong>資本高效的工具／服務，不是 venture-scale 火箭</strong>。退出主路是 acqui-hire 或併入 EvoScale 生態，倍數有限。×2 權重單獨封住 V 的上行端。</p><p class="capreason" style="border:none;color:var(--ink-dim)">V 天花板 ≈ 69 至 72</p></div>
+    <div class="card" style="border-color:rgba(251,191,36,.3)"><h3 style="margin-top:0;color:var(--sun)">F10　護城河可複製</h3><p class="body" style="flex:1">分析器與機構清單<strong>都可被複製</strong>。真 moat（校準 golden-set＋雙邊資料迴路）達 10 需數年級資料量，不可硬編。誠實上限約 7。</p><p class="capreason" style="border:none;color:var(--ink-dim)">F 封在 78，非 ● 高分</p></div>
+    <div class="card" style="border-color:rgba(56,189,248,.3)"><h3 style="margin-top:0;color:var(--earth)">D　founder-PLG 維他命性</h3><p class="body" style="flex:1">募資焦慮真實但<strong>episodic（只在募資那 2 至 4 個月）</strong>，且免費替代充斥。即使 B2B-first 重構，founder 側單獨仍偏維他命。</p><p class="capreason" style="border:none;color:var(--ink-dim)">D 停在高 △ ≈ 72</p></div>
+  </div>
+  <div class="note" style="margin-top:24px"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>要解開 99，等於變成另一門生意</div><p>把 V 推上 ●／逼近 99，需要把這門生意重做成<strong>真正的雙邊資料網路、有專屬 outcome 資料規模、venture-scale 的市場</strong>。那是不同的賭注，不一定是現在要走的路。誠實的高 △，好過虛構的滿分。這份判決原文印在產品上，本身就是 Deal Lens 最強的可信度證明。</p></div>
+</div></section>
+
+<!-- FREE-FIRST MODEL -->
+<section id="model"><div class="wrap reveal">
+  <div class="kick">免費起手，第二輪收費</div>
+  <h2>第一輪給出無法否認的價值</h2>
+  <p class="lead">我們相信第一次就能創造價值，讓人想繼續用。所以 Round 01 是一份<strong>完整免費報告</strong>，指出傷口；Round 02 才付費，給你開刀的方法。</p>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(52,211,153,.35)">
+      <h3 style="color:var(--green)">Round 01・免費完整報告</h3>
+      <p class="body">三元評分＋信心燈號、所處 stage 與基準百分位、一句話本質判斷，以及<strong>前三個最該修的地方（含嚴重度與為什麼）</strong>，再加一個 fund-match 預告（數量＋類型＋ 1 至 2 家具名當證據）。每個<strong>已驗證</strong>信箱一次，當作濫用閘門。</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,191,36,.35)">
+      <h3 style="color:var(--sun)">Round 02・付費解鎖</h3>
+      <p class="body">解鎖 the HOW（完整 Fix Playbook）、the WHO（完整具名清單＋聯絡＋敲門角度）、the PROOF（改版後 re-score 差異）、the ARTIFACTS（PDF＋可編輯 Word）。回訪本身就是付費的那一刻，因為傷口已經被指出來了。</p>
+    </div>
+  </div>
+  <p class="body" style="margin-top:18px"><span class="hl-e">啟動的 aha</span>：當 founder 看到一個他自己沒發現、且嚴重度排序過的 fix，同時看到真實具名的基金確實符合他，他就上鉤了。對應後台 <code>first-analysis-free = 一次性 +1 grant</code>。</p>
+</div></section>
+
+<!-- PRICING -->
+<section id="price"><div class="wrap reveal">
+  <div class="kick">定價（已定案）</div>
+  <h2>第一次轉換最簡單，B2B 賺真錢</h2>
+  <div class="prices">
+    <div class="price"><div class="pn">Round 01</div><div class="amt">Free</div><div class="sub">每信箱一次完整報告</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>三元評分＋階段</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>前三個 named fixes</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>fund-match 預告</li></ul></div>
+    <div class="price feat"><span class="badge">第一次轉換</span><div class="pn">解鎖這份報告</div><div class="amt">US$29</div><div class="sub">一鍵，不用算額度</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>完整 Fix Playbook</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>具名聯絡＋敲門角度</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>PDF＋可編輯 Word</li></ul></div>
+    <div class="price"><div class="pn">訂閱（active raisers）</div><div class="amt">US$29<span>／月</span></div><div class="sub">募資那 2 至 4 個月</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>無限分析・公平使用</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>版本差異＋ re-score</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>投資人聯絡追蹤</li></ul></div>
+    <div class="price rev"><span class="badge">核心營收</span><div class="pn">B2B 機構授權</div><div class="amt">US$6K<span>+／年</span></div><div class="sub">加速器／大學／白標</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>cohort intake／分流</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>seat 或年費平台費</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>定錨在 Evalyze 與 Dealroom €12.5k+ 之間</li></ul></div>
+  </div>
+  <h3 style="margin-top:30px">Trinity Review with Vincent（HITL，邀請制）</h3>
+  <p class="body">US$249 至 349，限量名額：60 分鐘一對一 teardown ＋ Vincent 人工校正的標註報告。落在人工複核市場帶（US$275 至 449）。雙重作用：最高品質的 golden-set 標註（predicted vs corrected），以及通往 EaseLens 投資人那扇門的橋。與 EaseLens AOR（NT$9,900 至 14,900／月，投資人訂閱）在文案上嚴格區分。重複使用者可在解鎖後選擇用量方案，不放進第一個決策。</p>
+</div></section>
+
+<!-- FIX LIST -->
+<section id="fix"><div class="wrap reveal">
+  <div class="kick">頭號產品面</div>
+  <h2>不只告訴你有什麼，告訴你修什麼</h2>
+  <p class="lead">Fix List（改進清單）是領頭交付物，也是最強的脫離 tar-pit 方式。每個缺口用四欄結構，沿用引擎的 knockout 分級。免費看見傷口，付費拿到手術，re-score 證明你補起來了。</p>
+  <div class="fixrow">
+    <div class="fh"><div>01　缺口</div><div>02　為什麼痛（哪類投資人扣分）</div><div>03　好的長怎樣（benchmark）</div><div>04　具體動作</div></div>
+    <div class="fr"><div><span class="sevc major">關鍵</span><b>沒有付費驗證</b></div><div>seed 投資人視為高風險，存續性直接扣分</div><div>同類 seed 平均有 3 至 5 個付費試點</div><div><span class="paid">解鎖：</span>列出可在 14 天內取得的 LOI 或預付清單</div></div>
+    <div class="fr"><div><span class="sevc major">關鍵</span><b>單位經濟不清</b></div><div>A 輪以後一定問，現在沒講＝沒準備好</div><div>CAC、LTV、回收期一頁講完</div><div><span class="paid">解鎖：</span>給你那一頁的填空模板</div></div>
+    <div class="fr"><div><span class="sevc minor">次要</span><b>市場由上而下估</b></div><div>有經驗的投資人一眼看穿，可信度崩（免費指出此問題）</div><div>bottom-up：客戶數 × 單價 × 滲透</div><div><span class="paid">解鎖：</span>給你算式</div></div>
+  </div>
+  <p class="body" style="margin-top:16px"><strong>免費 = 欄 01 至 02 ＋前三項；付費 = 欄 03 至 04 ＋完整清單。</strong>re-score 的儀表會明顯往上動，那就是成交的證明。</p>
+</div></section>
+
+<!-- EXPORT -->
+<section id="export"><div class="wrap reveal">
+  <div class="kick">三種格式，三種任務</div>
+  <h2>看得到，也帶得走</h2>
+  <div class="grid3">
+    <div class="card" style="border-color:rgba(52,211,153,.3)"><h3 style="color:var(--green);margin-top:0">Web 報告・免費</h3><p class="body">活的產物，放在不可枚舉的 <code>report_id + access_token</code>。是病毒與轉介的迴路，帶著「evaluated / optimized by Trinity」徽章。</p></div>
+    <div class="card" style="border-color:rgba(251,191,36,.3)"><h3 style="color:var(--sun);margin-top:0">PDF・付費</h3><p class="body">A4 品牌化中立三層 leave-behind，沿用 deal-lens 的 a4-template-neutral ＋ export-pdf.sh，驗證不溢頁。給投資人留底。</p></div>
+    <div class="card" style="border-color:rgba(56,189,248,.3)"><h3 style="color:var(--earth);margin-top:0">可編輯 Word・付費</h3><p class="body">不是死報告，是 action workbook：Fix List 變成可勾選清單（缺口／嚴重度／目標／我的行動・完成）、逐機構預填的 outreach email 模板、把每個 fix 對到 deck 哪一頁的改稿清單。</p></div>
+  </div>
+  <p class="body" style="margin-top:16px">PDF＋Docx 綁進 US$29 解鎖。修正舊版「Email／PDF 免費」的說法：<strong>Web 報告免費，PDF 與 Docx 是解鎖。</strong></p>
+</div></section>
+
+<!-- REVENUE -->
+<section id="rev"><div class="wrap reveal">
+  <div class="kick">營收線（依優先）</div>
+  <h2>毛利在 B2B 與加值</h2>
+  <div class="grid2">
+    <div class="card"><h3>01　加值 Raise-Ready 報告</h3><p class="body">最高毛利上銷。把通用名單變成客製募資計畫，附逐機構「為什麼你符合這家 thesis」。</p></div>
+    <div class="card"><h3>02　加速器／大學／育成（核心）</h3><p class="body"><span class="hl-g">真正的利潤池</span>。cohort 面試前標準化 D／F／V 計分卡。台灣大學＋政府新創辦公室是天然首發。</p></div>
+    <div class="card"><h3>03　白標／聯名給 VC 與天使會</h3><p class="body">「被某基金的 Trinity 引擎評估過」當 inbound 吸案磁鐵，橋接回 EaseLens。</p></div>
+    <div class="card"><h3>04　匿名、選擇加入的數據洞察</h3><p class="body">基準報告餵 40 篇文章 SEO 飛輪。<strong>絕不販售或訓練於可識別 deck。</strong></p></div>
+    <div class="card"><h3>05　揭露的工具鄰接轉介</h3><p class="body">data room、cap table、e-sign。這不是投資掮客費（法律紅線）。</p></div>
+    <div class="card"><h3>06　工作坊／課程帶單</h3><p class="body">「弱」的判斷就是溫熱教練線索，包成「報告＋ 30 分鐘拆解」。</p></div>
+  </div>
+</div></section>
+
+<!-- CAC -->
+<section id="cac"><div class="wrap reveal">
+  <div class="kick">單位經濟</div>
+  <h2>讓 CAC 小於 LTV 的具名渠道</h2>
+  <div class="cac">
+    <div class="metric"><div class="big">≥ 3</div><div class="ml">目標 LTV／CAC（地板 ≥ 1）</div></div>
+    <div class="metric"><div class="big">低</div><div class="ml">target CAC：自然流量為主</div></div>
+    <div class="metric"><div class="big">1 輪</div><div class="ml">per-founder LTV：一次募資週期</div></div>
+  </div>
+  <p class="body" style="margin-top:18px">讓 CAC &lt; LTV 的<strong>具名渠道</strong>：工作坊漏斗、大學合作、40 篇文章的 SEO 飛輪、EaseLens 交叉授粉、referral credits（介紹朋友，兩邊都拿額度）。founder 側不是靠廣告買量，是靠這些低成本入口。</p>
+  <div class="note"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>HITL 與高流量的矛盾</div><p>Phase 1 的 HITL 刻意限制流量（試點與案例庫，還不是 PLG）。PLG 只有在 Phase 2 自動化通過 golden-set 品質門檻後才開。流量的宣稱永遠是「自動化之後」，絕不與 HITL 同時成立。</p></div>
+</div></section>
+
+<!-- ROADMAP -->
+<section id="road"><div class="wrap reveal">
+  <div class="kick">三階段路線圖</div>
+  <h2>楔入，自動化，平台化</h2>
+  <div class="note" style="border-color:rgba(251,113,133,.3);background:rgba(251,113,133,.05);margin-top:20px"><div class="nh" style="color:var(--rose)"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Phase 0・法務前置（拆兩顆引擎抓到的炸彈）</div><p>成立法人<strong>當下同步簽 IP assignment</strong>（拆 F-KO-4 條件式一票否決），並<strong>補互補 cofounder</strong>（拆 F11 solo 硬依賴，脫離 knockout 邊緣）。這兩步在收任何一筆錢之前完成。</p></div>
+  <div class="grid3">
+    <div class="phase p1"><div class="pn">PHASE 01・0 至 3 個月</div><h4>楔入並證明價值</h4><ul>
+      <li>引擎沿用 deal-lens skill，只輸出中立層</li><li>intake fork apply.html，快投＋表單兩模式</li><li>HITL 交付：前端像自動，後台跑、寄報告</li><li>計費：免費 Round 01 ＋ US$29 解鎖，Stripe＋ KV／D1 帳本</li><li>機構：精選美國＋小批台灣，手動維護</li><li>目標：3 至 5 個試點 → 量化證言 → 首批付費</li></ul></div>
+    <div class="phase p2"><div class="pn">PHASE 02・3 至 9 個月</div><h4>自動化並訂閱</h4><ul>
+      <li>標準報告前段改即時 Claude API，premium 仍 HITL</li><li>階段分類器、投資人配對成一等模組</li><li>上線 US$29／月、re-score 迴路、餘額與花費上限</li><li>deck 歷史、版本差異、聯絡追蹤、premium 報告</li><li>匿名基準語料（選擇加入），發第一篇趨勢文</li><li>B2B 灘頭：首個加速器／大學 cohort 試點</li></ul></div>
+    <div class="phase p3"><div class="pn">PHASE 03・9 至 18+ 個月</div><h4>兩扇門，一顆引擎</h4><ul>
+      <li>多代理獨立 D／F／V、查核、中立合成</li><li>持續學習把概念護城河變資料護城河</li><li>創辦人側＋投資人側＋加速器側同台一引擎</li><li>數據洞察成獨立基準產品線</li><li>把台灣深化到與美國同等可用，再看東南亞</li></ul></div>
+  </div>
+  <div class="gate"><div class="gh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>GO / NO-GO 願付閘門（Phase 1 結束）</div><p>對應 D△「出現 PMF 訊號再回看」：若 90 天內，免費 Round 01 用戶轉付費解鎖的比例低於 X%、且 CAC &lt; LTV 不成立，就把 founder 線轉成純 lead-gen，全力押 B2B。這是有日期的檢查點，不是口號。</p></div>
+</div></section>
+
+<!-- MOAT + WALL -->
+<section id="moat"><div class="wrap reveal">
+  <div class="kick">誠實的護城河</div>
+  <h2>護城河不是分析器，是資料迴路</h2>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">真正的 moat</h3><p class="body">校準過的 golden-set ＋雙邊（founder × investor）資料迴路＋品牌與內容網路。<strong>不是</strong>分析器，也<strong>不是</strong>機構清單，這兩個都可被複製。對應後台的持續微調迴路。</p></div>
+    <div class="card"><h3 style="margin-top:0">資料新鮮度＝成本也＝moat</h3><p class="body">機構資料（尤其台灣）會過期，把它當成週期性 curation 成本與節奏。維護得夠勤，本身就變成別人追不上的 moat。</p></div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(167,139,250,.3)"><h3 style="margin-top:0;color:var(--violet)">信任牆</h3><p class="body">中立報告層（第三人稱，同 deck 同結論）＋私有 E-config 層（機構偏好，<strong>永不出現在 founder 產品</strong>）。Deck 不訓練模型、物理隔離、僅在同意下保留 metadata。</p></div>
+    <div class="card" style="border-color:rgba(251,113,133,.3)"><h3 style="margin-top:0;color:var(--rose)">法律紅線</h3><p class="body">評估與準備 founder，指出投資人公開接受 pitch 的地方。從不「引薦」、不收以成交為條件的費用（未登記掮客特徵）。文案說「被工具評估、最佳化過」，不說「被某基金背書」。EvoScale 利益衝突用可見的中立牆處理。</p></div>
+  </div>
+</div></section>
+
+<!-- GUARDRAILS -->
+<section id="guard"><div class="wrap reveal">
+  <div class="kick">從 MVP 就要有</div>
+  <h2>計費防護</h2>
+  <div class="note" style="border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.05)"><div class="nh" style="color:var(--earth)"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>信任的脊樑</div><p>即時額度餘額、門檻警示、硬性上限、「這個動作會花 N 額度，請確認」、idempotency key 防連點重複扣款。最關鍵：<strong style="color:#fff">額度在交付時才扣，失敗自動退回。</strong>焦慮型 founder 會因為帳單嚇到而退訂，這幾道是底線。</p></div>
+</div></section>
+
+<footer><div class="wrap">Trinity｜商業模式藍圖・內部規劃・2026-06-28　｜　同源：index.html（網站）、backend-architecture.html（後台架構）、research/IMPROVEMENT-PLAN.md</div></footer>
+
+<script>
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h>0?scrollY/h*100:0)+'%';},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// self verdict bars fill in view
+const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('#selfgrid .bar i').forEach(i=>i.style.width=i.dataset.w+'%');sio.disconnect();}}),{threshold:.3});
+const sg=document.getElementById('selfgrid');if(sg)sio.observe(sg);
+</script>
+</body>
+</html>

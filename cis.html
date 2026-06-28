@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Trinity｜Design System (CIS)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a18'/%3E%3Ccircle cx='16' cy='19' r='7' fill='%2338bdf8'/%3E%3Ccircle cx='16' cy='13.5' r='4.4' fill='%23cbd5e1' stroke='%230a0a18' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='8.5' r='2.7' fill='%23fbbf24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#06060f;--bg-1:#0a0a18;--bg-2:#0b0b1c;--bg-3:#11122a;--panel:rgba(255,255,255,.04);--panel-2:rgba(255,255,255,.06);--bd:rgba(255,255,255,.10);--bd-strong:rgba(255,255,255,.22);
+  --ink:#eef1ff;--ink-soft:#aab0d4;--ink-dim:#777fae;--ink-faint:#4d5480;
+  --earth:#38bdf8;--earth-2:#22d3ee;--earth-deep:#0369a1;--moon:#cbd5e1;--moon-2:#f1f5f9;--moon-deep:#64748b;--sun:#fbbf24;--sun-2:#fb923c;--sun-deep:#c2410c;
+  --violet:#a78bfa;--violet-2:#7c3aed;--green:#34d399;--rose:#fb7185;
+  --grad-title:linear-gradient(110deg,#fff 8%,var(--earth) 46%,var(--sun) 92%);--grad-h2:linear-gradient(100deg,#fff,var(--earth) 70%,var(--violet));--grad-axis:linear-gradient(180deg,var(--sun),var(--earth));
+  --card-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 20px 40px -28px rgba(0,0,0,.8);
+  --font-disp:"Space Grotesk","Noto Sans TC",sans-serif;--font-body:"Inter","Noto Sans TC",sans-serif;--mono:"JetBrains Mono",monospace;
+  --ease-out:cubic-bezier(.2,.7,.2,1);--maxw:1080px;--r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;background:var(--bg)}
+body{background:transparent;color:var(--ink);font-family:var(--font-body);font-size:1.0625rem;line-height:1.7;-webkit-font-smoothing:antialiased}
+#aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background:radial-gradient(55% 45% at 18% 12%,rgba(56,189,248,.10),transparent 60%),radial-gradient(50% 40% at 84% 26%,rgba(167,139,250,.10),transparent 60%),radial-gradient(60% 50% at 50% 98%,rgba(251,146,60,.07),transparent 60%)}
+a{color:var(--earth);text-decoration:none}.wrap{width:min(92vw,var(--maxw));margin-inline:auto}
+nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:linear-gradient(to bottom,rgba(6,6,15,.9),rgba(6,6,15,.5));border-bottom:1px solid rgba(255,255,255,.07)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(16px,4vw,40px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--font-disp);font-weight:700;font-size:1.12rem;letter-spacing:.14em}.brand svg{width:28px;height:28px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}.tabs a{color:var(--ink-soft);font-size:1rem;font-weight:500;padding:7px 13px;border-radius:9px;white-space:nowrap;transition:.2s}.tabs a:hover,.tabs a.on{color:var(--ink);background:var(--panel-2)}
+.hero{padding:clamp(60px,10vh,110px) 0 clamp(30px,5vh,50px);position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:1.1rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--earth-2);margin-bottom:18px}
+.eyebrow::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--earth),transparent)}
+h1{font-family:var(--font-disp);font-weight:700;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.08;letter-spacing:-.01em;background:var(--grad-title);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:18px;font-size:1.2rem;color:var(--ink-soft);max-width:44em}
+section{padding:clamp(40px,6vh,64px) 0;border-top:1px solid rgba(255,255,255,.06)}
+.kick{font-size:1.05rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--violet);margin-bottom:12px}
+h2{font-family:var(--font-disp);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.4rem);line-height:1.15;letter-spacing:-.01em;background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin-top:12px;font-size:1.12rem;color:var(--ink-soft);max-width:46em}
+h3{font-family:var(--font-disp);font-weight:600;font-size:1.3rem;margin:24px 0 10px}
+p.body{margin:12px 0;color:var(--ink-soft)}p.body strong{color:var(--ink)}
+code{font-family:var(--mono);font-size:.95rem;background:var(--panel-2);padding:2px 7px;border-radius:6px;color:#cfe6ff}
+.btn{font-family:var(--font-body);font-size:1.02rem;font-weight:600;padding:12px 22px;border-radius:12px;cursor:pointer;border:1px solid var(--bd);background:var(--panel);color:var(--ink);transition:.25s}
+.btn:hover{border-color:var(--earth);transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(100deg,var(--earth),var(--earth-2));color:#04121d;border-color:transparent}
+/* logo showcase */
+.logo-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;margin-top:30px}@media(max-width:780px){.logo-grid{grid-template-columns:1fr}}
+.logo-stage{border:1px solid var(--bd);border-radius:20px;background:radial-gradient(120% 120% at 50% 0%,rgba(251,191,36,.08),rgba(56,189,248,.05) 40%,transparent 70%),var(--bg-2);display:grid;place-items:center;min-height:300px;box-shadow:var(--card-shadow)}
+.logo-stage svg{width:160px;height:160px;filter:drop-shadow(0 0 40px rgba(56,189,248,.25))}
+.logo-side{display:flex;flex-direction:column;gap:14px}
+.lvar{border:1px solid var(--bd);border-radius:14px;background:var(--panel);padding:16px 18px;display:flex;align-items:center;gap:16px}
+.lvar svg{width:46px;height:46px;flex:none}
+.lvar .lv-t{font-weight:600}.lvar .lv-d{font-size:1rem;color:var(--ink-dim)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+/* color tokens */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:24px}
+.sw{border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:var(--panel);cursor:pointer;transition:.2s}
+.sw:hover{transform:translateY(-3px);border-color:var(--bd-strong)}
+.sw .chip{height:74px}
+.sw .meta{padding:11px 13px}
+.sw .nm{font-size:1rem;font-weight:600}
+.sw .hex{font-family:var(--mono);font-size:.95rem;color:var(--ink-dim);margin-top:2px}
+.grad-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:18px}
+.gr{border:1px solid var(--bd);border-radius:14px;overflow:hidden;cursor:pointer;background:var(--panel);transition:.2s}.gr:hover{transform:translateY(-3px)}
+.gr .bar{height:56px}.gr .meta{padding:10px 13px}.gr .nm{font-family:var(--mono);font-size:.95rem;color:var(--ink-soft)}
+/* type scale */
+.tsrow{display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap}
+.tsrow .tk{font-family:var(--mono);font-size:1rem;color:var(--ink-dim);min-width:130px}
+.tsrow .sample{font-family:var(--font-disp);color:var(--ink);white-space:nowrap}
+/* motion */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:22px}
+.mcard{border:1px solid var(--bd);border-radius:14px;background:var(--panel);padding:18px;box-shadow:var(--card-shadow)}
+.mcard h4{font-family:var(--font-disp);font-size:1.1rem;margin-bottom:6px}.mcard p{font-size:1rem;color:var(--ink-soft)}
+.mcard code{font-size:.9rem}
+/* optimization plan */
+.opt{border:1px solid var(--bd);border-radius:14px;background:var(--panel);padding:20px 22px;margin-top:14px;display:flex;gap:16px;align-items:flex-start;box-shadow:var(--card-shadow)}
+.opt .n{font-family:var(--font-disp);font-weight:700;font-size:1.4rem;background:var(--grad-axis);-webkit-background-clip:text;background-clip:text;color:transparent;flex:none}
+.opt h4{font-family:var(--font-disp);font-size:1.2rem;margin-bottom:4px}.opt p{font-size:1.02rem;color:var(--ink-soft)}
+.opt .pri{font-family:var(--mono);font-size:.9rem;padding:2px 9px;border-radius:6px;margin-left:8px;vertical-align:middle}
+.pri.p1{background:rgba(251,113,133,.16);color:var(--rose)}.pri.p2{background:rgba(251,191,36,.16);color:var(--sun)}.pri.p3{background:rgba(52,211,153,.16);color:var(--green)}
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-3);border:1px solid var(--earth);color:var(--ink);padding:12px 22px;border-radius:12px;font-weight:600;opacity:0;transition:.3s;z-index:80;box-shadow:0 12px 40px -12px rgba(56,189,248,.6)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink-dim);font-size:.98rem}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#222244;border-radius:6px}
+</style>
+</head>
+<body>
+<div id="aurora"></div>
+<nav><div class="navin">
+  <div class="brand"><svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="8" fill="#38bdf8"/><circle cx="16" cy="13" r="5" fill="#cbd5e1" stroke="#06060f" stroke-width="1.4"/><circle cx="16" cy="8" r="3" fill="#fbbf24"/></svg><span>TRINITY</span></div>
+  <div class="tabs"><a href="backend-hub.html">Hub</a><a href="index.html">Site</a><a href="backend-architecture.html">Architecture</a><a href="business-model.html">Business</a><a href="cis.html" class="on">Design System</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="eyebrow">Trinity · Corporate Identity System</span>
+  <h1>The Trinity Design System</h1>
+  <p>One cohesive language across the site, the reports and the engine. Click any color to copy its hex; download the logo as SVG. Built on the Sun / Moon / Earth trinity.</p>
+</div></header>
+
+<!-- LOGO -->
+<section id="logo"><div class="wrap">
+  <div class="kick">Logomark</div>
+  <h2>Eclipse Stack</h2>
+  <p class="lead">Three concentric bodies in a vertical syzygy. Size encodes energy → mechanism → market: Sun (top, Viability) over Moon (Feasibility) over Earth (largest, Desirability). Works down to a 16px favicon.</p>
+  <div class="logo-grid">
+    <div class="logo-stage">
+      <svg id="logoFull" viewBox="0 0 32 32" aria-label="Trinity logo">
+        <defs><linearGradient id="tAxis" x1="16" y1="4" x2="16" y2="27" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs>
+        <line x1="16" y1="4" x2="16" y2="27" stroke="url(#tAxis)" stroke-width=".8" opacity=".35"/>
+        <circle cx="16" cy="18" r="8" fill="#38bdf8"/>
+        <circle cx="16" cy="13" r="5" fill="#cbd5e1" stroke="#06060f" stroke-width="1.4"/>
+        <circle cx="16" cy="8" r="4.6" fill="none" stroke="#fbbf24" stroke-width="1" opacity=".5"/>
+        <circle cx="16" cy="8" r="3" fill="#fbbf24"/>
+      </svg>
+    </div>
+    <div class="logo-side">
+      <div class="lvar"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0a0a18"/><circle cx="16" cy="19" r="7" fill="#38bdf8"/><circle cx="16" cy="13.5" r="4.4" fill="#cbd5e1" stroke="#0a0a18" stroke-width="1.2"/><circle cx="16" cy="8.5" r="2.7" fill="#fbbf24"/></svg><div><div class="lv-t">Favicon</div><div class="lv-d">Plate, no axis / corona</div></div></div>
+      <div class="lvar"><svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="8" fill="#eef1ff"/><circle cx="16" cy="13" r="5" fill="#eef1ff" opacity=".7" stroke="#06060f" stroke-width="1.4"/><circle cx="16" cy="8" r="3" fill="#eef1ff"/></svg><div><div class="lv-t">Monochrome</div><div class="lv-d">Staged opacity for print / light tabs</div></div></div>
+      <div class="lvar" style="font-family:var(--font-disp);font-weight:700;letter-spacing:.16em;font-size:1.5rem">TRINITY<span style="font-family:var(--font-body);font-weight:600;font-size:1rem;letter-spacing:.2em;color:var(--ink-dim);margin-left:8px">FEASIBILITY ENGINE</span></div>
+      <div class="actions">
+        <button class="btn btn-primary" id="copyLogo">Copy SVG</button>
+        <button class="btn" id="dlLogo">Download SVG</button>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- COLOR -->
+<section id="color"><div class="wrap">
+  <div class="kick">Color tokens</div>
+  <h2>Click to copy</h2>
+  <p class="lead">Verdict mapping is load-bearing across the product: ● Strong = green, △ Conditional = sun, ✕ Veto = rose.</p>
+  <div class="swatches" id="swatches"></div>
+  <h3>Signature gradients</h3>
+  <div class="grad-row" id="grads"></div>
+</div></section>
+
+<!-- TYPE -->
+<section id="type"><div class="wrap">
+  <div class="kick">Typography</div>
+  <h2>1.25 scale, 16px floor</h2>
+  <p class="lead">Display: Space Grotesk. Body: Inter. Mono: JetBrains Mono. CJK: Noto Sans TC. Nothing renders below 16px.</p>
+  <div style="margin-top:18px">
+    <div class="tsrow"><span class="tk">--fs-display</span><span class="sample" style="font-size:3rem;font-weight:700">From idea to investable</span></div>
+    <div class="tsrow"><span class="tk">--fs-h2</span><span class="sample" style="font-size:2.2rem;font-weight:700">Three bodies, three questions</span></div>
+    <div class="tsrow"><span class="tk">--fs-h3</span><span class="sample" style="font-size:1.5rem;font-weight:600">Does anyone want it</span></div>
+    <div class="tsrow"><span class="tk">--fs-lead 1.2rem</span><span class="sample" style="font-size:1.2rem;font-family:var(--font-body);color:var(--ink-soft)">Feed your idea to the Trinity engine.</span></div>
+    <div class="tsrow"><span class="tk">--fs-body 1.0625rem</span><span class="sample" style="font-size:1.0625rem;font-family:var(--font-body);color:var(--ink-soft)">Body copy sits at 17px for comfortable reading.</span></div>
+    <div class="tsrow"><span class="tk">--fs-min 1rem</span><span class="sample" style="font-size:1rem;font-family:var(--mono);color:var(--ink-dim)">labels / mono · 16px floor</span></div>
+  </div>
+</div></section>
+
+<!-- MOTION -->
+<section id="motion"><div class="wrap">
+  <div class="kick">Motion language</div>
+  <h2>Build once, reuse everywhere</h2>
+  <div class="mgrid">
+    <div class="mcard"><h4>Easings</h4><p><code>--ease-out</code> .2,.7,.2,1<br><code>--ease-wipe</code> .7,0,.25,1<br><code>--ease-spring</code> .34,1.56,.64,1</p></div>
+    <div class="mcard"><h4>Durations</h4><p><code>fast</code> 140ms · <code>base</code> 280ms<br><code>page</code> 400ms · <code>reveal</code> 800ms</p></div>
+    <div class="mcard"><h4>Page wipe</h4><p>Eclipse wash + sweeping hairline on view change.</p></div>
+    <div class="mcard"><h4>Magnetic / tilt</h4><p>Pointer pulls CTAs ≤8px; cards tilt ≤6° with a pointer-tracked sheen.</p></div>
+    <div class="mcard"><h4>Scroll-scrub</h4><p>GSAP ScrollTrigger drives parallax, pins and reveals.</p></div>
+    <div class="mcard"><h4>Cursor halo</h4><p>One conic-gradient ring, plus-lighter blend, lerped follow.</p></div>
+  </div>
+</div></section>
+
+<!-- OPTIMIZATION PLAN -->
+<section id="plan"><div class="wrap">
+  <div class="kick">Optimization plan</div>
+  <h2>How we push it to the top tier</h2>
+  <p class="lead">The design system is also a roadmap. These are the moves, in priority order, that take Trinity from strong to awwwards-tier and launch-ready.</p>
+  <div class="opt"><div class="n">01</div><div><h4>One transform owner per element <span class="pri p1">P1</span></h4><p>Route all motion through GSAP (quickTo) so CSS transitions, scrub and pointer transforms never fight. Removes the last of the "not-smooth" feel.</p></div></div>
+  <div class="opt"><div class="n">02</div><div><h4>Engine + math as the signature <span class="pri p1">P1</span></h4><p>The independent-then-cross animation and the Monte-Carlo / tornado models are the moat made visible. Keep them front-and-center, performant, and gated to viewport.</p></div></div>
+  <div class="opt"><div class="n">03</div><div><h4>Investor-fit as the payoff <span class="pri p1">P1</span></h4><p>The closing section animates the recommendation: stage, investor type, named US + Taiwan institutions with logos, contact links, how to approach, exit path.</p></div></div>
+  <div class="opt"><div class="n">04</div><div><h4>One cohesive cosmos <span class="pri p2">P2</span></h4><p>Single starfield + aurora behind every page and doc; translucent glass panels so the universe shows through. No section feels different.</p></div></div>
+  <div class="opt"><div class="n">05</div><div><h4>Mobile parity <span class="pri p2">P2</span></h4><p>Reduced 3D pixel ratio, autoplay timelines instead of pin-scrub, sticky-bottom CTAs, single-column grids. Verified on real devices.</p></div></div>
+  <div class="opt"><div class="n">06</div><div><h4>Launch motion <span class="pri p3">P3</span></h4><p>Pair the site with the video / self-media engine: hero loop as a teaser clip, the engine animation as an explainer reel, ship a waitlist + first free-round funnel.</p></div></div>
+</div></section>
+
+<footer><div class="wrap">Trinity｜Design System · internal · <a href="backend-hub.html">back to hub</a></div></footer>
+
+<div id="toast">Copied</div>
+<script>
+const toast=document.getElementById('toast');let tt;
+function flash(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),1400);}
+function copy(t){navigator.clipboard&&navigator.clipboard.writeText(t).then(()=>flash('Copied  '+t)).catch(()=>flash('Copy failed'));}
+// color tokens
+const TOK=[
+ ['--bg','#06060f'],['--bg-1','#0a0a18'],['--bg-2','#0b0b1c'],['--bg-3','#11122a'],
+ ['--ink','#eef1ff'],['--ink-soft','#aab0d4'],['--ink-dim','#777fae'],
+ ['Earth · D','#38bdf8'],['earth-2','#22d3ee'],['earth-deep','#0369a1'],
+ ['Moon · F','#cbd5e1'],['moon-deep','#64748b'],
+ ['Sun · V','#fbbf24'],['sun-2','#fb923c'],['sun-deep','#c2410c'],
+ ['Violet','#a78bfa'],['Green ●','#34d399'],['Rose ✕','#fb7185'],
+];
+document.getElementById('swatches').innerHTML=TOK.map(([n,h])=>`<div class="sw" data-h="${h}"><div class="chip" style="background:${h}"></div><div class="meta"><div class="nm">${n}</div><div class="hex">${h}</div></div></div>`).join('');
+document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',()=>copy(s.dataset.h)));
+const GRAD=[
+ ['grad-title','linear-gradient(110deg,#fff 8%,#38bdf8 46%,#fbbf24 92%)'],
+ ['grad-h2','linear-gradient(100deg,#fff,#38bdf8 70%,#a78bfa)'],
+ ['grad-axis','linear-gradient(180deg,#fbbf24,#38bdf8)'],
+ ['grad-cta','linear-gradient(100deg,#38bdf8,#22d3ee)'],
+ ['grad-trinity','conic-gradient(from 210deg,#fbbf24,#38bdf8,#a78bfa,#fbbf24)'],
+];
+document.getElementById('grads').innerHTML=GRAD.map(([n,g])=>`<div class="gr" data-g="${g.replace(/"/g,'&quot;')}"><div class="bar" style="background:${g}"></div><div class="meta"><div class="nm">${n}</div></div></div>`).join('');
+document.querySelectorAll('.gr').forEach(s=>s.addEventListener('click',()=>copy(s.dataset.g)));
+// logo copy / download
+function logoSVG(){return document.getElementById('logoFull').outerHTML.replace('id="logoFull" ','').replace(/\n\s*/g,'').trim();}
+document.getElementById('copyLogo').addEventListener('click',()=>copy(logoSVG()));
+document.getElementById('dlLogo').addEventListener('click',()=>{const blob=new Blob(['<?xml version="1.0" encoding="UTF-8"?>\n'+logoSVG()],{type:'image/svg+xml'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='trinity-logo.svg';a.click();URL.revokeObjectURL(a.href);flash('Downloaded trinity-logo.svg');});
+</script>
+</body>
+</html>

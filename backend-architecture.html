@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Trinity｜後台架構・可移轉地基</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a18'/%3E%3Ccircle cx='16' cy='19' r='7' fill='%2338bdf8'/%3E%3Ccircle cx='16' cy='13.5' r='4.4' fill='%23cbd5e1' stroke='%230a0a18' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='8.5' r='2.7' fill='%23fbbf24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#06060f;--bg-1:#0a0a18;--bg-2:#0b0b1c;--bg-3:#11122a;--panel:rgba(255,255,255,.04);--panel-2:rgba(255,255,255,.06);--bd:rgba(255,255,255,.10);--bd-strong:rgba(255,255,255,.22);
+  --ink:#eef1ff;--ink-soft:#aab0d4;--ink-dim:#777fae;--ink-faint:#4d5480;
+  --earth:#38bdf8;--earth-2:#22d3ee;--moon:#cbd5e1;--moon-deep:#64748b;--sun:#fbbf24;--sun-2:#fb923c;--violet:#a78bfa;--green:#34d399;--rose:#fb7185;
+  --grad-h2:linear-gradient(100deg,#fff,var(--earth) 72%,var(--green));--grad-axis:linear-gradient(180deg,var(--sun),var(--earth));
+  --card-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 20px 40px -28px rgba(0,0,0,.8);
+  --font-disp:"Space Grotesk","Noto Sans TC",sans-serif;--font-body:"Inter","Noto Sans TC",sans-serif;--mono:"JetBrains Mono",monospace;
+  --ease-out:cubic-bezier(.2,.7,.2,1);--maxw:1100px;--r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:1.0625rem;line-height:1.72;-webkit-font-smoothing:antialiased}
+a{color:var(--earth);text-decoration:none}.wrap{width:min(94vw,var(--maxw));margin-inline:auto}
+nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:linear-gradient(to bottom,rgba(6,6,15,.9),rgba(6,6,15,.5));border-bottom:1px solid rgba(255,255,255,.07)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(16px,4vw,40px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-disp);font-weight:700;font-size:1.1rem;letter-spacing:.14em}.brand svg{width:27px;height:27px}
+.tabs{display:flex;gap:3px;flex-wrap:wrap}.tabs a{color:var(--ink-soft);font-size:1rem;font-weight:500;padding:7px 11px;border-radius:9px;white-space:nowrap;transition:.2s}.tabs a:hover{color:var(--ink);background:var(--panel-2)}
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:40;background:var(--grad-axis)}
+.hero{padding:clamp(56px,9vh,96px) 0 clamp(24px,4vh,40px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(900px 420px at 78% 0%,rgba(56,189,248,.14),transparent 60%),radial-gradient(700px 420px at 8% 30%,rgba(167,139,250,.10),transparent 60%)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:1.1rem;font-weight:600;letter-spacing:.14em;color:var(--earth-2);margin-bottom:18px;text-transform:uppercase}
+.eyebrow::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--earth),transparent)}
+h1{font-family:var(--font-disp);font-weight:700;font-size:clamp(2.1rem,4.8vw,3.4rem);line-height:1.1;letter-spacing:-.01em;background:linear-gradient(110deg,#fff,var(--earth) 55%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:18px;font-size:1.18rem;color:var(--ink-soft);max-width:46em}
+.meta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}.tag{border:1px solid var(--bd);border-radius:999px;padding:6px 15px;font-size:1rem;color:var(--ink-soft)}
+section{padding:clamp(42px,7vh,72px) 0;border-top:1px solid rgba(255,255,255,.06)}
+.kick{font-size:1.05rem;font-weight:600;letter-spacing:.12em;color:var(--violet);margin-bottom:12px;text-transform:uppercase}
+h2{font-family:var(--font-disp);font-weight:700;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.15;letter-spacing:-.01em;background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin-top:14px;font-size:1.15rem;color:var(--ink-soft);max-width:48em}
+h3{font-family:var(--font-disp);font-weight:600;font-size:1.3rem;margin:26px 0 10px}
+p.body{margin:12px 0;color:var(--ink-soft)}p.body strong{color:var(--ink);font-weight:600}
+code{font-family:var(--mono);font-size:1rem;background:var(--panel-2);padding:2px 7px;border-radius:6px;color:#cfe6ff}
+.hl-e{color:var(--earth);font-weight:600}.hl-g{color:var(--green);font-weight:600}.hl-v{color:var(--violet);font-weight:600}.hl-s{color:var(--sun);font-weight:600}.hl-r{color:var(--rose);font-weight:600}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}.reveal.in{opacity:1;transform:none}
+
+/* DIAGRAM */
+.diagram-wrap{margin-top:8px;border:1px solid var(--bd);border-radius:20px;background:linear-gradient(180deg,var(--bg-2),var(--bg-1));padding:18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+.diagram-wrap::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 300px at 50% 0%,rgba(56,189,248,.06),transparent 70%);pointer-events:none}
+#archSvg{width:100%;height:auto;display:block}
+.dlegend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;padding:0 6px;font-size:1rem;color:var(--ink-soft)}
+.dlegend .li{display:flex;align-items:center;gap:8px}
+.dlegend .sw{width:26px;height:0;border-top-width:2px;border-top-style:solid}
+.dlegend .flow{border-color:var(--earth)}.dlegend .ctrl{border-color:var(--ink-faint);border-top-style:dotted}.dlegend .fb{border-color:var(--violet);border-top-style:dashed}
+.dcap{margin-top:12px;min-height:48px;border:1px solid var(--bd);border-radius:12px;background:var(--panel);padding:14px 18px;font-size:1rem;color:var(--ink-soft);transition:border-color .2s}
+.dcap b{color:var(--ink);font-family:var(--mono);font-size:1rem}
+.enode rect{transition:filter .2s,transform .2s}
+.enode text{font-family:var(--mono);font-size:16px;fill:var(--ink)}
+.enode .nid{font-size:16px;fill:var(--ink-dim)}
+.enode:hover{cursor:pointer}
+.edge{fill:none}
+.edge.flow{stroke:rgba(56,189,248,.32);stroke-width:1.6}
+.edge.ctrl{stroke:rgba(119,127,174,.25);stroke-width:1.2;stroke-dasharray:2 5}
+.edge.fb{stroke:rgba(167,139,250,.3);stroke-width:1.3;stroke-dasharray:6 6;animation:fbflow 3s linear infinite}
+@keyframes fbflow{to{stroke-dashoffset:-24}}
+.edge.hot{stroke:var(--sun);stroke-width:2.6;filter:drop-shadow(0 0 4px var(--sun))}
+.edge.hl{stroke:var(--earth);stroke-width:2.4}
+#pulseDot{fill:#fff;filter:drop-shadow(0 0 6px var(--sun))}
+
+/* tiers + blocks */
+.tier{margin-top:30px}
+.tier .th{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.tier .tnum{font-family:var(--mono);font-size:1rem;color:var(--ink-dim);border:1px solid var(--bd);border-radius:7px;padding:3px 9px}
+.tier .tname{font-family:var(--font-disp);font-size:1.2rem;font-weight:600}
+.blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:880px){.blocks{grid-template-columns:1fr 1fr}}@media(max-width:560px){.blocks{grid-template-columns:1fr}}
+.block{border:1px solid var(--bd);border-radius:13px;background:var(--panel);padding:18px;box-shadow:var(--card-shadow);position:relative;overflow:hidden;transition:transform var(--ease-out) .25s,border-color .25s;will-change:transform}
+.block::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac,var(--earth))}
+.block .bid{font-family:var(--mono);font-size:1rem;color:var(--ink-dim)}
+.block .bn{font-family:var(--font-disp);font-weight:600;font-size:1.08rem;margin:3px 0 6px}
+.block.new .bn::after{content:"NEW";font-family:var(--mono);font-size:1rem;color:var(--rose);border:1px solid rgba(251,113,133,.4);border-radius:5px;padding:1px 5px;margin-left:8px;vertical-align:middle}
+.block p{font-size:1rem;color:var(--ink-soft)}
+/* critical path */
+.cpath{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;align-items:center}
+.cpath .cn{font-family:var(--mono);font-size:1rem;border:1px solid var(--bd);border-radius:8px;padding:7px 11px;background:var(--panel);color:var(--ink-soft)}
+.cpath .cn.key{border-color:rgba(251,113,133,.4);color:#fff;background:rgba(251,113,133,.08)}
+.cpath .ar{color:var(--ink-faint)}
+/* table */
+.tblwrap{overflow-x:auto;margin-top:22px;border:1px solid var(--bd);border-radius:var(--r)}table{width:100%;border-collapse:collapse;font-size:1.0rem;min-width:560px}
+th,td{padding:13px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}th{font-family:var(--font-disp);font-weight:600;color:var(--ink);background:rgba(255,255,255,.03);white-space:nowrap}td{color:var(--ink-soft)}td:first-child{font-family:var(--mono);color:var(--earth);white-space:nowrap}tr:last-child td{border-bottom:none}
+/* loop */
+.loop{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px;align-items:center}.loop .node{border:1px solid var(--bd);border-radius:10px;background:var(--panel);padding:10px 14px;font-size:1rem;font-weight:500}.loop .arr{color:var(--ink-faint)}.loop .node.k{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.07);color:#fff}
+.note{border:1px solid rgba(251,113,133,.3);background:rgba(251,113,133,.06);border-radius:var(--r);padding:22px 24px;margin-top:24px}.note .nh{font-family:var(--font-disp);font-weight:600;font-size:1.12rem;color:var(--rose);margin-bottom:8px;display:flex;align-items:center;gap:9px}.note .nh svg{width:20px;height:20px}.note p{color:var(--ink-soft)}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.card{border:1px solid var(--bd);border-radius:var(--r);padding:22px;background:var(--panel);box-shadow:var(--card-shadow)}.card h3{margin-top:0}.card p{font-size:1rem;color:var(--ink-soft)}
+footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink-dim);font-size:1rem}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#222244;border-radius:6px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}.edge.fb{animation:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav><div class="navin">
+  <a class="brand" href="backend-hub.html" style="text-decoration:none;color:inherit"><svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="8" fill="#38bdf8"/><circle cx="16" cy="13" r="5" fill="#cbd5e1" stroke="#06060f" stroke-width="1.4"/><circle cx="16" cy="8" r="3" fill="#fbbf24"/></svg><span>TRINITY</span><span style="font-size:.95rem;color:var(--ink-dim);font-weight:500;letter-spacing:0;margin-left:4px">／ Hub</span></a>
+  <div class="tabs"><a href="#diagram">架構圖</a><a href="#foundation">積木地基</a><a href="#blocks">25 積木</a><a href="#path">關鍵路徑</a><a href="#data">資料模型</a><a href="#loop">微調迴路</a><a href="#sec">隱私</a><a href="#reuse">複用</a><a href="business-model.html" style="color:var(--violet)">商業模式 ↗</a><a href="cis.html" style="color:var(--sun)">CIS ↗</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="eyebrow">後台架構・可移轉地基</span>
+  <h1>一個地基，很多積木</h1>
+  <p>整個後台是一塊<strong style="color:#fff">地基</strong>，由很多可重組的<strong style="color:#fff">積木</strong>拼成。積木之間只透過宣告好的介面對話，所以每一塊都能獨立蓋、獨立測、獨立換，整套還能移轉到下一個專案。下面這張圖會動，讓你看見一份 deck 從上傳到寄出報告，怎麼穿過每一塊積木。</p>
+  <div class="meta"><span class="tag">Cloudflare-native</span><span class="tag">25 blocks</span><span class="tag">Claude API</span><span class="tag">可移轉</span></div>
+</div></header>
+
+<!-- DIAGRAM -->
+<section id="diagram"><div class="wrap reveal">
+  <div class="kick">會動的架構圖</div>
+  <h2>從上傳到寄出，整條路徑</h2>
+  <p class="lead">亮點脈衝沿著主資料流跑：上傳 deck → 解析 → 三透鏡並行 → 合成 → 階段 → 配對 → 改進引擎 → 產報告 → 寄信 → 開啟。虛線是學習迴路，把結果送回去讓引擎變聰明。</p>
+  <div class="diagram-wrap">
+    <svg id="archSvg" viewBox="0 0 1000 800" role="img" aria-label="Trinity architecture diagram"></svg>
+  </div>
+  <div class="dlegend">
+    <span class="li"><span class="sw flow"></span><span class="zh">資料流（主脈衝）</span></span>
+    <span class="li"><span class="sw fb"></span><span class="zh">學習迴路 feedback</span></span>
+    <span class="li"><span class="sw ctrl"></span><span class="zh">控制／設定 control</span></span>
+  </div>
+  <div class="dcap" id="dcap"><b>地基</b>　25 塊積木，6 層，從上傳到寄出一條龍。</div>
+</div></section>
+
+<!-- FOUNDATION -->
+<section id="foundation"><div class="wrap reveal">
+  <div class="kick">地基哲學</div>
+  <h2>為什麼拆成積木</h2>
+  <div class="grid2">
+    <div class="card"><h3>四個好處</h3><p><strong style="color:var(--ink)">可最佳化</strong>：每塊獨立，換掉一塊不動其他。<strong style="color:var(--ink)">可客製</strong>：機構要不同行為，換對應積木。<strong style="color:var(--ink)">可除錯</strong>：壞在哪塊一目了然。<strong style="color:var(--ink)">可移轉</strong>：下個專案拿同一套積木重拼，這才是真正的回報。</p></div>
+    <div class="card"><h3>唯一的紀律</h3><p>積木只透過<strong>宣告好的介面（stud 契約）</strong>對話，不偷看彼此內部。守住這條，上面四個好處才成立；破壞它，地基就退化成一坨泥。</p></div>
+  </div>
+  <p class="body" style="margin-top:18px">下面把 25 塊積木分成六層。最底的<span class="hl-v">平台／Ops</span> 層是底板（baseplate），上面的功能積木卡上去。你之前點名的積木大多是獨立的一塊：入口守門、身份、邏輯、連線、爬蟲、AI、檔案、記憶 DB、通知、版控、展示，再加上計費、可觀測。其中工具箱（共用函式）、排程（Cron）、部署（Wrangler／Secrets）是橫切的平台能力，歸在底板 Ops 層，不另立功能卡。</p>
+</div></section>
+
+<!-- BLOCKS -->
+<section id="blocks"><div class="wrap reveal">
+  <div class="kick">25 塊積木</div>
+  <h2>每一塊都能獨立蓋</h2>
+  <div id="tiers"></div>
+</div></section>
+
+<!-- CRITICAL PATH -->
+<section id="path"><div class="wrap reveal">
+  <div class="kick">Phase 1 關鍵路徑</div>
+  <h2>先蓋哪幾塊</h2>
+  <div class="cpath">
+    <span class="cn">B01/02 UI</span><span class="ar">→</span><span class="cn">B04/05/06 API＋身份</span><span class="ar">→</span><span class="cn">B07/08 解析＋事實庫</span><span class="ar">→</span><span class="cn">B09/10/11 引擎</span><span class="ar">→</span><span class="cn">B13 配對</span><span class="ar">→</span><span class="cn key">B15 Advisory</span><span class="ar">→</span><span class="cn">B16 報告＋PDF</span><span class="ar">→</span><span class="cn">B17 寄信</span><span class="ar">→</span><span class="cn">B18/19 計費</span><span class="ar">→</span><span class="cn">B23 orchestrator</span><span class="ar">→</span><span class="cn key">B24 HITL</span><span class="ar">→</span><span class="cn">B25 Cost Guard</span>
+  </div>
+  <p class="body" style="margin-top:18px">先延後：B12 量化引擎、Vectorize、完整 B20/B21/B22 機制（但語料從第一天就 capture）。<span class="hl-r">B15 Advisory</span> 與 <span class="hl-r">B24 HITL</span> 是這一輪的重點，因為「指出哪裡要修」是這個產品的賣點，而 HITL console 就是 Phase 1 的引擎本體。</p>
+</div></section>
+
+<!-- DATA MODEL -->
+<section id="data"><div class="wrap reveal">
+  <div class="kick">資料模型（D1）</div>
+  <h2>最終實體集</h2>
+  <div class="tblwrap"><table>
+    <tr><th>實體</th><th>關鍵欄位</th></tr>
+    <tr><td>founder</td><td>email 去重；consent_ai、consent_contact</td></tr>
+    <tr><td>submission</td><td>mode、answers_json、deck_r2_key、status</td></tr>
+    <tr><td>analysis</td><td>prompt_version_id、model、d／f／v_json＋scores、cross_table_json、verdict、confidence、stage、raw_run_r2_key、token／latency</td></tr>
+    <tr><td>report</td><td>html_r2_key、access_token、emailed_at、opened_at</td></tr>
+    <tr><td>institution</td><td>name、type（12 類）、geo、stages[]、sectors[]、thesis、check_min／max、website、contact_url、intake_email（僅公開）、responsiveness、last_verified、active</td></tr>
+    <tr><td>match</td><td>analysis_id、institution_id、rank、fit_score、rationale、contacted、replied</td></tr>
+    <tr><td>credit_ledger</td><td>append-only delta</td></tr>
+    <tr><td>usage_event</td><td>tokens、billed</td></tr>
+    <tr><td>prompt_version</td><td>module、version、body、active</td></tr>
+    <tr><td>feedback</td><td>source、rating、corrected_verdict、outcome</td></tr>
+    <tr><td>eval</td><td>verdict_match、stage_match、match_precision、score_mae、calibration、guardrail_pass</td></tr>
+  </table></div>
+  <p class="body" style="margin-top:16px">儲存面：<code>R2</code> decks／runs／reports＋exports，<code>D1</code> 關聯，<code>KV</code> 餘額快取／idempotency／lock／rate limit，Vectorize 延後。</p>
+</div></section>
+
+<!-- FINE-TUNING -->
+<section id="loop"><div class="wrap reveal">
+  <div class="kick">持續微調迴路</div>
+  <h2>概念護城河變資料護城河</h2>
+  <div class="loop">
+    <span class="node">run</span><span class="arr">→</span><span class="node">capture 輸出＋脈絡</span><span class="arr">→</span><span class="node">收結果／回饋</span><span class="arr">→</span><span class="node">對 golden set 評分</span><span class="arr">→</span><span class="node k">改 prompt（新版本）</span><span class="arr">→</span><span class="node">holdout A／B</span><span class="arr">→</span><span class="node">promote</span><span class="arr">→</span><span class="node">（定期）蒸餾／微調</span>
+  </div>
+  <p class="body" style="margin-top:18px">每次 run 存不可變輸入、各透鏡原始輸出、prompt_version、model、token。回饋來自 founder 評分、+30/+90 天 Cron 信（聯絡了誰、回了嗎、募到沒），以及最高品質的<strong>專家更正</strong>（HITL）。Golden set 種子來自 <code>B2B/Review/*</code>（阿基里斯）。<span class="hl-e">prompts 是資料</span>：每個 prompt 是一個 version row，勝出且無退步才翻 active，回滾就是翻回旗標。機構資料也自己調：配對回饋更新 responsiveness／fit_priors，不動 LLM 就改善排序。</p>
+</div></section>
+
+<!-- SECURITY -->
+<section id="sec"><div class="wrap reveal">
+  <div class="kick">隱私與安全</div>
+  <h2>Deck 是機密 IP</h2>
+  <div class="note"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>承重，不可妥協</div><p>直傳 R2 以 token 隔離（Worker 不持有位元組，15 分鐘 URL，40MB 上限，無列表）。不可枚舉的報告連結。靜態加密＋ TLS；secrets 只在 Wrangler／Secrets Store。Claude API 採排除客戶資料訓練條款，只送透鏡需要的，不記錄完整 deck 文字。明確 consent；公布留存政策，Cron N 天後自動刪除，提供 <code>/api/erase</code>。機構只給公開聯絡資訊，E-config 層留內部。報告絕不宣稱某基金已承諾或預先審核。</p></div>
+</div></section>
+
+<!-- REUSE -->
+<section id="reuse"><div class="wrap reveal">
+  <div class="kick">複用資產</div>
+  <h2>地基的零件你已經有</h2>
+  <div class="tblwrap"><table>
+    <tr><th>資產</th><th>路徑</th><th>拿來做什麼</th></tr>
+    <tr><td>三透鏡引擎</td><td>B2B/ai-dealflow-prompts.md</td><td>整顆分析大腦、熱表、權重</td></tr>
+    <tr><td>deal-lens skill</td><td>.claude/skills/deal-lens/SKILL.md</td><td>Analysis Worker 的執行流＋省 token 閘門</td></tr>
+    <tr><td>A4 報告模板</td><td>deal-lens/a4-template-neutral.html</td><td>適配成網頁＋PDF renderer</td></tr>
+    <tr><td>EvoScale intake</td><td>B2B/apply.html</td><td>fork 成 Trinity 表單</td></tr>
+    <tr><td>Intake Worker</td><td>B2B/worker/、easelens/worker/</td><td>intake＋存＋寄信骨幹，近乎逐字</td></tr>
+    <tr><td>阿基里斯案例</td><td>B2B/Review/260614_阿基里斯/</td><td>評測台第一個 golden-set</td></tr>
+  </table></div>
+  <p class="body" style="margin-top:18px"><strong>核心複用原則</strong>：先本質、後盡調。快速給 創辦人 × FMF × 幾個關鍵指標；查核與量化是下游、依階段啟動的 kill-switch。中立報告層公開，E-config 層嚴格留內部。完整研究見 <code>research/IMPROVEMENT-PLAN.md</code> 與 <code>research/block-foundation.md</code>。</p>
+</div></section>
+
+<footer><div class="wrap">Trinity｜後台架構・可移轉地基・內部規劃・2026-06-28　｜　同源：index.html（網站）、business-model.html（商業模式）</div></footer>
+
+<script>
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h>0?scrollY/h*100:0)+'%';},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===== ARCHITECTURE DIAGRAM ===== */
+const C={earth:'#38bdf8',green:'#34d399',violet:'#a78bfa',sun:'#fbbf24',rose:'#fb7185',moon:'#64748b'};
+const NODES=[
+ {id:'ui',l:'Static UI',layer:'edge',c:C.earth,cap:'B01　Pages 表單與 deck 上傳頁，承襲 apply.html'},
+ {id:'viewer',l:'Report Viewer',layer:'edge',c:C.earth,cap:'B03　以不可枚舉連結開啟報告'},
+ {id:'api',l:'API Gateway',layer:'api',c:C.earth,cap:'B04　輕薄無狀態路由＋濫用守門（入口守門積木）'},
+ {id:'verify',l:'Identity',layer:'api',c:C.earth,cap:'B06　信箱驗證＋同意，守住免費 +1 額度（身份積木）'},
+ {id:'parse',l:'Deck Parser',layer:'ingestion',c:C.green,cap:'B07　Claude 原生 PDF 解析，OCR fallback（爬蟲／檔案積木）'},
+ {id:'fact',l:'Fact-Base',layer:'ingestion',c:C.green,cap:'B08　事實庫＋完整度閘門＋prompt injection 消毒'},
+ {id:'lens',l:'D/F/V Lenses',layer:'engine',c:C.violet,cap:'B09　三路獨立並行 Claude 評分（邏輯／AI 積木）'},
+ {id:'claude',l:'Claude API',layer:'engine',c:C.violet,cap:'AI　Sonnet 走量，Opus 留難案，rubric prompt caching'},
+ {id:'synth',l:'Synthesis',layer:'engine',c:C.violet,cap:'B10　合成＋交叉推導 §J/§S'},
+ {id:'stage',l:'Stage',layer:'engine',c:C.violet,cap:'B11　階段分類 §K'},
+ {id:'match',l:'Investor Match',layer:'matching',c:C.sun,cap:'B13　SQL 硬篩 → 排序 → 1 次 LLM rerank'},
+ {id:'inst',l:'Institution Reg',layer:'matching',c:C.sun,cap:'B14　last_verified、priors，embeddings later'},
+ {id:'advise',l:'Advisory/Fix',layer:'reporting',c:C.rose,cap:'B15　改進引擎，每個 fix 對到事實缺口＋deck 頁＋預期分數影響'},
+ {id:'render',l:'Report+Export',layer:'reporting',c:C.earth,cap:'B16　HTML＋PDF（Browser Rendering）＋模板化 .docx（展示／匯出積木）'},
+ {id:'email',l:'Delivery',layer:'reporting',c:C.earth,cap:'B17　Resend，ctx.waitUntil（通知積木）'},
+ {id:'ledger',l:'Credit Ledger',layer:'billing',c:C.green,cap:'B18　append-only，hold-then-capture，submission_id idempotent（計費積木）'},
+ {id:'stripe',l:'Stripe',layer:'billing',c:C.green,cap:'B19　簽章驗證＋事件 idempotent webhook（連線積木）'},
+ {id:'capture',l:'Run Capture',layer:'learning',c:C.moon,cap:'B20　拆 PII 與去識別 eval 特徵'},
+ {id:'eval',l:'Eval+Golden',layer:'learning',c:C.moon,cap:'B21　重播金樣本：verdict／stage／match precision'},
+ {id:'prompts',l:'Prompt Reg',layer:'learning',c:C.moon,cap:'B22　prompts-as-data，版本切換 active（版控積木）'},
+ {id:'queue',l:'Queue/WF',layer:'ops',c:C.violet,cap:'B23　解耦＋KV lock＋每步 R2 checkpoint，at-least-once 不重花（排程／邏輯積木）'},
+ {id:'hitl',l:'HITL Console',layer:'ops',c:C.rose,cap:'B24　Phase 1 的 MVP 引擎，人工核准／覆寫送出'},
+ {id:'cron',l:'Cron',layer:'ops',c:C.moon,cap:'排程　夜間評測、資料刷新、+30/+90 追蹤'},
+ {id:'guard',l:'Cost Guard',layer:'ops',c:C.moon,cap:'B25　每 run token 上限＋每日預算 kill-switch（可觀測積木）'},
+ {id:'r2',l:'R2',layer:'data',c:C.moon,cap:'檔案　decks／runs／reports＋exports'},
+ {id:'d1',l:'D1',layer:'data',c:C.moon,cap:'記憶　關聯資料（SQLite）'},
+ {id:'kv',l:'KV',layer:'data',c:C.moon,cap:'記憶　餘額快取／idempotency／lock／rate limit'},
+];
+const EDGES=[
+ ['e01','ui','r2','presigned PUT','flow'],['e02','ui','api','POST /submit','flow'],['e03','api','verify','驗證','flow'],
+ ['e04','api','d1','寫 submission','flow'],['e05','api','ledger','credit hold','flow'],['e06','ledger','d1','ledger row','flow'],
+ ['e07','api','queue','enqueue','flow'],['e08','queue','parse','consume(lock)','flow'],['e09','parse','r2','讀 deck','flow'],
+ ['e10','parse','fact','parsed','flow'],['e11','fact','lens','fact base','flow'],['e12','lens','claude','3 並行','flow'],
+ ['e13','claude','lens','scores','flow'],['e14','lens','synth','per-lens','flow'],['e15','synth','stage','verdict','flow'],
+ ['e16','stage','match','stage','flow'],['e17','match','inst','filter+rank','flow'],['e18','match','advise','matches+bundle','flow'],
+ ['e18b','synth','advise','verdict+scores','flow'],['e18c','fact','advise','gap grounding','flow'],
+ ['e19','advise','render','fix+data','flow'],['e20','render','r2','store HTML','flow'],['e21','render','d1','report row','flow'],
+ ['e22','render','ledger','hold→capture','flow'],['e23','render','hitl','draft to review','flow'],['eh','hitl','email','approve+send','flow'],['e24','email','viewer','founder opens','flow'],
+ ['c01','ui','api','poll /status','ctrl'],['c03','prompts','lens','active ver','ctrl'],['c04','prompts','synth','active ver','ctrl'],
+ ['c05','prompts','advise','active ver','ctrl'],['c06','guard','claude','token ceiling','ctrl'],['c07','stripe','ledger','+N','ctrl'],
+ ['f01','render','capture','run corpus','fb'],['f02','viewer','capture','opens/rating','fb'],['f03','capture','inst','priors','fb'],
+ ['f04','hitl','capture','corrections','fb'],['f05','cron','eval','nightly','fb'],['f06','capture','eval','candidates','fb'],
+ ['f07','eval','prompts','promote','fb'],['f08','cron','email','+30/+90','fb'],
+];
+const flowPath=['e01','e02','e03','e04','e05','e06','e07','e08','e09','e10','e11','e12','e13','e14','e15','e16','e17','e18','e19','e20','e21','e22','e23','eh','e24'];
+const ROWS=['edge','api','ingestion','engine','matching','reporting','billing','learning','ops','data'];
+const VBW=1040,padTop=42,rowH=76,NW=156,NH=42;
+const pos={};
+ROWS.forEach((layer,ri)=>{const row=NODES.filter(n=>n.layer===layer);row.forEach((n,ci)=>{pos[n.id]={x:VBW*(ci+1)/(row.length+1),y:padTop+ri*rowH};});});
+const VBH=padTop+ROWS.length*rowH+10;
+const svg=document.getElementById('archSvg');svg.setAttribute('viewBox',`0 0 ${VBW} ${VBH}`);
+const NS='http://www.w3.org/2000/svg';
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+// edges
+const edgeEls={};
+EDGES.forEach(([id,f,t,lab,kind])=>{const a=pos[f],b=pos[t];if(!a||!b)return;
+  const ln=el('path',{d:`M${a.x},${a.y} L${b.x},${b.y}`,class:'edge '+kind,id:'edge-'+id});svg.appendChild(ln);edgeEls[id]={el:ln,f,t};});
+// nodes
+NODES.forEach(n=>{const p=pos[n.id];const g=el('g',{class:'enode','data-id':n.id});
+  const rect=el('rect',{x:p.x-NW/2,y:p.y-NH/2,width:NW,height:NH,rx:9,fill:'rgba(255,255,255,.04)',stroke:n.c,'stroke-width':1.4});
+  rect.style.filter='drop-shadow(0 0 0 transparent)';g.appendChild(rect);
+  const tx=el('text',{x:p.x,y:p.y+1,'text-anchor':'middle','dominant-baseline':'middle'});tx.textContent=n.l;g.appendChild(tx);
+  if(['advise','hitl','verify','queue'].includes(n.id)){const nb=el('circle',{cx:p.x+NW/2-7,cy:p.y-NH/2+7,r:4,fill:'#fb7185'});nb.appendChild(el('title',{}));g.appendChild(nb);}
+  g.addEventListener('mouseenter',()=>{document.getElementById('dcap').innerHTML='<b>'+n.l+'</b>　'+n.cap;
+    rect.setAttribute('fill','rgba(255,255,255,.10)');rect.setAttribute('stroke-width',2.2);
+    EDGES.forEach(([id,f,t])=>{if(f===n.id||t===n.id){const e=edgeEls[id];if(e)e.el.classList.add('hl');}});});
+  g.addEventListener('mouseleave',()=>{rect.setAttribute('fill','rgba(255,255,255,.04)');rect.setAttribute('stroke-width',1.4);
+    EDGES.forEach(([id])=>edgeEls[id]&&edgeEls[id].el.classList.remove('hl'));});
+  svg.appendChild(g);});
+// pulse dot
+const dot=el('circle',{id:'pulseDot',r:5,cx:-10,cy:-10});svg.appendChild(dot);
+let fi=0;
+function lerpDot(a,b,dur,done){const t0=performance.now();function fr(t){const k=Math.min(1,(t-t0)/dur);dot.setAttribute('cx',a.x+(b.x-a.x)*k);dot.setAttribute('cy',a.y+(b.y-a.y)*k);if(k<1)requestAnimationFrame(fr);else done&&done();}requestAnimationFrame(fr);}
+function parallelDots(a,b){ // three lenses fanning in parallel
+  for(let k=-1;k<=1;k++){const d=el('circle',{r:4,cx:a.x,cy:a.y,fill:'#fff'});d.style.filter='drop-shadow(0 0 5px #a78bfa)';svg.appendChild(d);
+    const oy=k*13,t0=performance.now();(function fr(t){const kk=Math.min(1,(t-t0)/280);d.setAttribute('cx',a.x+(b.x-a.x)*kk);d.setAttribute('cy',a.y+oy+(b.y-a.y)*kk);if(kk<1)requestAnimationFrame(fr);else d.remove();})(performance.now());}
+}
+function step(){
+  if(document.hidden){setTimeout(step,400);return;}
+  const id=flowPath[fi];const e=edgeEls[id];
+  if(e){const a=pos[e.f],b=pos[e.t];e.el.classList.add('hot');
+    if(id==='e12'){dot.style.opacity=0;parallelDots(a,b);setTimeout(()=>e.el.classList.remove('hot'),300);}
+    else{dot.style.opacity=1;lerpDot(a,b,230,()=>{setTimeout(()=>e.el.classList.remove('hot'),120);});}}
+  fi++;if(fi>=flowPath.length){fi=0;dot.style.opacity=0;setTimeout(step,700);return;}
+  setTimeout(step,250);
+}
+if(!RM){dot.style.opacity=0;setTimeout(step,600);}
+
+/* ===== BLOCKS by tier ===== */
+const TIERS=[
+ {n:'Edge ／ 入口守門',blocks:[['B01','Static UI','展示積木：Pages 表單與上傳頁',C.earth],['B02','Client Upload','直傳 R2 控制器（檔案積木）',C.earth],['B03','Report Viewer','不可枚舉連結看報告',C.earth],['B04','API Gateway','入口守門：路由＋濫用防護',C.earth,'new'],['B06','Identity','身份積木：信箱驗證＋同意',C.earth,'new']]},
+ {n:'Ingestion ／ 取料',blocks:[['B05','Submission Svc','建立 submission，下發 presign',C.earth],['B07','Deck Parser','爬蟲／檔案：PDF 解析＋OCR',C.green],['B08','Fact-Base','事實庫＋完整度＋injection 消毒',C.green]]},
+ {n:'Engine ／ 邏輯與 AI',blocks:[['B09','Lens Runner','邏輯／AI：三路獨立 D/F/V',C.violet],['B10','Synthesis','合成＋交叉推導 §J/§S',C.violet],['B11','Stage','階段分類 §K',C.violet],['B12','Quant','量化（gated，延後 Phase 3）',C.violet]]},
+ {n:'Matching + Reporting ／ 配對與產出',blocks:[['B13','Investor Match','SQL 篩→排序→LLM rerank',C.sun],['B14','Institution Reg','機構登錄，自我調整 priors',C.sun],['B15','Advisory/Fix-It','改進引擎，產品的賣點',C.rose,'new'],['B16','Report+Export','展示／匯出：HTML＋PDF＋Docx',C.earth],['B17','Delivery','通知積木：Resend 寄信',C.earth]]},
+ {n:'Billing + Learning ／ 計費與學習',blocks:[['B18','Credit Ledger','計費：hold-then-capture',C.green],['B19','Payments','連線：Stripe webhook',C.green],['B20','Run Capture','捕捉語料＋去識別',C.moon],['B21','Eval Harness','評測台＋golden set',C.moon],['B22','Prompt Reg','版控：prompts-as-data',C.moon]]},
+ {n:'Platform ／ Ops 底板',blocks:[['B23','Orchestrator','排程／邏輯：Queue→WF＋checkpoint',C.violet,'new'],['B24','HITL Console','Phase 1 的引擎本體',C.rose,'new'],['B25','Cost Guard','可觀測：token 上限＋預算 kill',C.moon],['··','Cron','排程積木：定時任務',C.moon],['··','Storage','記憶：D1／R2／KV／Vectorize',C.moon]]},
+];
+document.getElementById('tiers').innerHTML=TIERS.map((t,i)=>`
+ <div class="tier reveal"><div class="th"><span class="tnum">TIER ${String(i+1).padStart(2,'0')}</span><span class="tname">${t.n}</span></div>
+ <div class="blocks">${t.blocks.map(b=>`<div class="block ${b[4]||''}" style="--ac:${b[3]}"><div class="bid">${b[0]}</div><div class="bn">${b[1]}</div><p>${b[2]}</p></div>`).join('')}</div></div>`).join('');
+document.querySelectorAll('.tier.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
