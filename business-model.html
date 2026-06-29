@@ -137,6 +137,25 @@ td .lx{font-family:var(--mono);font-size:1em;color:var(--ink-dim)}
 .tractbar{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px;padding:16px 20px;border:1px solid var(--bd);border-radius:14px;background:var(--panel)}
 .tractbar .ti{font-size:1.05rem;color:var(--ink-soft)}.tractbar .ti b{font-family:var(--font-disp);font-size:1.2rem;display:block}
 .tractbar .ti.zero b{color:var(--rose)}.tractbar .ti.next b{color:var(--sun)}
+/* mode toggle */
+.modetabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.modetab{font-family:var(--font-disp);font-weight:600;font-size:1.05rem;color:var(--ink-soft);background:var(--panel);border:1px solid var(--bd);border-radius:999px;padding:8px 18px;cursor:pointer;white-space:nowrap;transition:.2s}
+.modetab:hover{color:var(--ink);border-color:var(--bd-strong)}
+.modetab.active{color:#04121d;background:var(--grad-cta);border-color:transparent}
+.modecap{margin-top:14px;font-size:1.05rem;color:var(--ink-soft);max-width:48em}.modecap b{color:var(--ink)}
+.mverdict{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:5px 14px;font-weight:700;font-size:1rem;margin:18px 0 4px;border:1px solid var(--bd-strong);background:var(--panel-2);color:var(--ink)}
+.slens .big1{font-family:var(--font-disp);font-weight:700;font-size:2rem;line-height:1}
+.slens.e .big1{color:var(--earth)}.slens.m .big1{color:var(--moon)}.slens.s .big1{color:var(--sun)}
+.dirup{color:var(--green);font-weight:700}.dirdn{color:var(--rose);font-weight:700}.direq{color:var(--ink-dim);font-weight:700}
+.stagecols{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}@media(max-width:760px){.stagecols{grid-template-columns:1fr}}
+.stagecol{border:1px solid var(--bd);border-radius:14px;padding:20px;background:var(--panel);display:flex;flex-direction:column}
+.stagecol.ok{border-color:rgba(52,211,153,.35)}.stagecol.mid{border-color:rgba(251,191,36,.32)}.stagecol.bad{border-color:rgba(251,113,133,.32)}
+.stagecol h4{font-family:var(--font-disp);font-size:1.2rem;margin:0 0 8px;white-space:nowrap}
+.stagecol .dfv{display:flex;gap:16px;margin:4px 0 10px}.stagecol .dfv b{font-family:var(--font-disp);font-weight:700;font-size:1.4rem}
+.stagecol .dfv .lab{font-size:1rem;color:var(--ink-dim);font-weight:500;display:block}
+.stagecol .vd2{font-weight:600;font-size:1rem;margin-bottom:8px}.stagecol.ok .vd2{color:var(--green)}.stagecol.mid .vd2{color:var(--sun)}.stagecol.bad .vd2{color:var(--rose)}
+.stagecol .fc{font-size:1rem;color:var(--ink-soft);margin-top:auto;padding-top:8px}
+.takeaway{margin-top:20px;border-left:3px solid var(--earth);padding:8px 0 8px 16px;font-size:1.08rem;color:var(--ink-soft)}.takeaway b{color:var(--ink)}
 /* generic cards/grids */
 .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
 @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
@@ -261,6 +280,15 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
   </div>
   <div class="note" style="margin-top:16px"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>唯一的賭注，五要素</div><p><strong>假設：</strong>機構願為標準化 D／F／V 初篩付費。<strong>驗證動作：</strong>14 天內取得 LOI 或預付，跑 smoke test 讓陌生人重複付費。<strong>通過門檻：</strong>至 2026-09-30 拿到 3 至 5 個機構付費試點。<strong>沒過：</strong>砍掉 founder 線，全押 B2B。這就是下面所有分析存在的理由。</p></div>
 
+  <div class="modetabs" id="modetabs">
+    <button class="modetab active" data-mode="overall">整體（誠實自評）</button>
+    <button class="modetab" data-mode="founder">創辦人出發</button>
+    <button class="modetab" data-mode="institution">機構出發</button>
+    <button class="modetab" data-mode="stage">分階段</button>
+  </div>
+  <p class="modecap" id="modecap"><b>換鏡頭、不換生意。</b>同一門生意，換一個出發點（誰是買家、在哪個階段），引擎的裁決就不同。這正是 Deal Lens 的核心：12 類投資人 × 階段 × 退出。下面就用這把尺評我們自己。</p>
+
+  <div id="mode-overall">
   <div class="stagestrip">
     <div class="stg"><div class="sl">基線自評</div><div class="sv">54 · 70 · 48</div><div class="sd">D／F／V 初評，△ KEEP GOING。</div></div>
     <div class="arr">→</div>
@@ -300,6 +328,8 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
     <div class="vchip">△ CONDITIONAL（基線信心 mid-low → 目標態 mid-high）</div>
     <p class="body" style="margin-top:0"><strong>白話：</strong>引擎是真的，Vincent 做得出來，但商業模式若以 founder-first PLG 當頭條，等於把賭注押在最弱的客戶身上。對抗複審把今天的誠實壓到 <strong>F59／V49</strong>，地基是「陌生人真金白銀重複付費今天為零」。我們不竄改今天，也不謊報 99：把 55 維逐維的分數與證據攤開（見<a href="#dims">全維度</a>），分清哪些可學、哪些是重力問題（見<a href="#learn">學習vs重力</a>），把為什麼到不了滿分講明白（見<a href="#ceiling">天花板</a>）。敢用同一把尺評自己、敢公開最弱的軸，才有資格替別人評案。</p>
   </div>
+  </div>
+  <div id="mode-dynamic" hidden></div>
 </div></section>
 
 <!-- DEFAULT ALIVE -->
@@ -629,6 +659,73 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 // self verdict bars fill in view
 const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('#selfgrid .bar i').forEach(i=>i.style.width=i.dataset.w+'%');sio.disconnect();}}),{threshold:.3});
 const sg=document.getElementById('selfgrid');if(sg)sio.observe(sg);
+</script>
+<script>
+(function(){
+  const BASE={D:55,F:59,V:49};
+  const LENS=[['D','欲求性 Desirability','e'],['F','可行性 Feasibility','m'],['V','存續性 Viability','s']];
+  const DEFCAP='<b>換鏡頭、不換生意。</b>同一門生意，換一個出發點（誰是買家、在哪個階段），引擎的裁決就不同。這正是 Deal Lens 的核心：12 類投資人 × 階段 × 退出。下面就用這把尺評我們自己。';
+  const M={
+    founder:{
+      cap:'<b>創辦人鏡頭：</b>把 Trinity 創辦人皮當成一個獨立、面向募資中創辦人的付費產品來評，買家＝付費的創辦人本人，不靠 B2B 那扇門撐分。',
+      verdict:'△ Keep Going（最弱的一扇門）',
+      sc:{D:50,F:55,V:42},
+      drivers:{
+        D:['↓ D5 購買力＋D3 創投可投性：換回 pre-raise 創辦人，購買力最弱、US$29 至 79 撐不起 10×','↓ D1／D2：改 deck 過初篩是真痛但 episodic、免費替代多，偏維他命且帶 tar-pit','→ D18 FMF：Vincent workshop 足跡＋引擎讓 FMF 維持強分，是唯一把 D 撐在 gate 之上的支柱'],
+        F:['↓ F1／F8：founder 自助計費移到 Phase 2、現在不建，比施工中的 B2B 線更早期；引擎可建造性不變故只小降'],
+        V:['↓ V15／V16：episodic 使用、低 ARPU、LTV 只有一次募資週期，PLG 到最弱買方接近 D2C 低毛利陷阱，V 跌破 50 成 ✕']
+      },
+      takeaway:'同一顆引擎、換成最弱的買方：需求真但 episodic 又沒購買力，D 卡 gate、V 跌破線。這正是本業把 founder 側降為 lead-gen 而非主營收的數字證據。'
+    },
+    institution:{
+      cap:'<b>機構鏡頭：</b>用有預算、每天篩案的機構買家評 Deal Lens 賣進創投／加速器／大學新創辦 intake（同一顆引擎，機構皮）。',
+      verdict:'△ 附條件（強 KEEP GOING）',
+      sc:{D:65,F:61,V:59},
+      drivers:{
+        D:['↑ 買家換成有預算、每天篩數十份 deck 的機構：D1 止痛藥／D5 購買力與易觸達／D8 痛點代價（工時×件數）／D9・D18 同時上抬，55→65','→ 仍封 △ 65、到不了 ● 75：D3 創投可投性是 capital-efficient niche 非 venture-scale；D2 buyer-chasm（採購週期長、在位者主場）壓住上緣'],
+        F:['→ F 大致持平 59→61：引擎買家無關、已在阿基里斯真案跑通、F17 建造深度是強項；企業採購複雜＋護城河上限約 7＋IP knockout＋solo 互抵，無躍升'],
+        V:['↑ 機構高 ACV（US$6K+／年→席位 US$25K 至 250K）＋真實預算撐起單位經濟 V4、損平 V11、B2B 利潤 V16，49→59','→ 仍鎖 △、到不了 69：V15 創投報酬×2＋SOM（育成／政府 niche 小）＋今天 0 付費的 pre-revenue 封頂（PMF／六關鍵數字／單位經濟三個 ×3）']
+      },
+      takeaway:'換成有預算、每天痛的機構當買家，D 與 V 明顯抬升（55→65、49→59）、F 持平，但 venture-scale 上限、buyer-chasm 與今天 0 付費把它鎖在三 △：翻成強案的鑰匙仍是第一筆機構付費試點。'
+    },
+    stage:{
+      cap:'<b>階段鏡頭（§K 階段判準引擎）：</b>同一門生意，用 pre-seed／seed／Series A 三把不同階段的尺各評一次。變的是尺，不是案子。',
+      stages:[
+        {stage:'pre-seed',cls:'ok',D:70,F:74,V:62,verdict:'附條件（強 pre-seed 案）：D● F● V△',focus:'權重壓在創辦人＋FMF、真痛點、PSF、洞察。FMF 與痛點抬成核心×3，引擎自建、能 demo、阿基里斯真案跑通讓 F 上行；F3 付費＝0 調成不苛求 traction、不重扣。一個 FMF 強、痛點真、原型能跑的好早期案。'},
+        {stage:'seed',cls:'mid',D:60,F:54,V:45,verdict:'Keep Going（D△，卡在零付費）',focus:'早期付費驗證 F3 升為核心×3，「零真實付費」正是 seed 致命缺口。零付費把 F 拉到 50% 線、把 V（seed 要 ARR 30 至 50 萬鎂、月增 15 至 20%，本案＝0）壓到 ✕。只認第一筆陌生人的錢。'},
+        {stage:'Series A',cls:'bad',D:51,F:40,V:35,verdict:'否決／不適配：F✕ V✕，太早',focus:'PMF 三訊號、留存、可重複獲客、單位經濟、成長率全列核心×3。本案這排皆空（pre-revenue、無留存、無重複獲客），最嚴苛的尺把 F、V 打到 ✕；D 痛點仍真停 △。§K 規則要求標「非我方／跨階段」，不硬套不該套的尺。'}
+      ],
+      takeaway:'同一個 Deal Lens 商業模式，分數隨「你假裝它在哪一輪」大幅擺動。關鍵都在同一個 F3＝0：pre-seed 不苛求、seed 致命缺口、Series A 早該有 PMF，三種命運。誠實定位＝pre-seed 到 seed 之間，用早期尺與早期里程碑（2026-09-30 前第一筆機構付費）要求自己，不是用 Series A 的尺自我否決。變的是尺，不是案子。'
+    }
+  };
+  function dirSym(v,b){return v>b?'<span class="dirup">↑</span>':v<b?'<span class="dirdn">↓</span>':'<span class="direq">＝</span>';}
+  function renderLens(m){
+    var cards=LENS.map(function(L){var k=L[0],name=L[1],cls=L[2];var v=m.sc[k];
+      var bl=(m.drivers[k]||[]).map(function(t){return '<li>'+t+'</li>';}).join('');
+      return '<div class="slens '+cls+'"><div class="top"><span class="nm">'+name+'</span><span class="big1">'+v+' '+dirSym(v,BASE[k])+'</span></div><ul class="moves">'+bl+'</ul></div>';
+    }).join('');
+    return '<div class="mverdict">'+m.verdict+'</div><div class="selfgrid">'+cards+'</div><div class="takeaway"><b>結論：</b>'+m.takeaway+'</div>';
+  }
+  function renderStage(m){
+    var cols=m.stages.map(function(s){
+      return '<div class="stagecol '+s.cls+'"><h4>'+s.stage+'</h4><div class="dfv"><span><span class="lab">D</span><b>'+s.D+'</b></span><span><span class="lab">F</span><b>'+s.F+'</b></span><span><span class="lab">V</span><b>'+s.V+'</b></span></div><div class="vd2">'+s.verdict+'</div><div class="fc">'+s.focus+'</div></div>';
+    }).join('');
+    return '<div class="stagecols">'+cols+'</div><div class="takeaway"><b>結論：</b>'+m.takeaway+'</div>';
+  }
+  var tabs=document.getElementById('modetabs'), cap=document.getElementById('modecap'),
+      ov=document.getElementById('mode-overall'), dyn=document.getElementById('mode-dynamic');
+  if(!tabs) return;
+  tabs.addEventListener('click',function(e){
+    var b=e.target.closest('.modetab'); if(!b) return;
+    [].forEach.call(tabs.querySelectorAll('.modetab'),function(x){x.classList.remove('active');});
+    b.classList.add('active');
+    var mode=b.dataset.mode;
+    if(mode==='overall'){ov.hidden=false;dyn.hidden=true;dyn.innerHTML='';cap.innerHTML=DEFCAP;return;}
+    var m=M[mode]; ov.hidden=true; dyn.hidden=false;
+    cap.innerHTML=m.cap;
+    dyn.innerHTML=(mode==='stage')?renderStage(m):renderLens(m);
+  });
+})();
 </script>
 </body>
 </html>
