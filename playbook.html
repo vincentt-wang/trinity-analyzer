@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Trinity｜建構作戰手冊 Build Playbook</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a18'/%3E%3Ccircle cx='16' cy='19' r='7' fill='%2338bdf8'/%3E%3Ccircle cx='16' cy='13.5' r='4.4' fill='%23cbd5e1' stroke='%230a0a18' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='8.5' r='2.7' fill='%23fbbf24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#06060f;--bg-1:#0a0a18;--bg-2:#0b0b1c;--bg-3:#11122a;--panel:rgba(255,255,255,.04);--panel-2:rgba(255,255,255,.06);--bd:rgba(255,255,255,.10);--bd-strong:rgba(255,255,255,.22);
+  --ink:#eef1ff;--ink-soft:#aab0d4;--ink-dim:#777fae;--ink-faint:#4d5480;
+  --earth:#38bdf8;--earth-2:#22d3ee;--moon:#cbd5e1;--sun:#fbbf24;--sun-2:#fb923c;--violet:#a78bfa;--green:#34d399;--rose:#fb7185;
+  --grad-title:linear-gradient(110deg,#fff 8%,var(--earth) 46%,var(--sun) 92%);--grad-h2:linear-gradient(100deg,#fff,var(--earth) 70%,var(--violet));--grad-axis:linear-gradient(180deg,var(--sun),var(--earth));
+  --card-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 22px 46px -30px rgba(0,0,0,.85);
+  --font-disp:"Space Grotesk","Noto Sans TC",sans-serif;--font-body:"Inter","Noto Sans TC",sans-serif;--mono:"JetBrains Mono",monospace;--ease-out:cubic-bezier(.2,.7,.2,1);--maxw:1120px;--r:16px;}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;background:var(--bg)}
+body{background:transparent;color:var(--ink);font-family:var(--font-body);font-size:1.0625rem;line-height:1.72;-webkit-font-smoothing:antialiased}
+#aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background:radial-gradient(55% 45% at 16% 10%,rgba(56,189,248,.12),transparent 60%),radial-gradient(50% 42% at 86% 24%,rgba(167,139,250,.12),transparent 60%),radial-gradient(60% 50% at 50% 100%,rgba(251,146,60,.07),transparent 60%);animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateY(-3%) scale(1.06)}}
+a{color:var(--earth);text-decoration:none}.wrap{width:min(92vw,var(--maxw));margin-inline:auto}
+nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:linear-gradient(to bottom,rgba(6,6,15,.9),rgba(6,6,15,.5));border-bottom:1px solid rgba(255,255,255,.07)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(16px,4vw,40px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-disp);font-weight:700;font-size:1.1rem;letter-spacing:.14em}.brand svg{width:27px;height:27px}
+.tabs{display:flex;gap:3px;flex-wrap:wrap}.tabs a{color:var(--ink-soft);font-size:1rem;font-weight:500;padding:7px 12px;border-radius:9px;white-space:nowrap;transition:.2s}.tabs a:hover,.tabs a.on{color:var(--ink);background:var(--panel-2)}
+.hero{padding:clamp(60px,10vh,110px) 0 clamp(30px,5vh,50px)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:1.1rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--earth-2);margin-bottom:18px}.eyebrow::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--earth),transparent)}
+h1{font-family:var(--font-disp);font-weight:700;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.08;letter-spacing:-.01em;background:var(--grad-title);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:18px;font-size:1.22rem;color:var(--ink-soft);max-width:46em}
+section{padding:clamp(42px,6.5vh,72px) 0;border-top:1px solid rgba(255,255,255,.06)}
+.kick{font-size:1.05rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--violet);margin-bottom:12px}
+h2{font-family:var(--font-disp);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.15;letter-spacing:-.01em;background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin-top:12px;font-size:1.14rem;color:var(--ink-soft);max-width:48em}
+h3{font-family:var(--font-disp);font-weight:600;font-size:1.3rem;margin:0 0 8px}
+p.body{margin:12px 0;color:var(--ink-soft)}p.body strong{color:var(--ink)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}.reveal.in{opacity:1;transform:none}
+/* layer stack */
+.stack{display:flex;flex-direction:column;gap:12px;margin-top:30px}
+.layer{position:relative;border:1px solid var(--bd);border-radius:14px;background:var(--panel);padding:20px 22px;box-shadow:var(--card-shadow);overflow:hidden;display:grid;grid-template-columns:54px 1fr auto;gap:18px;align-items:center}
+.layer::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--ac)}
+.layer .lnum{font-family:var(--font-disp);font-weight:700;font-size:1.5rem;color:var(--ac)}
+.layer .lt{font-family:var(--font-disp);font-weight:600;font-size:1.2rem}
+.layer .ld{font-size:1.02rem;color:var(--ink-soft);margin-top:2px}
+.layer .lx{font-family:var(--mono);font-size:1rem;color:var(--ink-dim);white-space:nowrap}
+@media(max-width:640px){.layer{grid-template-columns:44px 1fr}.layer .lx{display:none}}
+/* phases */
+.phases{position:relative;margin-top:30px;padding-left:34px}
+.phases::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--sun),var(--earth),var(--violet))}
+.ph{position:relative;padding:0 0 26px}
+.ph::before{content:"";position:absolute;left:-30px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--ac,var(--earth));box-shadow:0 0 0 4px var(--bg),0 0 14px var(--ac,var(--earth))}
+.ph .pn{font-family:var(--mono);font-size:1rem;color:var(--ac,var(--earth));font-weight:600;letter-spacing:.04em}
+.ph .pt{font-family:var(--font-disp);font-size:1.25rem;font-weight:600;margin:3px 0 6px}
+.ph .pb{font-size:1.04rem;color:var(--ink-soft);max-width:54em}
+.ph .ptools{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+.ph .ptag{font-family:var(--mono);font-size:.95rem;border:1px solid var(--bd);border-radius:7px;padding:3px 9px;color:var(--ink-dim)}
+.ph .pstate{font-family:var(--mono);font-size:.95rem;padding:2px 9px;border-radius:7px;margin-left:8px;vertical-align:middle}
+.pstate.done{background:rgba(52,211,153,.16);color:var(--green)}.pstate.now{background:rgba(251,191,36,.16);color:var(--sun)}.pstate.next{background:rgba(167,139,250,.16);color:var(--violet)}
+/* AI workflow loop */
+.loop{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:26px}
+.loop .node{border:1px solid var(--bd);border-radius:11px;background:var(--panel);padding:12px 16px;font-size:1.02rem;font-weight:500;box-shadow:var(--card-shadow)}
+.loop .node b{display:block;font-family:var(--font-disp);font-size:1.05rem;color:var(--ink)}
+.loop .node span{font-size:.96rem;color:var(--ink-dim)}
+.loop .arr{color:var(--ink-faint);font-size:1.3rem}
+.loop .node.k{border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.08)}
+/* generic grids */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
+@media(max-width:820px){.grid3,.grid2{grid-template-columns:1fr}}
+.card{border:1px solid var(--bd);border-radius:14px;background:var(--panel);padding:22px;box-shadow:var(--card-shadow)}
+.card h3{margin-top:0}.card p{font-size:1.02rem;color:var(--ink-soft)}
+/* reference library */
+.refcat{margin-top:26px}
+.refcat h3{display:flex;align-items:center;gap:10px;font-size:1.2rem;margin-bottom:4px}
+.refcat .rc-dot{width:11px;height:11px;border-radius:50%}
+.refcat .rc-sub{font-size:1rem;color:var(--ink-dim);margin-bottom:14px}
+.reflist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:760px){.reflist{grid-template-columns:1fr}}
+.ref{display:flex;flex-direction:column;gap:3px;border:1px solid var(--bd);border-radius:12px;background:var(--panel);padding:15px 17px;transition:transform .25s var(--ease-out),border-color .25s;color:inherit}
+.ref:hover{transform:translateY(-3px);border-color:var(--bd-strong)}
+.ref .rn{font-family:var(--font-disp);font-weight:600;font-size:1.08rem;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ref .rn .arr{color:var(--earth)}
+.ref .rd{font-size:1rem;color:var(--ink-soft)}
+.ref .ru{font-family:var(--mono);font-size:.95rem;color:var(--ink-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.star{color:var(--sun);font-size:.92rem;font-weight:600}
+/* funnel */
+.funnel{margin-top:26px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.frow{width:100%;max-width:760px;border:1px solid var(--bd);border-radius:12px;padding:16px 20px;background:var(--panel);text-align:center;box-shadow:var(--card-shadow)}
+.frow .ft{font-family:var(--font-disp);font-weight:600;font-size:1.15rem}.frow .fd{font-size:1rem;color:var(--ink-soft);margin-top:2px}
+.frow.l1{max-width:780px;border-color:rgba(56,189,248,.4)}.frow.l2{max-width:620px;border-color:rgba(167,139,250,.4)}.frow.l3{max-width:480px;border-color:rgba(52,211,153,.4)}.frow.l4{max-width:360px;border-color:rgba(251,191,36,.45)}
+.farr{color:var(--ink-faint)}
+/* decision board */
+.dboard{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}@media(max-width:760px){.dboard{grid-template-columns:1fr}}
+.dcol h3{font-size:1.15rem}
+.dcol ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:10px}
+.dcol li{display:flex;gap:10px;align-items:flex-start;font-size:1.04rem;color:var(--ink-soft)}
+.dcol li svg{width:18px;height:18px;flex:none;margin-top:3px}
+footer{padding:48px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink-dim);font-size:1rem}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.toc a{font-size:1rem;border:1px solid var(--bd);border-radius:999px;padding:7px 14px;color:var(--ink-soft);transition:.2s}.toc a:hover{color:var(--ink);border-color:var(--earth)}
+</style>
+</head>
+<body>
+<div id="aurora"></div>
+<nav><div class="navin">
+  <a class="brand" href="backend-hub.html" style="color:inherit"><svg viewBox="0 0 32 32"><circle cx="16" cy="18" r="8" fill="#38bdf8"/><circle cx="16" cy="13" r="5" fill="#cbd5e1" stroke="#06060f" stroke-width="1.4"/><circle cx="16" cy="8" r="3" fill="#fbbf24"/></svg><span>TRINITY</span></a>
+  <div class="tabs"><a href="backend-hub.html">Hub</a><a href="index.html">Site</a><a href="business-model.html">Business</a><a href="backend-architecture.html">Architecture</a><a href="playbook.html" class="on">Playbook</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="eyebrow">Build Playbook・建構作戰手冊</span>
+  <h1>我們不是在做一個網站<br>是在建一個事業</h1>
+  <p>網站只是最外層的臉。底下是引擎、商業模式、角色 IP，以及它在整個創投生態系裡的漏斗定位。這份手冊把整套 workflow（含 AI workflow）攤開，當作我們討論的基礎。</p>
+  <div class="toc">
+    <a href="#stack">五層架構</a><a href="#workflow">端到端 Workflow</a><a href="#ai">AI Workflow 引擎</a><a href="#ip">角色 IP 與漏斗</a><a href="#refs">參考範本庫</a><a href="#decide">決策板</a>
+  </div>
+</div></header>
+
+<!-- LAYER STACK -->
+<section id="stack"><div class="wrap reveal">
+  <div class="kick">在蓋什麼</div>
+  <h2>五層架構：從臉到生態系</h2>
+  <p class="lead">大多數人只做最上面那層。真正能產生影響、能談下 B2B、能被收購的，是把五層一起立起來。每一層都已有對應的產出檔案。</p>
+  <div class="stack">
+    <div class="layer" style="--ac:var(--earth)"><div class="lnum">01</div><div><div class="lt">介面層・Website</div><div class="ld">最外層的臉。第一印象、敘事、轉換。要驚豔、要 solid。</div></div><div class="lx">index.html</div></div>
+    <div class="layer" style="--ac:var(--moon)"><div class="lnum">02</div><div><div class="lt">引擎層・Product</div><div class="ld">創新三元可行性引擎：55 維度 D／F／V，先獨立再交叉再合成。這是護城河的種子。</div></div><div class="lx">deal-lens skill</div></div>
+    <div class="layer" style="--ac:var(--sun)"><div class="lnum">03</div><div><div class="lt">模式層・Business model</div><div class="ld">一引擎兩扇門，B2B-first，免費 Round 01 → 付費解鎖 → 機構授權。</div></div><div class="lx">business-model.html</div></div>
+    <div class="layer" style="--ac:var(--violet)"><div class="lnum">04</div><div><div class="lt">角色層・IP &amp; Role</div><div class="ld">Vincent 的定位：方法論的擁有者、HITL 的人、把 founder 打磨乾淨的那個人。品牌與信任。</div></div><div class="lx">CIS + content</div></div>
+    <div class="layer" style="--ac:var(--green)"><div class="lnum">05</div><div><div class="lt">生態層・Ecosystem funnel</div><div class="ld">Trinity 在 founder ↔ investor 之間的漏斗位置：lead-gen → 案例庫 → B2B → 雙邊資料迴路。</div></div><div class="lx">ecosystem</div></div>
+  </div>
+</div></section>
+
+<!-- WORKFLOW -->
+<section id="workflow"><div class="wrap reveal">
+  <div class="kick">怎麼蓋</div>
+  <h2>端到端 Workflow（七階段）</h2>
+  <p class="lead">一條從品味到成長的路。每一階段都有目標、做法、用到的 AI workflow 與工具，以及現在的狀態。</p>
+  <div class="phases">
+    <div class="ph" style="--ac:var(--sun)"><div class="pn">PHASE 0</div><div class="pt">品味與標竿 <span class="pstate now">現在</span></div><div class="pb">先鎖定視覺天花板。逛頂尖站、挑 1 至 3 個範本當骨架，定義「驚豔」的具體標準。</div><div class="ptools"><span class="ptag">Awwwards</span><span class="ptag">GitHub templates</span><span class="ptag">Aceternity / Magic UI</span></div></div>
+    <div class="ph" style="--ac:var(--earth)"><div class="pn">PHASE 1</div><div class="pt">定位與商業模式 <span class="pstate done">已完成</span></div><div class="pb">JTBD、漏斗、定價、護城河、角色 IP。用我們自己的 Deal-Lens 評自己（D54／F70／V48 → B2B-first）。</div><div class="ptools"><span class="ptag">deal-lens 自評</span><span class="ptag">多 agent 檢討</span></div></div>
+    <div class="ph" style="--ac:var(--earth)"><div class="pn">PHASE 2</div><div class="pt">設計系統 CIS <span class="pstate done">已完成</span></div><div class="pb">Logo（Eclipse Stack）、色彩 token、字階、動態語言。一鍵複製、可下載。</div><div class="ptools"><span class="ptag">cis.html</span></div></div>
+    <div class="ph" style="--ac:var(--moon)"><div class="pn">PHASE 3</div><div class="pt">架構工程 <span class="pstate done">已完成</span></div><div class="pb">25 塊可移轉積木、會動的架構圖、資料模型、持續微調迴路。把概念護城河變資料護城河。</div><div class="ptools"><span class="ptag">backend-architecture.html</span></div></div>
+    <div class="ph" style="--ac:var(--violet)"><div class="pn">PHASE 4</div><div class="pt">建置 <span class="pstate now">進行中</span></div><div class="pb">前端（現為單檔 HTML，可升級 React/Next）→ 後端（Cloudflare worker：上傳→分析→計費→寄報告，先做 HITL 版）。</div><div class="ptools"><span class="ptag">前端定稿</span><span class="ptag">worker（待開）</span><span class="ptag">Stripe（待）</span></div></div>
+    <div class="ph" style="--ac:var(--violet)"><div class="pn">PHASE 5</div><div class="pt">內容與 IP <span class="pstate next">下一步</span></div><div class="pb">真實 Insight 文章（前沿→價值）、角色敘事、配影片自媒體放大。每篇文章都是漏斗入口。</div><div class="ptools"><span class="ptag">evoscale-insight skill</span><span class="ptag">video-studio</span></div></div>
+    <div class="ph" style="--ac:var(--green)"><div class="pn">PHASE 6</div><div class="pt">上線與成長 <span class="pstate next">下一步</span></div><div class="pb">waitlist → 免費 Round 01 → 付費 → B2B cohort 授權。結果回流，餵養 golden-set 與雙邊資料迴路。</div><div class="ptools"><span class="ptag">launch.html</span><span class="ptag">GO/NO-GO gate</span></div></div>
+  </div>
+</div></section>
+
+<!-- AI WORKFLOW -->
+<section id="ai"><div class="wrap reveal">
+  <div class="kick">用什麼蓋</div>
+  <h2>AI Workflow 引擎</h2>
+  <p class="lead">每一階段都用同一套多代理引擎跑。這就是我們做這個網站時實際在用的流程，可重複、可移轉到任何專案。</p>
+  <div class="loop">
+    <div class="node"><b>1 研究扇出</b><span>平行 agent 讀檔／搜尋</span></div><span class="arr">→</span>
+    <div class="node"><b>2 合成規格</b><span>匯整成可執行 spec</span></div><span class="arr">→</span>
+    <div class="node k"><b>3 建置</b><span>確定性產出 HTML/code</span></div><span class="arr">→</span>
+    <div class="node"><b>4 對抗式審查</b><span>多 critic 挑問題</span></div><span class="arr">→</span>
+    <div class="node"><b>5 最佳化迴圈</b><span>依檢討再修</span></div><span class="arr">→</span>
+    <div class="node"><b>6 驗證</b><span>Puppeteer 實測</span></div><span class="arr">→</span>
+    <div class="node"><b>7 部署</b><span>git push 上線</span></div>
+  </div>
+  <div class="grid3">
+    <div class="card"><h3>研究扇出</h3><p>一次派多個高階 agent 平行做：挖既有 IP、查市場、查投資機構、設計評審。互不干擾，只回結論。</p></div>
+    <div class="card"><h3>對抗式審查</h3><p>用 3D／互動／品牌／gstack 四個視角的 critic 撕開作品，找出「為什麼看起來廉價」，產出可實作的修正清單。</p></div>
+    <div class="card"><h3>最佳化迴圈</h3><p>critique → 修 → 再驗，重複到過關。每輪都 puppeteer 量測、零 console error 才部署。</p></div>
+  </div>
+</div></section>
+
+<!-- IP & FUNNEL -->
+<section id="ip"><div class="wrap reveal">
+  <div class="kick">角色與位置</div>
+  <h2>角色 IP 與生態系漏斗</h2>
+  <p class="lead">事業不只靠產品，靠你在生態系裡的位置與被信任的角色。下面是 Trinity／Vincent 在漏斗中的定位。</p>
+  <div class="grid2">
+    <div class="card"><h3>角色 IP</h3><p class="body"><strong>方法論的擁有者</strong>：創新三元 55 維度是可署名的 IP。<strong>HITL 的那個人</strong>：Trinity Review with Vincent，真人拆解＝最高信任也＝最高品質的訓練標註。<strong>把 founder 打磨乾淨的人</strong>：被你評過的案子，是更乾淨的 deal。</p></div>
+    <div class="card"><h3>不可妥協的紅線</h3><p class="body">只說「被工具評估、最佳化過」，不說「幫你引薦／保證募到」。中立報告層公開、E-config 層留內部。暖引薦未來才開（EvoScale／GVA／Bonhoe）。信任就是護城河。</p></div>
+  </div>
+  <div class="funnel">
+    <div class="frow l1"><div class="ft">廣：創業新手與內容讀者</div><div class="fd">Insight 文章＋影片自媒體，每篇都是入口</div></div>
+    <div class="farr">↓</div>
+    <div class="frow l2"><div class="ft">免費 Round 01</div><div class="fd">完整報告指出傷口，建立信任與案例庫</div></div>
+    <div class="farr">↓</div>
+    <div class="frow l3"><div class="ft">付費解鎖 / HITL</div><div class="fd">改進清單＋具名機構＋可匯出；Trinity Review 真人</div></div>
+    <div class="farr">↓</div>
+    <div class="frow l4"><div class="ft">B2B 授權（真正利潤）</div><div class="fd">加速器／大學／白標＋雙邊資料迴路</div></div>
+  </div>
+</div></section>
+
+<!-- REFERENCES -->
+<section id="refs"><div class="wrap reveal">
+  <div class="kick">參考範本庫</div>
+  <h2>挑你的天花板</h2>
+  <p class="lead">逛完挑 1 至 3 個喜歡的丟回給我，我照那個架構與設計語言重做 Trinity（保留我們的內容）。先看 A 的 Three.js 專區與 C 的 Aceternity／Magic UI，最對應「驚豔」。</p>
+
+  <div class="refcat">
+    <h3><span class="rc-dot" style="background:var(--earth)"></span>A・靈感畫廊（看成品挑風格）</h3>
+    <div class="rc-sub">先決定要走哪種味道</div>
+    <div class="reflist">
+      <a class="ref" href="https://www.awwwards.com/websites/three-js/" target="_blank" rel="noopener"><div class="rn">Awwwards · Three.js 專區 <span class="arr">↗</span></div><div class="rd">跟我們同路線的 3D/宇宙頂尖案例・最該先看</div><div class="ru">awwwards.com/websites/three-js</div></a>
+      <a class="ref" href="https://www.awwwards.com" target="_blank" rel="noopener"><div class="rn">Awwwards <span class="arr">↗</span></div><div class="rd">業界最高標竿得獎站</div><div class="ru">awwwards.com</div></a>
+      <a class="ref" href="https://godly.website" target="_blank" rel="noopener"><div class="rn">Godly <span class="arr">↗</span></div><div class="rd">精選質感站</div><div class="ru">godly.website</div></a>
+      <a class="ref" href="https://land-book.com" target="_blank" rel="noopener"><div class="rn">Land-book <span class="arr">↗</span></div><div class="rd">landing page 大全</div><div class="ru">land-book.com</div></a>
+      <a class="ref" href="https://mobbin.com" target="_blank" rel="noopener"><div class="rn">Mobbin <span class="arr">↗</span></div><div class="rd">真實產品 UI（含 SaaS）</div><div class="ru">mobbin.com</div></a>
+      <a class="ref" href="https://tympanus.net/codrops/" target="_blank" rel="noopener"><div class="rn">Codrops <span class="arr">↗</span></div><div class="rd">每個動效 demo 都附原始碼</div><div class="ru">tympanus.net/codrops</div></a>
+    </div>
+  </div>
+
+  <div class="refcat">
+    <h3><span class="rc-dot" style="background:var(--violet)"></span>B・可抓原始碼的整站範本（GitHub）</h3>
+    <div class="rc-sub">挑一個當骨架，多為 React/Next.js</div>
+    <div class="reflist">
+      <a class="ref" href="https://github.com/cruip/open-react-template" target="_blank" rel="noopener"><div class="rn">Cruip Open React Template <span class="arr">↗</span></div><div class="rd">Next.js + Tailwind，乾淨 SaaS 動畫 hero・最適合當骨架</div><div class="ru">github.com/cruip/open-react-template</div></a>
+      <a class="ref" href="https://github.com/leoMirandaa/shadcn-landing-page" target="_blank" rel="noopener"><div class="rn">shadcn-landing-page <span class="arr">↗</span> <span class="star">1.8k★</span></div><div class="rd">16+ 區塊齊全（Hero/Pricing/FAQ…）</div><div class="ru">github.com/leoMirandaa/shadcn-landing-page</div></a>
+      <a class="ref" href="https://github.com/Adrinlol/landy-react-template" target="_blank" rel="noopener"><div class="rn">Landy React Template <span class="arr">↗</span></div><div class="rd">多語言＋內容存 JSON，好維護</div><div class="ru">github.com/Adrinlol/landy-react-template</div></a>
+      <a class="ref" href="https://github.com/topics/threejs-template" target="_blank" rel="noopener"><div class="rn">Three.js 範本合集 <span class="arr">↗</span></div><div class="rd">要繼續走 3D 從這挑</div><div class="ru">github.com/topics/threejs-template</div></a>
+      <a class="ref" href="https://vercel.com/templates" target="_blank" rel="noopener"><div class="rn">Vercel Templates <span class="arr">↗</span></div><div class="rd">一鍵部署的官方範本庫</div><div class="ru">vercel.com/templates</div></a>
+      <a class="ref" href="https://github.com/topics/landing-page" target="_blank" rel="noopener"><div class="rn">GitHub landing-page 主題 <span class="arr">↗</span></div><div class="rd">海量 landing page 開源</div><div class="ru">github.com/topics/landing-page</div></a>
+    </div>
+  </div>
+
+  <div class="refcat">
+    <h3><span class="rc-dot" style="background:var(--sun)"></span>C・可複製貼上的動畫元件庫</h3>
+    <div class="rc-sub">你說的「本身就有檔案／提示詞」的那種</div>
+    <div class="reflist">
+      <a class="ref" href="https://magicui.design" target="_blank" rel="noopener"><div class="rn">Magic UI <span class="arr">↗</span> <span class="star">21k★</span></div><div class="rd">動畫元件最強（Framer Motion + shadcn）</div><div class="ru">magicui.design</div></a>
+      <a class="ref" href="https://ui.aceternity.com" target="_blank" rel="noopener"><div class="rn">Aceternity UI <span class="arr">↗</span></div><div class="rd">炫砲動畫區塊，直接複製程式碼・最對應「驚豔」</div><div class="ru">ui.aceternity.com</div></a>
+      <a class="ref" href="https://21st.dev" target="_blank" rel="noopener"><div class="rn">21st.dev <span class="arr">↗</span></div><div class="rd">你之前提過，可按需求拉元件（MCP）</div><div class="ru">21st.dev</div></a>
+      <a class="ref" href="https://reactbits.dev" target="_blank" rel="noopener"><div class="rn">React Bits <span class="arr">↗</span></div><div class="rd">動畫元件＋背景特效（星空、粒子）</div><div class="ru">reactbits.dev</div></a>
+    </div>
+  </div>
+
+  <div class="refcat">
+    <h3><span class="rc-dot" style="background:var(--green)"></span>D・宇宙／3D 神級標竿（看氣勢）</h3>
+    <div class="rc-sub">看頂級動態怎麼做</div>
+    <div class="reflist">
+      <a class="ref" href="https://lusion.co" target="_blank" rel="noopener"><div class="rn">lusion.co <span class="arr">↗</span></div><div class="rd">awwwards 級 3D 互動天花板</div><div class="ru">lusion.co</div></a>
+      <a class="ref" href="https://www.activetheory.net" target="_blank" rel="noopener"><div class="rn">Active Theory <span class="arr">↗</span></div><div class="rd">沉浸式 WebGL 工作室</div><div class="ru">activetheory.net</div></a>
+      <a class="ref" href="https://bruno-simon.com" target="_blank" rel="noopener"><div class="rn">Bruno Simon <span class="arr">↗</span></div><div class="rd">Three.js 互動神作（含教學 Three.js Journey）</div><div class="ru">bruno-simon.com</div></a>
+    </div>
+  </div>
+</div></section>
+
+<!-- DECISION BOARD -->
+<section id="decide"><div class="wrap reveal">
+  <div class="kick">我們現在停在哪</div>
+  <h2>決策板</h2>
+  <div class="dboard">
+    <div class="dcol card"><h3 style="color:var(--green)">已完成・上線</h3><ul>
+      <li><svg fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>前端網站（hero 太陽系、Trinity System、數學模型、生態系、機構配對）</li>
+      <li><svg fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>商業模式藍圖、後台架構、CIS、Hub、Launch 計畫</li>
+      <li><svg fill="none" stroke="#34d399" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>全部上線 GitHub Pages</li>
+    </ul></div>
+    <div class="dcol card"><h3 style="color:var(--sun)">需要你決定</h3><ul>
+      <li><svg fill="none" stroke="#fbbf24" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>要不要照範本「重做設計／改成 React 正式站」（挑好 A/B/C 丟回來）</li>
+      <li><svg fill="none" stroke="#fbbf24" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>開後端（HITL 版可先不串金流）：要 email/Resend 設定</li>
+      <li><svg fill="none" stroke="#fbbf24" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>產真實 Insight 文章、開始 Launch（配影片）</li>
+    </ul></div>
+  </div>
+  <p class="body" style="margin-top:20px;text-align:center;color:var(--ink-dim)">這頁是討論基礎。你逛完範本、或想調哪一層、哪一階段，直接跟我說，我就照著動。</p>
+</div></section>
+
+<footer><div class="wrap">Trinity｜建構作戰手冊・內部討論用・<a href="backend-hub.html">回 Hub</a></div></footer>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
