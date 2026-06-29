@@ -1765,15 +1765,17 @@ if(fine&&!RM){
     sats.push(o);});});
   function posTip(o){const tx=o.x+14,ty=o.y+14;tip.style.left=Math.max(6,Math.min(stage.clientWidth-tip.offsetWidth-6,tx))+'px';tip.style.top=Math.max(6,Math.min(stage.clientHeight-tip.offsetHeight-6,ty))+'px';}
   // geometry
-  let W,H,P=[],CORE={x:0,y:0};
+  let W,H,P=[],CORE={x:0,y:0},rScale=1;
   function geo(){W=stage.clientWidth;H=stage.clientHeight;beams.width=W*Math.min(devicePixelRatio,2);beams.height=H*Math.min(devicePixelRatio,2);beams.style.width=W+'px';beams.style.height=H+'px';bx.setTransform(Math.min(devicePixelRatio,2),0,0,Math.min(devicePixelRatio,2),0,0);
-    P=[{x:W*0.24,y:H*0.40},{x:W*0.76,y:H*0.40},{x:W*0.50,y:H*0.76}];CORE={x:W*0.50,y:H*0.52};
+    const mob=W<700;const dx=mob?0.20:0.26,ty=mob?0.34:0.40,vy=mob?0.78:0.76;
+    rScale=mob?Math.max(0.5,Math.min(0.74,W/520)):1;
+    P=[{x:W*(0.5-dx),y:H*ty},{x:W*(0.5+dx),y:H*ty},{x:W*0.50,y:H*vy}];CORE={x:W*0.50,y:H*(mob?0.55:0.52)};
     planets.forEach((pl,i)=>{pl.style.left=P[i].x+'px';pl.style.top=P[i].y+'px';});
     core.style.left=CORE.x+'px';core.style.top=CORE.y+'px';}
   geo();addEventListener('resize',()=>{geo();if(state>=1)placeSats(1);});
   // state: 0 none,1 scattered,2 linked,3 done
   let state=0,beamA=0,coreOn=0,mx=0,my=0,hoverLi=-1,focus=-1,t=0;
-  function placeSats(scatter){sats.forEach(o=>{const c=P[o.li];const a=o.ga+t*o.sp*(state>=3?1:0);const ex=Math.cos(a)*o.rad,ey=Math.sin(a)*o.rad*0.78;
+  function placeSats(scatter){sats.forEach(o=>{const c=P[o.li];const a=o.ga+t*o.sp*(state>=3?1:0);const rr=o.rad*rScale;const ex=Math.cos(a)*rr,ey=Math.sin(a)*rr*0.78;
     o.x=c.x+ex*scatter;o.y=c.y+ey*scatter;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';});}
   stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-0.5;my=(e.clientY-r.top)/r.height-0.5;},{passive:true});
   stage.addEventListener('pointerleave',()=>{mx=0;my=0;});
@@ -1801,7 +1803,7 @@ if(fine&&!RM){
   let onscreen=true;new IntersectionObserver(es=>es.forEach(e=>onscreen=e.isIntersecting),{threshold:0}).observe(stage);
   function loop(){if(!document.hidden&&onscreen){t+=0.01;const par=(li)=>({x:mx*(14+li*6),y:my*10});
     for(let i=0;i<3;i++)gather[i]+=(gatherT[i]-gather[i])*0.12;
-    if(state>=1){sats.forEach(o=>{const c=P[o.li],pp=par(o.li);const a=o.ga+t*o.sp*(state>=3?1:0.15);const gf=1-gather[o.li]*0.42;const ex=Math.cos(a)*o.rad*gf,ey=Math.sin(a)*o.rad*0.78*gf;o.x=c.x+ex+pp.x;o.y=c.y+ey+pp.y;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';if(gather[o.li]>0.05)o.el.style.filter='brightness('+(1+gather[o.li]*0.6)+')';else if(o.el.style.filter)o.el.style.filter='';});}
+    if(state>=1){sats.forEach(o=>{const c=P[o.li],pp=par(o.li);const a=o.ga+t*o.sp*(state>=3?1:0.15);const gf=(1-gather[o.li]*0.42)*rScale;const ex=Math.cos(a)*o.rad*gf,ey=Math.sin(a)*o.rad*0.78*gf;o.x=c.x+ex+pp.x;o.y=c.y+ey+pp.y;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';if(gather[o.li]>0.05)o.el.style.filter='brightness('+(1+gather[o.li]*0.6)+')';else if(o.el.style.filter)o.el.style.filter='';});}
     drawBeams();}
     requestAnimationFrame(loop);}
   function cu(el,tv){if(window.gsap){const o={v:0};gsap.to(o,{v:tv,duration:1.2,ease:'power2.out',onUpdate:()=>el.textContent=Math.round(o.v)});}else el.textContent=tv;}
