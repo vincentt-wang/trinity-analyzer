@@ -395,9 +395,13 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
 .ts-planet .ts-score{font-family:var(--font-disp);font-weight:700;font-size:1.9rem;line-height:1;color:#04121d;text-shadow:0 1px 3px rgba(255,255,255,.4)}
 .ts-plabel{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;font-family:var(--font-disp);font-weight:600;font-size:1.08rem;color:var(--ac)}
 .ts-planet.dim{opacity:.25}
-.ts-sat{position:absolute;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:var(--ac);box-shadow:0 0 8px var(--ac);cursor:pointer;z-index:4;opacity:0}
-.ts-sat:hover,.ts-sat.lit{width:13px;height:13px;box-shadow:0 0 18px var(--ac),0 0 30px var(--ac);z-index:8}
-.ts-sat.dim{opacity:.12!important}
+.ts-sat{position:absolute;transform:translate(-50%,-50%);width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 42% 38%,#fff,var(--ac) 60%);box-shadow:0 0 10px var(--ac),0 0 18px -2px var(--ac);cursor:pointer;z-index:4;opacity:0;transition:width .2s var(--ease-spring),height .2s var(--ease-spring),box-shadow .2s;animation:tsTwinkle var(--tw,3s) ease-in-out infinite}
+@keyframes tsTwinkle{0%,100%{filter:brightness(.8)}50%{filter:brightness(1.25)}}
+.ts-sat::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--ac);opacity:0;pointer-events:none}
+.ts-sat:hover,.ts-sat.lit{width:24px;height:24px;box-shadow:0 0 22px var(--ac),0 0 44px var(--ac);z-index:9;animation:none;filter:brightness(1.3)}
+.ts-sat:hover::after,.ts-sat.lit::after{animation:tsPing .7s var(--ease-out) infinite}
+@keyframes tsPing{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.2);opacity:0}}
+.ts-sat.dim{opacity:.12!important;animation:none}
 .ts-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:0;width:128px;height:128px;border-radius:50%;display:grid;place-items:center;text-align:center;z-index:7;
   background:radial-gradient(circle at 42% 36%,rgba(167,139,250,.55),rgba(56,189,248,.18) 70%);border:1px solid var(--violet);box-shadow:0 0 60px -8px var(--violet);font-family:var(--font-disp);font-weight:700;color:#fff;font-size:1.05rem;line-height:1.2}
 .ts-core::before{content:"";position:absolute;inset:-12px;border-radius:50%;background:var(--grad-trinity);opacity:.5;animation:orbspin 9s linear infinite;-webkit-mask:radial-gradient(transparent 60%,#000 62%);mask:radial-gradient(transparent 60%,#000 62%)}
@@ -1752,8 +1756,8 @@ if(fine&&!RM){
    {nm:['Feasibility','可行性'],dims:[['Stage placement','階段定位'],['PSF→PMF→Scaling gates','三驗證關卡'],['Willingness-to-pay','付費意願驗證'],['PMF three signals','PMF 三訊號'],['Four MVP types','四種 MVP＋Solid Data'],['Technical first-principles','技術合理性（第一性原理）'],['Business Model Canvas loop','BMC 九格閉環'],['Model & multi-side needs','商業模式選擇與各端需求%'],['Ecosystem & competition','生態系角色與競合'],['Five moat types','護城河五型'],['Team three traits','團隊三特質'],['FMF (execution)','Founder-Market Fit（執行面）'],['Technical gross margin','技術性毛利'],['Runway & valley of death','Runway 與死亡谷'],['Riskiest assumption (48hr)','最高風險假設（48hr）'],['Demo-ability','可 demo 程度'],['AI gap positioning','缺口定位 Gap Positioning（AI）']]},
    {nm:['Viability','存續性'],dims:[['TAM/SAM/SOM + momentum','市場量體 TAM/SAM/SOM＋動能'],['PMF three pillars','PMF 三支柱'],['Six key numbers','六關鍵數字'],['Unit economics','單位經濟'],['Rule of 40','Rule of 40'],['Burn multiple','Burn Multiple'],['Stage / round thresholds','階段與輪次門檻對照'],['Customer-funded (CFA)','CFA 客戶自融資'],['Hormozi value equation','Hormozi 價值公式'],['Pricing strategy','定價策略'],['Break-even point','損益平衡點'],['Multi-method valuation','多元估值交叉'],['Exit paths','退出路徑'],['Liquidation preference','清算優先權影響'],['VC return lens (10x?)','VC 報酬視角（撐得起 10×?）'],['D2C trap / B2B margin','D2C 困境 / B2B 利潤'],['Pitch ten elements','Pitch 十元素完整度'],['Valuation vs comparables','估值合理性（comparables）'],['AI-durable value','價值耐久性 抗模型收斂（AI）']]}];
   // build satellites
-  const sats=[];GX.forEach((L,li)=>{L.dims.forEach((d,i)=>{const el=document.createElement('div');el.className='ts-sat';el.style.setProperty('--ac',LAC[li]);
-    const ga=i*2.39996+li*1.7, rad=58+( (i*37)%70 );const sp=(0.10+((i*53)%40)/300)*(i%2?1:-1);
+  const sats=[];GX.forEach((L,li)=>{L.dims.forEach((d,i)=>{const el=document.createElement('div');el.className='ts-sat';el.style.setProperty('--ac',LAC[li]);el.style.setProperty('--tw',(2.2+((i*47)%40)/15).toFixed(2)+'s');
+    const ga=i*2.39996+li*1.7, rad=70+( (i*37)%82 );const sp=(0.10+((i*53)%40)/300)*(i%2?1:-1);
     field.appendChild(el);const o={el,li,d,ga,rad,sp,x:0,y:0};
     el.addEventListener('pointerenter',()=>{el.classList.add('lit');tip.style.borderColor=LCOL[li];tip.innerHTML='<div class="tt"><span class="en">'+d[0]+'</span><span class="zh">'+d[1]+'</span></div><div class="tl" style="color:'+LCOL[li]+'"><span class="en">'+L.nm[0]+' lens</span><span class="zh">'+L.nm[1]+'透鏡</span></div>';tip.classList.add('show');posTip(o);});
     el.addEventListener('pointerleave',()=>{el.classList.remove('lit');tip.classList.remove('show');});
