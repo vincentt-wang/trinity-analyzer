@@ -1564,7 +1564,7 @@ if(fine&&!RM){
     {n:'AppWorks',d:'appworks.tw',t:['Accelerator + VC','加速器＋創投'],st:['preseed','seed'],sl:'Pre-seed / Seed (AI, Web3, SE Asia)',u:'https://www.appworks.tw',c:['Open accelerator application','加速器公開申請'],a:'open'},
     {n:'SparkLabs Taiwan',d:'sparklabstaiwan.com',t:['Accelerator + VC','加速器＋創投'],st:['preseed','seed'],sl:'Pre-seed / Seed (AI-first)',u:'https://sparklabstaiwan.com',c:['Application, 2 cohorts/yr','申請（每年兩梯）'],a:'open'},
     {n:'Cherubic Ventures',d:'cherubic.com',t:['Seed VC','種子創投'],st:['preseed','seed'],sl:'Pre-seed / Seed (US + Greater China)',u:'https://www.cherubic.com',c:['Contact / submit on site','網站聯絡／投案'],a:'open'},
-    {n:'Hive Ventures 蜂行資本',d:'hiveventures.io',t:['Data & AI seed VC','數據與 AI 種子創投'],st:['preseed','seed'],sl:'Pre-seed / Seed',u:'https://www.hiveventures.io',c:['Contact page','聯絡頁'],a:'warm'},
+    {n:'<span class="en">Hive Ventures</span><span class="zh">Hive Ventures 蜂行資本</span>',d:'hiveventures.io',t:['Data & AI seed VC','數據與 AI 種子創投'],st:['preseed','seed'],sl:'Pre-seed / Seed',u:'https://www.hiveventures.io',c:['Contact page','聯絡頁'],a:'warm'},
     {n:'Taiwania Capital',d:'taiwaniacapital.com',t:['VC (most active)','創投（最活躍）'],st:['seed','a','growth'],sl:'Seed / Series A+ (deep-tech, health)',u:'https://taiwaniacapital.com',c:['Contact page (warm intro)','聯絡頁（溫暖引薦）'],a:'warm'},
     {n:'Taiwan Tech Arena',d:'taiwanarena.tech',t:['Gov startup hub (NSTC)','政府新創基地（國科會）'],st:['preseed','seed'],sl:'Pre-seed / Seed, international',u:'https://www.taiwanarena.tech',c:['info@taiwanarena.tech; program apply','info@taiwanarena.tech；計畫申請'],a:'open'}]};
   const APPR={seed:[
@@ -1592,8 +1592,8 @@ if(fine&&!RM){
     <div class="type-weights"><div class="tw-seg" data-lens="d" style="flex:${ty.w.d}">D ${ty.w.d}%</div><div class="tw-seg" data-lens="f" style="flex:${ty.w.f}">F ${ty.w.f}%</div><div class="tw-seg" data-lens="v" style="flex:${ty.w.v}">V ${ty.w.v}%</div></div>
     <p class="type-why">${L(ty.why)}</p></div>`;
   // institutions
-  function instCard(o){return `<a class="inst-card" href="${o.u}" target="_blank" rel="noopener" style="--c:var(--earth)">
-    <div class="inst-top"><img class="inst-logo" src="https://logo.clearbit.com/${o.d}" alt="${o.n} logo" loading="lazy" data-fb="${o.n.replace(/[^A-Za-z ]/g,'').trim().split(' ').map(w=>w[0]).slice(0,2).join('')}">
+  function instCard(o){const pn=o.n.replace(/<[^>]+>/g,' ').replace(/[一-鿿]/g,'').trim();return `<a class="inst-card" href="${o.u}" target="_blank" rel="noopener" style="--c:var(--earth)">
+    <div class="inst-top"><img class="inst-logo" src="https://logo.clearbit.com/${o.d}" alt="${pn} logo" loading="lazy" data-fb="${pn.replace(/[^A-Za-z ]/g,'').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('')}">
       <div class="inst-id"><div class="inst-name">${o.n}</div><div class="inst-type">${L(o.t)}</div></div>
       <span class="inst-access ${o.a}">${o.a==='open'?L(['Open apply','公開申請']):L(['Intro-led','偏好引薦'])}</span></div>
     <div class="inst-stage">${o.sl}</div>
