@@ -403,8 +403,10 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
 @keyframes tsPing{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.2);opacity:0}}
 .ts-sat.dim{opacity:.12!important;animation:none}
 .ts-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:0;width:128px;height:128px;border-radius:50%;display:grid;place-items:center;text-align:center;z-index:7;
-  background:radial-gradient(circle at 42% 36%,rgba(167,139,250,.55),rgba(56,189,248,.18) 70%);border:1px solid var(--violet);box-shadow:0 0 60px -8px var(--violet);font-family:var(--font-disp);font-weight:700;color:#fff;font-size:1.05rem;line-height:1.2}
-.ts-core::before{content:"";position:absolute;inset:-12px;border-radius:50%;background:var(--grad-trinity);opacity:.5;animation:orbspin 9s linear infinite;-webkit-mask:radial-gradient(transparent 60%,#000 62%);mask:radial-gradient(transparent 60%,#000 62%)}
+  background:radial-gradient(circle at 44% 38%,#c4b5fd 0%,#8b6fe0 24%,#3b2f73 64%,#0a0c1c 100%);box-shadow:0 0 60px -10px var(--violet),0 0 0 1px rgba(167,139,250,.5) inset;font-family:var(--font-disp);font-weight:700;color:#fff;font-size:1.05rem;line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.ts-core::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(167,139,250,.45);box-shadow:0 0 24px -4px var(--violet);animation:tsHalo 3.4s ease-in-out infinite}
+.ts-core::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(56,189,248,.3);animation:tsHalo 3.4s ease-in-out infinite .9s}
+@keyframes tsHalo{0%{transform:scale(.96);opacity:.7}50%{transform:scale(1.12);opacity:0}100%{transform:scale(.96);opacity:0}}
 .ts-tip{position:absolute;z-index:20;pointer-events:none;background:var(--bg-3);border:1px solid var(--bd-strong);border-radius:11px;padding:10px 14px;max-width:260px;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;box-shadow:0 12px 34px -12px rgba(0,0,0,.85)}
 .ts-tip.show{opacity:1;transform:none}
 .ts-tip .tt{font-weight:600;color:var(--ink);font-size:1.04rem}.ts-tip .tl{font-size:1rem;margin-top:3px}
@@ -1791,12 +1793,18 @@ if(fine&&!RM){
   function drawBeams(){bx.clearRect(0,0,W,H);if(beamA<=0&&coreOn<=0&&state<1)return;bx.globalCompositeOperation='lighter';
     // intra-cluster spokes: only for the hovered/focused planet (keeps it clean)
     if(state>=1){const hi=focus>=0?focus:(gather.findIndex(g=>g>0.05));if(hi>=0){const str=Math.max(focus===hi?0.5:0,gather[hi]);sats.forEach(o=>{if(o.li!==hi)return;const c=P[o.li];bx.strokeStyle=LCOL[o.li];bx.globalAlpha=0.18*str*(+o.el.style.opacity||1);bx.lineWidth=1;bx.beginPath();bx.moveTo(c.x,c.y);bx.lineTo(o.x,o.y);bx.stroke();});}}
+    const cen={x:(P[0].x+P[1].x+P[2].x)/3,y:(P[0].y+P[1].y+P[2].y)/3};
+    function qpt(A,C,B,tt){const u=1-tt;return {x:u*u*A.x+2*u*tt*C.x+tt*tt*B.x,y:u*u*A.y+2*u*tt*C.y+tt*tt*B.y};}
+    function flowQ(A,C,B,phase,col,n,alpha){for(let j=0;j<n;j++){const fp=((t*0.45+phase+j/n)%1);const p=qpt(A,C,B,fp);const fade=Math.sin(fp*Math.PI);bx.globalAlpha=alpha*fade;const r=(2.6+1.4*fade)*2.4;const rg=bx.createRadialGradient(p.x,p.y,0,p.x,p.y,r);rg.addColorStop(0,'#fff');rg.addColorStop(.5,col);rg.addColorStop(1,'rgba(0,0,0,0)');bx.fillStyle=rg;bx.beginPath();bx.arc(p.x,p.y,r,0,6.28);bx.fill();}}
     const pairs=[[0,1],[1,2],[2,0]];
-    pairs.forEach(([a,b],k)=>{const fade=(focus<0||focus===a||focus===b)?1:0.12;const g=bx.createLinearGradient(P[a].x,P[a].y,P[b].x,P[b].y);g.addColorStop(0,LCOL[a]);g.addColorStop(.5,'#cdd6ff');g.addColorStop(1,LCOL[b]);bx.strokeStyle=g;bx.globalAlpha=beamA*0.32*fade;bx.lineWidth=1.6;bx.beginPath();bx.moveTo(P[a].x,P[a].y);bx.lineTo(P[b].x,P[b].y);bx.stroke();
-      if(state>=2){flowParticles(P[a].x,P[a].y,P[b].x,P[b].y,k*0.33,LCOL[a],2,beamA*0.85*fade);flowParticles(P[b].x,P[b].y,P[a].x,P[a].y,k*0.33+0.5,LCOL[b],2,beamA*0.85*fade);}});
-    // core links
-    if(coreOn>0){P.forEach((p,i)=>{const fade=(focus<0||focus===i)?1:0.18;bx.strokeStyle=LCOL[i];bx.globalAlpha=coreOn*0.38*fade;bx.lineWidth=1.6;bx.beginPath();bx.moveTo(p.x,p.y);bx.lineTo(CORE.x,CORE.y);bx.stroke();
-      flowParticles(p.x,p.y,CORE.x,CORE.y,i*0.33,LCOL[i],2,coreOn*fade);});
+    pairs.forEach(([a,b],k)=>{const fade=(focus<0||focus===a||focus===b)?1:0.12;const mid={x:(P[a].x+P[b].x)/2,y:(P[a].y+P[b].y)/2};let ox=mid.x-cen.x,oy=mid.y-cen.y;const ol=Math.hypot(ox,oy)||1;const ctrl={x:mid.x+ox/ol*48,y:mid.y+oy/ol*48};
+      const g=bx.createLinearGradient(P[a].x,P[a].y,P[b].x,P[b].y);g.addColorStop(0,LCOL[a]);g.addColorStop(.5,'#cdd6ff');g.addColorStop(1,LCOL[b]);bx.strokeStyle=g;bx.globalAlpha=beamA*0.32*fade;bx.lineWidth=1.6;bx.beginPath();bx.moveTo(P[a].x,P[a].y);bx.quadraticCurveTo(ctrl.x,ctrl.y,P[b].x,P[b].y);bx.stroke();
+      if(state>=2){flowQ(P[a],ctrl,P[b],k*0.33,LCOL[a],2,beamA*0.85*fade);flowQ(P[b],ctrl,P[a],k*0.33+0.5,LCOL[b],2,beamA*0.85*fade);}});
+    // core links (stop at the core's edge so they never cross the circle)
+    const coreR=(W<700?54:66);
+    if(coreOn>0){P.forEach((p,i)=>{const fade=(focus<0||focus===i)?1:0.18;const dx=CORE.x-p.x,dy=CORE.y-p.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;const ex=CORE.x-ux*coreR,ey=CORE.y-uy*coreR;
+      bx.strokeStyle=LCOL[i];bx.globalAlpha=coreOn*0.38*fade;bx.lineWidth=1.6;bx.beginPath();bx.moveTo(p.x,p.y);bx.lineTo(ex,ey);bx.stroke();
+      flowParticles(p.x,p.y,ex,ey,i*0.33,LCOL[i],2,coreOn*fade);});
       // core glow pulse
       const pr=58+Math.sin(t*2)*6;const cg=bx.createRadialGradient(CORE.x,CORE.y,0,CORE.x,CORE.y,pr);cg.addColorStop(0,'rgba(167,139,250,'+(0.22*coreOn).toFixed(2)+')');cg.addColorStop(1,'rgba(0,0,0,0)');bx.globalAlpha=1;bx.fillStyle=cg;bx.beginPath();bx.arc(CORE.x,CORE.y,pr,0,6.28);bx.fill();}
     bx.globalAlpha=1;bx.globalCompositeOperation='source-over';}
