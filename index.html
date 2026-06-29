@@ -1779,15 +1779,20 @@ if(fine&&!RM){
   document.querySelectorAll('#tsCounts .ts-count').forEach(c=>{c.addEventListener('click',()=>{const li=+c.dataset.li;focus=(focus===li?-1:li);document.querySelectorAll('#tsCounts .ts-count').forEach((z,zi)=>z.classList.toggle('on',focus===zi));applyFocus();});});
   planets.forEach((pl,li)=>pl.addEventListener('click',()=>{focus=(focus===li?-1:li);document.querySelectorAll('#tsCounts .ts-count').forEach((z,zi)=>z.classList.toggle('on',focus===zi));applyFocus();}));
   function applyFocus(){sats.forEach(o=>o.el.classList.toggle('dim',focus>=0&&o.li!==focus));planets.forEach((pl,li)=>pl.classList.toggle('dim',focus>=0&&li!==focus));}
-  function drawBeams(){bx.clearRect(0,0,W,H);if(beamA<=0&&coreOn<=0)return;bx.globalCompositeOperation='lighter';
+  function hx(c){return c;}
+  function flowParticles(ax,ay,bxx,by,phase,col,n,alpha){for(let j=0;j<n;j++){const fp=((t*0.45+phase+j/n)%1);const fx=ax+(bxx-ax)*fp,fy=ay+(by-ay)*fp;const fade=Math.sin(fp*Math.PI);
+    bx.globalAlpha=alpha*fade;const r=2.6+1.4*fade;const rg=bx.createRadialGradient(fx,fy,0,fx,fy,r*2.4);rg.addColorStop(0,'#fff');rg.addColorStop(.5,col);rg.addColorStop(1,'rgba(0,0,0,0)');bx.fillStyle=rg;bx.beginPath();bx.arc(fx,fy,r*2.4,0,6.28);bx.fill();}}
+  function drawBeams(){bx.clearRect(0,0,W,H);if(beamA<=0&&coreOn<=0&&state<1)return;bx.globalCompositeOperation='lighter';
+    // intra-cluster spokes: each planet to its satellites (the "made of these" feel)
+    if(state>=1){sats.forEach(o=>{const c=P[o.li];bx.strokeStyle=LCOL[o.li];bx.globalAlpha=0.10*(+o.el.style.opacity||1)*(focus<0||focus===o.li?1:0.2);bx.lineWidth=1;bx.beginPath();bx.moveTo(c.x,c.y);bx.lineTo(o.x,o.y);bx.stroke();});}
     const pairs=[[0,1],[1,2],[2,0]];
-    pairs.forEach(([a,b],k)=>{const g=bx.createLinearGradient(P[a].x,P[a].y,P[b].x,P[b].y);g.addColorStop(0,LCOL[a]);g.addColorStop(1,LCOL[b]);bx.strokeStyle=g;bx.globalAlpha=beamA*0.5;bx.lineWidth=2;bx.beginPath();bx.moveTo(P[a].x,P[a].y);bx.lineTo(P[b].x,P[b].y);bx.stroke();
-      // flowing dot
-      if(state>=2){const fp=((t*0.4+k*0.33)%1);const fx=P[a].x+(P[b].x-P[a].x)*fp,fy=P[a].y+(P[b].y-P[a].y)*fp;bx.globalAlpha=beamA;bx.fillStyle='#fff';bx.beginPath();bx.arc(fx,fy,3,0,6.28);bx.fill();
-      const fp2=((t*0.4+k*0.33+0.5)%1);const gx=P[b].x+(P[a].x-P[b].x)*fp2,gy=P[b].y+(P[a].y-P[b].y)*fp2;bx.beginPath();bx.arc(gx,gy,3,0,6.28);bx.fill();}});
+    pairs.forEach(([a,b],k)=>{const fade=(focus<0||focus===a||focus===b)?1:0.18;const g=bx.createLinearGradient(P[a].x,P[a].y,P[b].x,P[b].y);g.addColorStop(0,LCOL[a]);g.addColorStop(.5,'#cdd6ff');g.addColorStop(1,LCOL[b]);bx.strokeStyle=g;bx.globalAlpha=beamA*0.45*fade;bx.lineWidth=2.4;bx.beginPath();bx.moveTo(P[a].x,P[a].y);bx.lineTo(P[b].x,P[b].y);bx.stroke();
+      if(state>=2){flowParticles(P[a].x,P[a].y,P[b].x,P[b].y,k*0.33,LCOL[a],4,beamA*fade);flowParticles(P[b].x,P[b].y,P[a].x,P[a].y,k*0.33+0.5,LCOL[b],4,beamA*fade);}});
     // core links
-    if(coreOn>0){P.forEach((p,i)=>{bx.strokeStyle=LCOL[i];bx.globalAlpha=coreOn*0.55;bx.lineWidth=2;bx.beginPath();bx.moveTo(p.x,p.y);bx.lineTo(CORE.x,CORE.y);bx.stroke();
-      const fp=((t*0.5+i*0.33)%1);const fx=p.x+(CORE.x-p.x)*fp,fy=p.y+(CORE.y-p.y)*fp;bx.globalAlpha=coreOn;bx.fillStyle='#fff';bx.beginPath();bx.arc(fx,fy,3,0,6.28);bx.fill();});}
+    if(coreOn>0){P.forEach((p,i)=>{const fade=(focus<0||focus===i)?1:0.2;bx.strokeStyle=LCOL[i];bx.globalAlpha=coreOn*0.5*fade;bx.lineWidth=2.4;bx.beginPath();bx.moveTo(p.x,p.y);bx.lineTo(CORE.x,CORE.y);bx.stroke();
+      flowParticles(p.x,p.y,CORE.x,CORE.y,i*0.33,LCOL[i],3,coreOn*fade);});
+      // core glow pulse
+      const pr=58+Math.sin(t*2)*6;const cg=bx.createRadialGradient(CORE.x,CORE.y,0,CORE.x,CORE.y,pr);cg.addColorStop(0,'rgba(167,139,250,'+(0.22*coreOn).toFixed(2)+')');cg.addColorStop(1,'rgba(0,0,0,0)');bx.globalAlpha=1;bx.fillStyle=cg;bx.beginPath();bx.arc(CORE.x,CORE.y,pr,0,6.28);bx.fill();}
     bx.globalAlpha=1;bx.globalCompositeOperation='source-over';}
   let onscreen=true;new IntersectionObserver(es=>es.forEach(e=>onscreen=e.isIntersecting),{threshold:0}).observe(stage);
   function loop(){if(!document.hidden&&onscreen){t+=0.01;const par=(li)=>({x:mx*(14+li*6),y:my*10});
