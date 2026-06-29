@@ -396,7 +396,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
 .ts-plabel{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;font-family:var(--font-disp);font-weight:600;font-size:1.08rem;color:var(--ac)}
 .ts-planet.dim{opacity:.25}
 .ts-sat{position:absolute;transform:translate(-50%,-50%);width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 42% 38%,#fff,var(--ac) 60%);box-shadow:0 0 10px var(--ac),0 0 18px -2px var(--ac);cursor:pointer;z-index:4;opacity:0;transition:width .2s var(--ease-spring),height .2s var(--ease-spring),box-shadow .2s;animation:tsTwinkle var(--tw,3s) ease-in-out infinite}
-@keyframes tsTwinkle{0%,100%{filter:brightness(.8)}50%{filter:brightness(1.25)}}
+@keyframes tsTwinkle{0%,100%{filter:brightness(.9)}50%{filter:brightness(1.12)}}
 .ts-sat::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--ac);opacity:0;pointer-events:none}
 .ts-sat:hover,.ts-sat.lit{width:24px;height:24px;box-shadow:0 0 22px var(--ac),0 0 44px var(--ac);z-index:9;animation:none;filter:brightness(1.3)}
 .ts-sat:hover::after,.ts-sat.lit::after{animation:tsPing .7s var(--ease-out) infinite}
@@ -526,8 +526,9 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
 .track-rail{position:relative;height:3px;background:rgba(255,255,255,.12);border-radius:3px;margin:60px 0 20px;transform-origin:left}
 .track-progress{position:absolute;left:0;top:0;height:100%;width:var(--pct,0%);background:var(--grad-axis);border-radius:3px;transition:width 1s var(--ease-out)}
 .track-puck{position:absolute;top:50%;left:var(--pct,0%);width:20px;height:20px;border-radius:50%;background:var(--earth);transform:translate(-50%,-50%);box-shadow:0 0 0 6px rgba(56,189,248,.18),0 0 24px var(--earth);transition:left 1s var(--ease-out)}
-.track-node{position:absolute;top:50%;transform:translate(-50%,-50%);text-align:center;width:120px}
-.track-node .node-dot{width:13px;height:13px;border-radius:50%;background:#2a3150;border:2px solid rgba(255,255,255,.2);margin:0 auto 32px;transition:.4s}
+.track-node{position:absolute;top:50%;transform:translateX(-50%);text-align:center;width:130px}
+.track-node .node-dot{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#2a3150;border:2px solid rgba(255,255,255,.2);transition:.4s}
+.track-node .node-label{margin-top:26px}
 .track-node.on .node-dot{background:var(--ac);border-color:var(--ac);box-shadow:0 0 16px var(--ac)}
 .track-node .node-label{font-family:var(--font-disp);font-weight:600;font-size:1.1rem;white-space:nowrap}
 .track-node.on .node-label{color:var(--ac)}
@@ -1777,26 +1778,30 @@ if(fine&&!RM){
   stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-0.5;my=(e.clientY-r.top)/r.height-0.5;},{passive:true});
   stage.addEventListener('pointerleave',()=>{mx=0;my=0;});
   document.querySelectorAll('#tsCounts .ts-count').forEach(c=>{c.addEventListener('click',()=>{const li=+c.dataset.li;focus=(focus===li?-1:li);document.querySelectorAll('#tsCounts .ts-count').forEach((z,zi)=>z.classList.toggle('on',focus===zi));applyFocus();});});
-  planets.forEach((pl,li)=>pl.addEventListener('click',()=>{focus=(focus===li?-1:li);document.querySelectorAll('#tsCounts .ts-count').forEach((z,zi)=>z.classList.toggle('on',focus===zi));applyFocus();}));
+  const gather=[0,0,0],gatherT=[0,0,0];
+  planets.forEach((pl,li)=>{pl.addEventListener('click',()=>{focus=(focus===li?-1:li);document.querySelectorAll('#tsCounts .ts-count').forEach((z,zi)=>z.classList.toggle('on',focus===zi));applyFocus();});
+    pl.addEventListener('pointerenter',()=>{gatherT[li]=1;pl.classList.add('solo');});
+    pl.addEventListener('pointerleave',()=>{gatherT[li]=0;pl.classList.remove('solo');});});
   function applyFocus(){sats.forEach(o=>o.el.classList.toggle('dim',focus>=0&&o.li!==focus));planets.forEach((pl,li)=>pl.classList.toggle('dim',focus>=0&&li!==focus));}
   function hx(c){return c;}
   function flowParticles(ax,ay,bxx,by,phase,col,n,alpha){for(let j=0;j<n;j++){const fp=((t*0.45+phase+j/n)%1);const fx=ax+(bxx-ax)*fp,fy=ay+(by-ay)*fp;const fade=Math.sin(fp*Math.PI);
     bx.globalAlpha=alpha*fade;const r=2.6+1.4*fade;const rg=bx.createRadialGradient(fx,fy,0,fx,fy,r*2.4);rg.addColorStop(0,'#fff');rg.addColorStop(.5,col);rg.addColorStop(1,'rgba(0,0,0,0)');bx.fillStyle=rg;bx.beginPath();bx.arc(fx,fy,r*2.4,0,6.28);bx.fill();}}
   function drawBeams(){bx.clearRect(0,0,W,H);if(beamA<=0&&coreOn<=0&&state<1)return;bx.globalCompositeOperation='lighter';
-    // intra-cluster spokes: each planet to its satellites (the "made of these" feel)
-    if(state>=1){sats.forEach(o=>{const c=P[o.li];bx.strokeStyle=LCOL[o.li];bx.globalAlpha=0.10*(+o.el.style.opacity||1)*(focus<0||focus===o.li?1:0.2);bx.lineWidth=1;bx.beginPath();bx.moveTo(c.x,c.y);bx.lineTo(o.x,o.y);bx.stroke();});}
+    // intra-cluster spokes: only for the hovered/focused planet (keeps it clean)
+    if(state>=1){const hi=focus>=0?focus:(gather.findIndex(g=>g>0.05));if(hi>=0){const str=Math.max(focus===hi?0.5:0,gather[hi]);sats.forEach(o=>{if(o.li!==hi)return;const c=P[o.li];bx.strokeStyle=LCOL[o.li];bx.globalAlpha=0.18*str*(+o.el.style.opacity||1);bx.lineWidth=1;bx.beginPath();bx.moveTo(c.x,c.y);bx.lineTo(o.x,o.y);bx.stroke();});}}
     const pairs=[[0,1],[1,2],[2,0]];
-    pairs.forEach(([a,b],k)=>{const fade=(focus<0||focus===a||focus===b)?1:0.18;const g=bx.createLinearGradient(P[a].x,P[a].y,P[b].x,P[b].y);g.addColorStop(0,LCOL[a]);g.addColorStop(.5,'#cdd6ff');g.addColorStop(1,LCOL[b]);bx.strokeStyle=g;bx.globalAlpha=beamA*0.45*fade;bx.lineWidth=2.4;bx.beginPath();bx.moveTo(P[a].x,P[a].y);bx.lineTo(P[b].x,P[b].y);bx.stroke();
-      if(state>=2){flowParticles(P[a].x,P[a].y,P[b].x,P[b].y,k*0.33,LCOL[a],4,beamA*fade);flowParticles(P[b].x,P[b].y,P[a].x,P[a].y,k*0.33+0.5,LCOL[b],4,beamA*fade);}});
+    pairs.forEach(([a,b],k)=>{const fade=(focus<0||focus===a||focus===b)?1:0.12;const g=bx.createLinearGradient(P[a].x,P[a].y,P[b].x,P[b].y);g.addColorStop(0,LCOL[a]);g.addColorStop(.5,'#cdd6ff');g.addColorStop(1,LCOL[b]);bx.strokeStyle=g;bx.globalAlpha=beamA*0.32*fade;bx.lineWidth=1.6;bx.beginPath();bx.moveTo(P[a].x,P[a].y);bx.lineTo(P[b].x,P[b].y);bx.stroke();
+      if(state>=2){flowParticles(P[a].x,P[a].y,P[b].x,P[b].y,k*0.33,LCOL[a],2,beamA*0.85*fade);flowParticles(P[b].x,P[b].y,P[a].x,P[a].y,k*0.33+0.5,LCOL[b],2,beamA*0.85*fade);}});
     // core links
-    if(coreOn>0){P.forEach((p,i)=>{const fade=(focus<0||focus===i)?1:0.2;bx.strokeStyle=LCOL[i];bx.globalAlpha=coreOn*0.5*fade;bx.lineWidth=2.4;bx.beginPath();bx.moveTo(p.x,p.y);bx.lineTo(CORE.x,CORE.y);bx.stroke();
-      flowParticles(p.x,p.y,CORE.x,CORE.y,i*0.33,LCOL[i],3,coreOn*fade);});
+    if(coreOn>0){P.forEach((p,i)=>{const fade=(focus<0||focus===i)?1:0.18;bx.strokeStyle=LCOL[i];bx.globalAlpha=coreOn*0.38*fade;bx.lineWidth=1.6;bx.beginPath();bx.moveTo(p.x,p.y);bx.lineTo(CORE.x,CORE.y);bx.stroke();
+      flowParticles(p.x,p.y,CORE.x,CORE.y,i*0.33,LCOL[i],2,coreOn*fade);});
       // core glow pulse
       const pr=58+Math.sin(t*2)*6;const cg=bx.createRadialGradient(CORE.x,CORE.y,0,CORE.x,CORE.y,pr);cg.addColorStop(0,'rgba(167,139,250,'+(0.22*coreOn).toFixed(2)+')');cg.addColorStop(1,'rgba(0,0,0,0)');bx.globalAlpha=1;bx.fillStyle=cg;bx.beginPath();bx.arc(CORE.x,CORE.y,pr,0,6.28);bx.fill();}
     bx.globalAlpha=1;bx.globalCompositeOperation='source-over';}
   let onscreen=true;new IntersectionObserver(es=>es.forEach(e=>onscreen=e.isIntersecting),{threshold:0}).observe(stage);
   function loop(){if(!document.hidden&&onscreen){t+=0.01;const par=(li)=>({x:mx*(14+li*6),y:my*10});
-    if(state>=1){sats.forEach(o=>{const c=P[o.li],pp=par(o.li);const a=o.ga+t*o.sp*(state>=3?1:0.15);const ex=Math.cos(a)*o.rad,ey=Math.sin(a)*o.rad*0.78;o.x=c.x+ex+pp.x;o.y=c.y+ey+pp.y;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';});}
+    for(let i=0;i<3;i++)gather[i]+=(gatherT[i]-gather[i])*0.12;
+    if(state>=1){sats.forEach(o=>{const c=P[o.li],pp=par(o.li);const a=o.ga+t*o.sp*(state>=3?1:0.15);const gf=1-gather[o.li]*0.42;const ex=Math.cos(a)*o.rad*gf,ey=Math.sin(a)*o.rad*0.78*gf;o.x=c.x+ex+pp.x;o.y=c.y+ey+pp.y;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';if(gather[o.li]>0.05)o.el.style.filter='brightness('+(1+gather[o.li]*0.6)+')';else if(o.el.style.filter)o.el.style.filter='';});}
     drawBeams();}
     requestAnimationFrame(loop);}
   function cu(el,tv){if(window.gsap){const o={v:0};gsap.to(o,{v:tv,duration:1.2,ease:'power2.out',onUpdate:()=>el.textContent=Math.round(o.v)});}else el.textContent=tv;}
@@ -1812,7 +1817,7 @@ if(fine&&!RM){
     tl.to('#tsCap1',{opacity:0,y:-12,filter:'blur(6px)',duration:.45,ease:'power2.in'})
       .add(()=>{planets.forEach(p=>p.classList.remove('solo'));state=1;})
       .fromTo('#tsCap2',{opacity:0,y:14,filter:'blur(6px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.5},'<')
-      .to(sats.map(o=>o.el),{opacity:1,duration:.6,stagger:{each:0.01,from:'random'},ease:'power2.out'},'<')
+      .to(sats.map(o=>o.el),{opacity:1,duration:.7,stagger:{each:0.014,from:'center'},ease:'power2.out'},'<')
       .fromTo({s:0},{s:0},{s:1,duration:1.0,ease:'power2.inOut',onUpdate:function(){placeSats(this.targets()[0].s);}},'<')
       .to({},{duration:.4})
       .to('#tsCap2',{opacity:0,y:-12,filter:'blur(6px)',duration:.45,ease:'power2.in'})

@@ -125,6 +125,18 @@ td .lx{font-family:var(--mono);font-size:1em;color:var(--ink-dim)}
 .lgcol.learn li::before{background:var(--green)}.lgcol.grav li::before{background:var(--rose)}
 .lgcol li b{color:var(--ink)}
 .kostat .ok{color:var(--green);font-weight:600}.kostat .warn{color:var(--sun);font-weight:600}.kostat .bad{color:var(--rose);font-weight:600}
+/* single-bet banner + focus chips */
+.betbar{margin-top:22px;border:1px solid rgba(251,113,133,.4);background:linear-gradient(100deg,rgba(251,113,133,.1),rgba(251,191,36,.06));border-radius:var(--r);padding:20px 24px;display:flex;gap:16px;align-items:flex-start}
+.betbar svg{width:26px;height:26px;flex:none;color:var(--rose);margin-top:2px}
+.betbar .bt{font-family:var(--font-disp);font-weight:700;font-size:1.15rem;color:#fff;margin-bottom:4px;line-height:1.3}
+.betbar .bd{font-size:1.05rem;color:var(--ink-soft);line-height:1.6}.betbar .bd b{color:var(--sun)}
+.nowchip{display:inline-block;font-size:1rem;font-weight:700;padding:3px 11px;border-radius:999px;background:rgba(52,211,153,.16);color:var(--green);white-space:nowrap}
+.laterchip{display:inline-block;font-size:1rem;font-weight:700;padding:3px 11px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--ink-dim);white-space:nowrap}
+.dim-later{opacity:.5;filter:saturate(.5)}
+.appendix-note{margin:8px 0 0;font-size:1.05rem;color:var(--ink-dim)}
+.tractbar{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px;padding:16px 20px;border:1px solid var(--bd);border-radius:14px;background:var(--panel)}
+.tractbar .ti{font-size:1.05rem;color:var(--ink-soft)}.tractbar .ti b{font-family:var(--font-disp);font-size:1.2rem;display:block}
+.tractbar .ti.zero b{color:var(--rose)}.tractbar .ti.next b{color:var(--sun)}
 /* generic cards/grids */
 .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
 @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
@@ -192,54 +204,62 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
 <header class="hero"><div class="wrap">
   <span class="eyebrow">商業模式藍圖</span>
   <h1>一顆引擎，兩扇門，一把誠實的尺</h1>
-  <p>Trinity 是 <strong style="color:#fff">Deal Lens 引擎</strong>的創辦人側賣法，EaseLens 是投資人側。我們先用自己的引擎、再加上對抗式複審評自己。結論很誠實：這門生意的存續性天花板是<strong style="color:#fff">高 △，不是滿分</strong>，我們把這份判決原文印在產品上。</p>
-  <div class="meta"><span class="tag">原型 v0.2</span><span class="tag">2026-06-28</span><span class="tag">內部規劃</span><span class="tag">引擎自評＋對抗複審</span></div>
-</div></header>
-
-<!-- FRAME -->
-<section id="timeline"><div class="wrap reveal">
-  <div class="kick">時間藍圖</div>
-  <h2>從今天，往下鋪到平台</h2>
-  <p class="lead">一條以日期為軸的路線，對應下面的三階段。今天是 2026 年 6 月。</p>
-  <div class="tline">
-    <div class="tmile" style="--ac:var(--sun)"><div class="tdate">2026 Q3（7 至 9 月）<span class="tnow">現在</span></div><div class="ttitle">Phase 1 楔入：MVP 上線</div><div class="tbody">沿用 deal-lens 引擎只出中立層，fork apply.html intake，HITL 交付，免費 Round 01 ＋ US$29 解鎖（Stripe＋KV／D1 帳本）。目標 3 至 5 個免費試點 → 量化證言。</div></div>
-    <div class="tmile" style="--ac:var(--sun)"><div class="tdate">2026 Q4（10 至 12 月）</div><div class="ttitle">首批付費 ＋ 案例庫</div><div class="tbody">把試點轉成付費包，建立 case library，談第一個加速器／大學 cohort 授權試點，發第一篇趨勢文章。</div></div>
-    <div class="tmile" style="--ac:var(--earth)"><div class="tdate">2027 H1（1 至 6 月）</div><div class="ttitle">Phase 2 自動化 ＋ 訂閱</div><div class="tbody">標準報告前段改即時 Claude API，premium 仍 HITL；階段分類器與投資人配對成一等模組；上線 US$29／月、re-score 迴路、餘額與花費上限。</div></div>
-    <div class="tmile" style="--ac:var(--earth)"><div class="tdate">2027 H2（7 至 12 月）</div><div class="ttitle">B2B 規模化</div><div class="tbody">加速器／大學 cohort 授權放量（真正的利潤池），匿名基準語料成形，白標給 VC／天使會試水。</div></div>
-    <div class="tmile" style="--ac:var(--violet)"><div class="tdate">2028（H1 起）</div><div class="ttitle">Phase 3 平台：兩扇門一引擎</div><div class="tbody">完整多代理 D／F／V＋查核＋中立合成，創辦人側＋投資人側（EaseLens）＋加速器側同台一引擎，數據與洞察成獨立基準產品線，深化台灣到與美國同等可用。</div></div>
+  <p><strong style="color:#fff">Trinity</strong> 幫創辦人把募資 deck 改到能過投資人初篩；同一顆 <strong style="color:#fff">Deal Lens</strong> 引擎，賣給每天要篩數十份 deck、又不想多請人的<strong style="color:#fff">加速器、大學與基金</strong>。真錢在 B2B，創辦人側是乾淨案源與品牌。</p>
+  <div class="betbar">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <div><div class="bt">唯一的賭注：在 2026-09-30 前，讓機構真金白銀、重複付費。</div><div class="bd">今天這個數字是 <b>0</b>（F3＝0：陌生人重複付費為零），它一個人就把存續性 V 鎖在 49%。這頁其餘所有內容，都是為了讓這一格從 0 變成可重複。</div></div>
   </div>
-</div></section>
+  <p style="margin-top:18px;font-size:1.05rem;color:var(--ink-dim);max-width:46em">我們先用自己的引擎、再加對抗式複審評自己。結論很誠實：存續性天花板是高 △、不是滿分，我們把判決原文印在產品上（見下方自我評估）。</p>
+  <div class="meta"><span class="tag">原型 v0.2</span><span class="tag">2026-06-29</span><span class="tag">內部規劃</span><span class="tag">YC／gStack 框架審視</span></div>
+</div></header>
 
 <section id="frame"><div class="wrap reveal">
   <div class="kick">策略定位</div>
   <h2>一顆 Deal Lens，兩種賣法</h2>
   <p class="lead"><span class="hl-s">Deal Lens</span> 是那顆引擎（創新三元 D／F／V 評案，含 knockout、六向交叉、階段判準、12 類投資人熱力表）。<span class="hl-e">Trinity</span> 把它包給<span class="hl-e">創辦人</span>，<span class="hl-v">EaseLens</span> 把它包給<span class="hl-v">投資人</span>。引擎自己判定：founder 側單獨看 willingness-to-pay 太弱，角色是 lead-gen、案例庫與品牌，<strong>真正的營收來自 B2B</strong>。被 Trinity 打磨過的 deck，就是 EaseLens VC 的乾淨案源。</p>
+  <p class="body" style="margin-top:14px"><strong>兩扇門有先後，不是並行。</strong>現在只投入 B2B 那扇；創辦人側暫緩，等 B2B 驗證、Phase 2 自動化後才開。同時跑兩條＝兩條都落不了地。</p>
   <div class="doors">
-    <div class="door a">
-      <span class="pill">漏斗入口・非主營收</span>
+    <div class="door a dim-later">
+      <span class="pill">暫緩・Phase 2 後再開</span>
       <div class="lbl">創辦人皮・TRINITY</div>
       <h4>lead-gen ／ 案例庫 ／ 品牌</h4>
-      <p>自助式 PLG。第一輪免費創造價值，把 founder 變成乾淨的 deck 與口碑。願付低，但餵養上面那條線。</p>
-      <div class="foot">第一輪免費，一鍵解鎖 US$29</div>
-      <span class="flowline l"><span class="pkt"></span></span>
+      <p>之後的自助式 PLG 漏斗入口：把 founder 變成乾淨的 deck 與口碑，餵養 B2B 那條線。<strong>現在不投入工程</strong>，願付低、不是主營收。</p>
+      <div class="foot"><span class="laterchip">驗證後再開</span></div>
     </div>
     <div class="engine"><div class="core">Deal Lens<br>D / F / V</div></div>
     <div class="door b">
       <span class="pill">真正的營收引擎</span>
       <div class="lbl">投資人皮・B2B ＋ EASELENS</div>
-      <h4>加速器 ／ 大學 ／ 白標 ／ AOR</h4>
-      <p>把引擎授權進機構的 intake。低流量、高客單、可預測。台灣大學與政府新創辦公室是天然首發。</p>
-      <div class="foot">B2B 授權＋ EaseLens AOR NT$9,900 至 14,900／月</div>
+      <h4>台灣大學育成 ＋ 政府新創辦 cohort intake</h4>
+      <p>把引擎授權進機構的 intake：每天要篩數十份 deck 又不想多請人。低流量、高客單、可預測。先吃這一個灘頭，白標／VC／AOR 是之後的瓶。</p>
+      <div class="foot"><span class="nowchip">現在唯一投入</span></div>
       <span class="flowline r"><span class="pkt"></span></span>
     </div>
   </div>
 </div></section>
 
-<!-- SELF VERDICT -->
+<!-- PROBLEM / WHY NOW -->
+<section id="problem"><div class="wrap reveal">
+  <div class="kick">問題與 Why now</div>
+  <h2>痛點是真的，時機是現在</h2>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0;color:var(--rose)">問題</h3><p class="body">創辦人募不到，因為 deck 過不了投資人初篩；機構（加速器／大學／基金）淹在未篩的 deal flow，每天靠人工初篩燒掉 partner／associate 工時。<strong>兩邊都缺一把標準化、快速、可信的判斷尺。</strong></p></div>
+    <div class="card"><h3 style="margin-top:0;color:var(--earth)">Why now</h3><p class="body">AI 讓單案 D／F／V 評分趨近零成本、引擎已在阿基里斯真案跑通；而通用建議正被前沿模型商品化（Stanford AI Index 2026 美中前沿差 2.7%）。所以此刻真正贏的，是<strong>擁有專屬校準資料與判斷編排</strong>的人，不是再寫一個薄殼分析器。</p></div>
+  </div>
+</div></section>
+
 <section id="self"><div class="wrap reveal">
   <div class="kick">吃自己的狗糧</div>
   <h2>我們用 Deal Lens 評了 Deal Lens</h2>
   <p class="lead">把這份商業模式當成一個被 pitch 的新創，餵進自己的三透鏡引擎，再讓<strong>對抗式複審</strong>專門想把分數打回去。它沒有客氣。三個分數，三種誠實。</p>
+
+  <div class="tractbar">
+    <div class="ti">已對話創辦人<b>持續中</b></div>
+    <div class="ti">已接觸機構<b>洽談中</b></div>
+    <div class="ti zero">付費客戶<b>0</b></div>
+    <div class="ti next">下一步<b>第一筆機構付費</b></div>
+  </div>
+  <div class="note" style="margin-top:16px"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>唯一的賭注，五要素</div><p><strong>假設：</strong>機構願為標準化 D／F／V 初篩付費。<strong>驗證動作：</strong>14 天內取得 LOI 或預付，跑 smoke test 讓陌生人重複付費。<strong>通過門檻：</strong>至 2026-09-30 拿到 3 至 5 個機構付費試點。<strong>沒過：</strong>砍掉 founder 線，全押 B2B。這就是下面所有分析存在的理由。</p></div>
 
   <div class="stagestrip">
     <div class="stg"><div class="sl">基線自評</div><div class="sv">54 · 70 · 48</div><div class="sd">D／F／V 初評，△ KEEP GOING。</div></div>
@@ -282,11 +302,124 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
   </div>
 </div></section>
 
-<!-- FULL DIMENSION TABLE -->
+<!-- DEFAULT ALIVE -->
+<section id="alive"><div class="wrap reveal">
+  <div class="kick">該用哪把尺</div>
+  <h2>Default Alive：90 天唯一要追的數字</h2>
+  <p class="lead">固定成本近零不等於活著，<strong>創辦人的時間才是真燃燒</strong>。對一門資本高效、不靠 VC 的生意，記分板不是 10x，是 default-alive。這是 PG 強迫每個創辦人回答的問題。</p>
+  <div class="cac">
+    <div class="metric"><div class="big">≈ 0</div><div class="ml">雲端固定成本：Cloudflare／Claude 帳單近零</div></div>
+    <div class="metric"><div class="big">機會成本</div><div class="ml">真燃燒＝Vincent 放棄的顧問月收（填真實 NT$ 數）</div></div>
+    <div class="metric"><div class="big">N 個年約</div><div class="ml">ramen-profitable 門檻＝每月進帳蓋過燃燒</div></div>
+  </div>
+  <p class="body" style="margin-top:16px">要 default-alive，需要每月 X，等於約 N 個機構年約 或 M 筆解鎖。這個數字扣回上方<a href="#self">唯一的賭注</a>：在 2026-09-30 前讓機構重複付費。算出 X 與 N，是這頁最該先填的空格。</p>
+</div></section>
+
+<section id="model"><div class="wrap reveal">
+  <div class="kick">免費起手，第二輪收費</div>
+  <h2>第一輪給出無法否認的價值</h2>
+  <p class="lead">我們相信第一次就能創造價值，讓人想繼續用。所以 Round 01 是一份<strong>完整免費報告</strong>，指出傷口；Round 02 才付費，給你開刀的方法。</p>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(52,211,153,.35)">
+      <h3 style="color:var(--green)">Round 01・免費完整報告</h3>
+      <p class="body">三元評分＋信心燈號、所處 stage 與基準百分位、一句話本質判斷，以及<strong>前三個最該修的地方（含嚴重度與為什麼）</strong>，再加一個 fund-match 預告（數量＋類型＋ 1 至 2 家具名當證據）。每個<strong>已驗證</strong>信箱一次，當作濫用閘門。</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,191,36,.35)">
+      <h3 style="color:var(--sun)">Round 02・付費解鎖</h3>
+      <p class="body">解鎖 the HOW（完整 Fix Playbook）、the WHO（完整具名清單＋聯絡＋敲門角度）、the PROOF（改版後 re-score 差異）、the ARTIFACTS（PDF＋可編輯 Word）。回訪本身就是付費的那一刻，因為傷口已經被指出來了。</p>
+    </div>
+  </div>
+  <p class="body" style="margin-top:18px"><span class="hl-e">啟動的 aha</span>：當 founder 看到一個他自己沒發現、且嚴重度排序過的 fix，同時看到真實具名的基金確實符合他，他就上鉤了。對應後台 <code>first-analysis-free = 一次性 +1 grant</code>。</p>
+</div></section>
+
+<section id="price"><div class="wrap reveal">
+  <div class="kick">定價（結構已定・價格待 WTP 驗證）</div>
+  <h2>現在只賣一個：B2B 機構授權</h2>
+  <p class="lead">頁面自承 founder 是最弱買方、WTP 未實測，所以版面火力對齊真錢那一邊：<strong>現在主推 B2B 機構授權</strong>，創辦人三檔退為「驗證後再開」。價格結構已定、絕對數字待第一批付費校準。</p>
+  <div class="prices">
+    <div class="price rev" style="grid-column:span 2"><span class="badge">現在唯一在賣</span><div class="pn">B2B 機構授權</div><div class="amt">US$6K<span>+／年 → 席位制</span></div><div class="sub">台灣大學育成／政府新創辦 cohort intake</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>cohort intake／標準化 D／F／V 分流</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>價值錨定：每屆人工初篩省下的工時，非 undercut 在位者</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>年費起手 → land-and-expand 到席位制（成熟態對標 US$25K 至 250K）</li></ul></div>
+    <div class="price dim-later"><span class="badge">驗證後再開</span><div class="pn">Round 01</div><div class="amt">Free</div><div class="sub">創辦人側・Phase 2 後</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>三元評分＋階段</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>前三個 named fixes</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>fund-match 預告</li></ul></div>
+    <div class="price dim-later"><span class="badge">驗證後再開</span><div class="pn">解鎖報告</div><div class="amt">US$29</div><div class="sub">一次性，這一份</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>完整 Fix Playbook</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>具名聯絡＋敲門角度</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>PDF＋可編輯 Word</li></ul></div>
+    <div class="price dim-later"><span class="badge">驗證後再開</span><div class="pn">訂閱</div><div class="amt">US$49<span>至 79／月</span></div><div class="sub">整個募資週期</div>
+      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>跨 deck 版本 re-score</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>投資人聯絡追蹤</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>與一次性解鎖區分 value metric</li></ul></div>
+  </div>
+  <h3 style="margin-top:30px">Trinity Review with Vincent（HITL，邀請制）</h3>
+  <p class="body">US$249 至 349，限量名額：60 分鐘一對一 teardown ＋ Vincent 人工校正的標註報告。落在人工複核市場帶（US$275 至 449）。雙重作用：最高品質的 golden-set 標註（predicted vs corrected），以及通往 EaseLens 投資人那扇門的橋。與 EaseLens AOR（NT$9,900 至 14,900／月，投資人訂閱）在文案上嚴格區分。重複使用者可在解鎖後選擇用量方案，不放進第一個決策。</p>
+</div></section>
+
+<section id="fix"><div class="wrap reveal">
+  <div class="kick">頭號產品面</div>
+  <h2>不只告訴你有什麼，告訴你修什麼</h2>
+  <p class="lead">Fix List（改進清單）是領頭交付物，也是最強的脫離 tar-pit 方式。每個缺口用四欄結構，沿用引擎的 knockout 分級。免費看見傷口，付費拿到手術，re-score 證明你補起來了。</p>
+  <div class="fixrow">
+    <div class="fh"><div>01　缺口</div><div>02　為什麼痛（哪類投資人扣分）</div><div>03　好的長怎樣（benchmark）</div><div>04　具體動作</div></div>
+    <div class="fr"><div><span class="sevc major">關鍵</span><b>沒有付費驗證</b></div><div>seed 投資人視為高風險，存續性直接扣分</div><div>同類 seed 平均有 3 至 5 個付費試點</div><div><span class="paid">解鎖：</span>列出可在 14 天內取得的 LOI 或預付清單</div></div>
+    <div class="fr"><div><span class="sevc major">關鍵</span><b>單位經濟不清</b></div><div>A 輪以後一定問，現在沒講＝沒準備好</div><div>CAC、LTV、回收期一頁講完</div><div><span class="paid">解鎖：</span>給你那一頁的填空模板</div></div>
+    <div class="fr"><div><span class="sevc minor">次要</span><b>市場由上而下估</b></div><div>有經驗的投資人一眼看穿，可信度崩（免費指出此問題）</div><div>bottom-up：客戶數 × 單價 × 滲透</div><div><span class="paid">解鎖：</span>給你算式</div></div>
+  </div>
+  <p class="body" style="margin-top:16px"><strong>免費 = 欄 01 至 02 ＋前三項；付費 = 欄 03 至 04 ＋完整清單。</strong>re-score 的儀表會明顯往上動，那就是成交的證明。</p>
+</div></section>
+
+<section id="export"><div class="wrap reveal">
+  <div class="kick">三種格式，三種任務</div>
+  <h2>看得到，也帶得走</h2>
+  <div class="grid3">
+    <div class="card" style="border-color:rgba(52,211,153,.3)"><h3 style="color:var(--green);margin-top:0">Web 報告・免費</h3><p class="body">活的產物，放在不可枚舉的 <code>report_id + access_token</code>。是病毒與轉介的迴路，帶著「evaluated / optimized by Trinity」徽章。</p></div>
+    <div class="card" style="border-color:rgba(251,191,36,.3)"><h3 style="color:var(--sun);margin-top:0">PDF・付費</h3><p class="body">A4 品牌化中立三層 leave-behind，沿用 deal-lens 的 a4-template-neutral ＋ export-pdf.sh，驗證不溢頁。給投資人留底。</p></div>
+    <div class="card" style="border-color:rgba(56,189,248,.3)"><h3 style="color:var(--earth);margin-top:0">可編輯 Word・付費</h3><p class="body">不是死報告，是 action workbook：Fix List 變成可勾選清單（缺口／嚴重度／目標／我的行動・完成）、逐機構預填的 outreach email 模板、把每個 fix 對到 deck 哪一頁的改稿清單。</p></div>
+  </div>
+  <p class="body" style="margin-top:16px">PDF＋Docx 綁進 US$29 解鎖。修正舊版「Email／PDF 免費」的說法：<strong>Web 報告免費，PDF 與 Docx 是解鎖。</strong></p>
+</div></section>
+
+<section id="rev"><div class="wrap reveal">
+  <div class="kick">營收線（90 天只押一條）</div>
+  <h2>現在只跑 02，其餘等驗證</h2>
+  <p class="lead">pre-revenue 押六條等於零條。在第一筆機構付費到手前，火力全給<strong>加速器／大學 cohort</strong>這一條；其餘是 Phase 2+ 的選項，不是現在的工作。</p>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(52,211,153,.4)"><h3 style="color:var(--green)">02　加速器／大學／育成<span class="nowchip" style="margin-left:8px">現在</span></h3><p class="body"><span class="hl-g">真正的利潤池</span>。cohort 面試前標準化 D／F／V 計分卡。台灣大學＋政府新創辦公室是天然首發，Vincent workshop 足跡直達。</p></div>
+    <div class="card dim-later"><h3>01　加值 Raise-Ready 報告<span class="laterchip" style="margin-left:8px">之後</span></h3><p class="body">高毛利上銷。把通用名單變成客製募資計畫，附逐機構「為什麼你符合這家 thesis」。</p></div>
+    <div class="card dim-later"><h3>03　白標／聯名給 VC<span class="laterchip" style="margin-left:8px">之後</span></h3><p class="body">「被某基金的 Deal Lens 評估過」當 inbound 吸案磁鐵，橋接回 EaseLens。</p></div>
+    <div class="card dim-later"><h3>04　匿名數據洞察<span class="laterchip" style="margin-left:8px">之後</span></h3><p class="body">基準報告餵內容 SEO 飛輪。<strong>絕不販售或訓練於可識別 deck。</strong></p></div>
+    <div class="card dim-later"><h3>05　工具鄰接轉介<span class="laterchip" style="margin-left:8px">之後</span></h3><p class="body">data room、cap table、e-sign。這不是投資掮客費（法律紅線）。</p></div>
+    <div class="card dim-later"><h3>06　工作坊／課程帶單<span class="laterchip" style="margin-left:8px">之後</span></h3><p class="body">「弱」的判斷就是溫熱教練線索，包成「報告＋ 30 分鐘拆解」。</p></div>
+  </div>
+  <div class="note" style="border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.05)"><div class="nh" style="color:var(--earth)"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg>市場量級（bottom-up SOM・估算非實測）</div><p>灘頭 SOM＝台灣＋精選美國的加速器／大學／政府新創辦席位數 × 平均年費 × 滲透率。機構端 job-cost 費米錨：一梯約 50 份申請的人工初篩，每份約 20 分鐘＝約 17 小時 partner／associate 工時，計分卡目標壓到 1 至 2 小時。以上為可證偽假設，待第一批 cohort 校準。</p></div>
+</div></section>
+
+<section id="cac"><div class="wrap reveal">
+  <div class="kick">單位經濟</div>
+  <h2>讓 CAC 小於 LTV 的具名渠道</h2>
+  <div class="cac">
+    <div class="metric"><div class="big">≥ 3</div><div class="ml">目標 LTV／CAC（地板 ≥ 1）</div></div>
+    <div class="metric"><div class="big">低</div><div class="ml">target CAC：自然流量為主</div></div>
+    <div class="metric"><div class="big">1 輪</div><div class="ml">per-founder LTV：一次募資週期</div></div>
+  </div>
+  <p class="body" style="margin-top:18px">讓 CAC &lt; LTV 的<strong>具名渠道</strong>：工作坊漏斗、大學合作、40 篇文章的 SEO 飛輪、EaseLens 交叉授粉、referral credits（介紹朋友，兩邊都拿額度）。founder 側不是靠廣告買量，是靠這些低成本入口。</p>
+  <div class="note"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>HITL 與高流量的矛盾</div><p>Phase 1 的 HITL 刻意限制流量（試點與案例庫，還不是 PLG）。PLG 只有在 Phase 2 自動化通過 golden-set 品質門檻後才開。流量的宣稱永遠是「自動化之後」，絕不與 HITL 同時成立。</p></div>
+</div></section>
+
+<section id="road"><div class="wrap reveal">
+  <div class="kick">三階段路線圖</div>
+  <h2>楔入，自動化，平台化</h2>
+  <div class="note" style="border-color:rgba(251,113,133,.3);background:rgba(251,113,133,.05);margin-top:20px"><div class="nh" style="color:var(--rose)"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Phase 0・法務前置（拆兩顆引擎抓到的炸彈）</div><p>成立法人<strong>當下同步簽 IP assignment</strong>（拆 F-KO-4 條件式一票否決），並<strong>補互補 cofounder</strong>（拆 F11 solo 硬依賴，脫離 knockout 邊緣）。這兩步在收任何一筆錢之前完成。</p></div>
+  <div class="grid3">
+    <div class="phase p1"><div class="pn">PHASE 01・0 至 3 個月</div><h4>楔入並證明價值</h4><ul>
+      <li><strong>主動線（sales-led）：</strong>親手談下並交付第一個加速器／大學的<strong>付費</strong>試點，手動跑引擎、寄中立層報告</li><li>引擎沿用 deal-lens skill，只輸出中立層；intake fork apply.html</li><li>機構：精選美國＋小批台灣，手動維護</li><li>創辦人計費（免費 Round 01＋US$29＋Stripe／KV／D1 帳本）移到 Phase 2，現在不建</li><li><strong>目標：至 2026-09-30 拿到 3 至 5 個機構付費試點（LOI 或預付）</strong></li></ul></div>
+    <div class="phase p2"><div class="pn">PHASE 02・3 至 9 個月</div><h4>自動化並訂閱</h4><ul>
+      <li>標準報告前段改即時 Claude API，premium 仍 HITL</li><li>階段分類器、投資人配對成一等模組</li><li>上線 US$29／月、re-score 迴路、餘額與花費上限</li><li>deck 歷史、版本差異、聯絡追蹤、premium 報告</li><li>匿名基準語料（選擇加入），發第一篇趨勢文</li><li>B2B 灘頭：首個加速器／大學 cohort 試點</li></ul></div>
+    <div class="phase p3"><div class="pn">PHASE 03・9 至 18+ 個月</div><h4>兩扇門，一顆引擎</h4><ul>
+      <li>多代理獨立 D／F／V、查核、中立合成</li><li>持續學習把概念護城河變資料護城河</li><li>創辦人側＋投資人側＋加速器側同台一引擎</li><li>數據洞察成獨立基準產品線</li><li>把台灣深化到與美國同等可用，再看東南亞</li></ul></div>
+  </div>
+  <div class="gate"><div class="gh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>GO / NO-GO 願付閘門（截止 2026-09-30）</div><p>對應 D△「出現 PMF 訊號再回看」。明確門檻：<strong>至 2026-09-30 若拿不到 3 家機構付費試點（LOI 或預付），或 founder 側免費轉付費 &lt; 8%</strong>，就把 founder 線轉成純 lead-gen、全力押 B2B。填了真數字與絕對日期，才是檢查點，不是口號。</p></div>
+</div></section>
+
 <section id="dims"><div class="wrap reveal">
   <div class="kick">全維度攤開</div>
   <h2>55 維評分表：現況分・最佳化空間・99 版對照</h2>
-  <p class="lead">引擎 D19＋F17＋V19 維全列。每維：權重、<span class="hl-e">現況今天誠實分</span>、<span class="hl-v">99 版 venture-scale 分</span>、把分數拉上去要做什麼，以及它是<span class="hl-g">可學習</span>（靠執行能補）還是<span class="hl-r">重力問題</span>（結構天花板）。逐維加權＝現況 D55／F59／V49、99 版 D79／F94／V93。99 版各維的細節敘事見<a href="#learn">學習vs重力</a>與<a href="#ceiling">天花板</a>。</p>
+  <p class="lead">引擎 D19＋F17＋V19 維全列。每維：權重、<span class="hl-e">現況今天誠實分</span>、<span class="hl-v">99 版 venture-scale 分</span>、把分數拉上去要做什麼，以及它是<span class="hl-g">可學習</span>（靠執行能補）還是<span class="hl-r">重力問題</span>（結構天花板）。逐維加權＝現況 D55／F59／V49、99 版 D79／F94／V93。99 版各維的細節敘事見<a href="#learn">學習vs重力</a>與<a href="#ceiling">天花板</a>。<span class="appendix-note">本表為逐維證據附錄，供稽核；結論已在上方自我評估與天花板給出，不需逐列讀。</span></p>
   <div class="dimsect e">
     <div class="dh"><span class="dt">D 透鏡 · 欲求性</span><span class="dp">現況 55%　→　99 版 79%</span></div>
     <div class="tblwrap"><table class="dimt">
@@ -365,8 +498,6 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
   </div>
 </div></section>
 
-
-<!-- LEARNABLE VS GRAVITY -->
 <section id="learn"><div class="wrap reveal">
   <div class="kick">兩種缺口，兩種對策</div>
   <h2>可學習 vs 重力問題</h2>
@@ -419,7 +550,6 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
     </tbody></table></div>
 </div></section>
 
-<!-- CROSS DERIVATION -->
 <section id="cross"><div class="wrap reveal">
   <div class="kick">透鏡不是各看各的</div>
   <h2>六向交叉推導：傷口會傳染</h2>
@@ -432,7 +562,6 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
   </div>
 </div></section>
 
-<!-- CEILING -->
 <section id="ceiling"><div class="wrap reveal">
   <div class="kick">誠實的上限</div>
   <h2>為什麼到不了 99</h2>
@@ -445,112 +574,6 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
   <div class="note" style="margin-top:24px"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>要解開 99，等於變成另一門生意</div><p>把 V 推上 ●／逼近 99，需要把這門生意重做成<strong>真正的雙邊資料網路、有專屬 outcome 資料規模、venture-scale 的市場</strong>。那是不同的賭注，不一定是現在要走的路。誠實的高 △，好過虛構的滿分。這份判決原文印在產品上，本身就是 Deal Lens 最強的可信度證明。</p></div>
 </div></section>
 
-<!-- FREE-FIRST MODEL -->
-<section id="model"><div class="wrap reveal">
-  <div class="kick">免費起手，第二輪收費</div>
-  <h2>第一輪給出無法否認的價值</h2>
-  <p class="lead">我們相信第一次就能創造價值，讓人想繼續用。所以 Round 01 是一份<strong>完整免費報告</strong>，指出傷口；Round 02 才付費，給你開刀的方法。</p>
-  <div class="grid2">
-    <div class="card" style="border-color:rgba(52,211,153,.35)">
-      <h3 style="color:var(--green)">Round 01・免費完整報告</h3>
-      <p class="body">三元評分＋信心燈號、所處 stage 與基準百分位、一句話本質判斷，以及<strong>前三個最該修的地方（含嚴重度與為什麼）</strong>，再加一個 fund-match 預告（數量＋類型＋ 1 至 2 家具名當證據）。每個<strong>已驗證</strong>信箱一次，當作濫用閘門。</p>
-    </div>
-    <div class="card" style="border-color:rgba(251,191,36,.35)">
-      <h3 style="color:var(--sun)">Round 02・付費解鎖</h3>
-      <p class="body">解鎖 the HOW（完整 Fix Playbook）、the WHO（完整具名清單＋聯絡＋敲門角度）、the PROOF（改版後 re-score 差異）、the ARTIFACTS（PDF＋可編輯 Word）。回訪本身就是付費的那一刻，因為傷口已經被指出來了。</p>
-    </div>
-  </div>
-  <p class="body" style="margin-top:18px"><span class="hl-e">啟動的 aha</span>：當 founder 看到一個他自己沒發現、且嚴重度排序過的 fix，同時看到真實具名的基金確實符合他，他就上鉤了。對應後台 <code>first-analysis-free = 一次性 +1 grant</code>。</p>
-</div></section>
-
-<!-- PRICING -->
-<section id="price"><div class="wrap reveal">
-  <div class="kick">定價（已定案）</div>
-  <h2>第一次轉換最簡單，B2B 賺真錢</h2>
-  <div class="prices">
-    <div class="price"><div class="pn">Round 01</div><div class="amt">Free</div><div class="sub">每信箱一次完整報告</div>
-      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>三元評分＋階段</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>前三個 named fixes</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>fund-match 預告</li></ul></div>
-    <div class="price feat"><span class="badge">第一次轉換</span><div class="pn">解鎖這份報告</div><div class="amt">US$29</div><div class="sub">一鍵，不用算額度</div>
-      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>完整 Fix Playbook</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>具名聯絡＋敲門角度</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>PDF＋可編輯 Word</li></ul></div>
-    <div class="price"><div class="pn">訂閱（active raisers）</div><div class="amt">US$29<span>／月</span></div><div class="sub">募資那 2 至 4 個月</div>
-      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>無限分析・公平使用</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>版本差異＋ re-score</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>投資人聯絡追蹤</li></ul></div>
-    <div class="price rev"><span class="badge">核心營收</span><div class="pn">B2B 機構授權</div><div class="amt">US$6K<span>+／年</span></div><div class="sub">加速器／大學／白標</div>
-      <ul><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>cohort intake／分流</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>seat 或年費平台費</li><li><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>定錨在 Evalyze 與 Dealroom €12.5k+ 之間</li></ul></div>
-  </div>
-  <h3 style="margin-top:30px">Trinity Review with Vincent（HITL，邀請制）</h3>
-  <p class="body">US$249 至 349，限量名額：60 分鐘一對一 teardown ＋ Vincent 人工校正的標註報告。落在人工複核市場帶（US$275 至 449）。雙重作用：最高品質的 golden-set 標註（predicted vs corrected），以及通往 EaseLens 投資人那扇門的橋。與 EaseLens AOR（NT$9,900 至 14,900／月，投資人訂閱）在文案上嚴格區分。重複使用者可在解鎖後選擇用量方案，不放進第一個決策。</p>
-</div></section>
-
-<!-- FIX LIST -->
-<section id="fix"><div class="wrap reveal">
-  <div class="kick">頭號產品面</div>
-  <h2>不只告訴你有什麼，告訴你修什麼</h2>
-  <p class="lead">Fix List（改進清單）是領頭交付物，也是最強的脫離 tar-pit 方式。每個缺口用四欄結構，沿用引擎的 knockout 分級。免費看見傷口，付費拿到手術，re-score 證明你補起來了。</p>
-  <div class="fixrow">
-    <div class="fh"><div>01　缺口</div><div>02　為什麼痛（哪類投資人扣分）</div><div>03　好的長怎樣（benchmark）</div><div>04　具體動作</div></div>
-    <div class="fr"><div><span class="sevc major">關鍵</span><b>沒有付費驗證</b></div><div>seed 投資人視為高風險，存續性直接扣分</div><div>同類 seed 平均有 3 至 5 個付費試點</div><div><span class="paid">解鎖：</span>列出可在 14 天內取得的 LOI 或預付清單</div></div>
-    <div class="fr"><div><span class="sevc major">關鍵</span><b>單位經濟不清</b></div><div>A 輪以後一定問，現在沒講＝沒準備好</div><div>CAC、LTV、回收期一頁講完</div><div><span class="paid">解鎖：</span>給你那一頁的填空模板</div></div>
-    <div class="fr"><div><span class="sevc minor">次要</span><b>市場由上而下估</b></div><div>有經驗的投資人一眼看穿，可信度崩（免費指出此問題）</div><div>bottom-up：客戶數 × 單價 × 滲透</div><div><span class="paid">解鎖：</span>給你算式</div></div>
-  </div>
-  <p class="body" style="margin-top:16px"><strong>免費 = 欄 01 至 02 ＋前三項；付費 = 欄 03 至 04 ＋完整清單。</strong>re-score 的儀表會明顯往上動，那就是成交的證明。</p>
-</div></section>
-
-<!-- EXPORT -->
-<section id="export"><div class="wrap reveal">
-  <div class="kick">三種格式，三種任務</div>
-  <h2>看得到，也帶得走</h2>
-  <div class="grid3">
-    <div class="card" style="border-color:rgba(52,211,153,.3)"><h3 style="color:var(--green);margin-top:0">Web 報告・免費</h3><p class="body">活的產物，放在不可枚舉的 <code>report_id + access_token</code>。是病毒與轉介的迴路，帶著「evaluated / optimized by Trinity」徽章。</p></div>
-    <div class="card" style="border-color:rgba(251,191,36,.3)"><h3 style="color:var(--sun);margin-top:0">PDF・付費</h3><p class="body">A4 品牌化中立三層 leave-behind，沿用 deal-lens 的 a4-template-neutral ＋ export-pdf.sh，驗證不溢頁。給投資人留底。</p></div>
-    <div class="card" style="border-color:rgba(56,189,248,.3)"><h3 style="color:var(--earth);margin-top:0">可編輯 Word・付費</h3><p class="body">不是死報告，是 action workbook：Fix List 變成可勾選清單（缺口／嚴重度／目標／我的行動・完成）、逐機構預填的 outreach email 模板、把每個 fix 對到 deck 哪一頁的改稿清單。</p></div>
-  </div>
-  <p class="body" style="margin-top:16px">PDF＋Docx 綁進 US$29 解鎖。修正舊版「Email／PDF 免費」的說法：<strong>Web 報告免費，PDF 與 Docx 是解鎖。</strong></p>
-</div></section>
-
-<!-- REVENUE -->
-<section id="rev"><div class="wrap reveal">
-  <div class="kick">營收線（依優先）</div>
-  <h2>毛利在 B2B 與加值</h2>
-  <div class="grid2">
-    <div class="card"><h3>01　加值 Raise-Ready 報告</h3><p class="body">最高毛利上銷。把通用名單變成客製募資計畫，附逐機構「為什麼你符合這家 thesis」。</p></div>
-    <div class="card"><h3>02　加速器／大學／育成（核心）</h3><p class="body"><span class="hl-g">真正的利潤池</span>。cohort 面試前標準化 D／F／V 計分卡。台灣大學＋政府新創辦公室是天然首發。</p></div>
-    <div class="card"><h3>03　白標／聯名給 VC 與天使會</h3><p class="body">「被某基金的 Trinity 引擎評估過」當 inbound 吸案磁鐵，橋接回 EaseLens。</p></div>
-    <div class="card"><h3>04　匿名、選擇加入的數據洞察</h3><p class="body">基準報告餵 40 篇文章 SEO 飛輪。<strong>絕不販售或訓練於可識別 deck。</strong></p></div>
-    <div class="card"><h3>05　揭露的工具鄰接轉介</h3><p class="body">data room、cap table、e-sign。這不是投資掮客費（法律紅線）。</p></div>
-    <div class="card"><h3>06　工作坊／課程帶單</h3><p class="body">「弱」的判斷就是溫熱教練線索，包成「報告＋ 30 分鐘拆解」。</p></div>
-  </div>
-</div></section>
-
-<!-- CAC -->
-<section id="cac"><div class="wrap reveal">
-  <div class="kick">單位經濟</div>
-  <h2>讓 CAC 小於 LTV 的具名渠道</h2>
-  <div class="cac">
-    <div class="metric"><div class="big">≥ 3</div><div class="ml">目標 LTV／CAC（地板 ≥ 1）</div></div>
-    <div class="metric"><div class="big">低</div><div class="ml">target CAC：自然流量為主</div></div>
-    <div class="metric"><div class="big">1 輪</div><div class="ml">per-founder LTV：一次募資週期</div></div>
-  </div>
-  <p class="body" style="margin-top:18px">讓 CAC &lt; LTV 的<strong>具名渠道</strong>：工作坊漏斗、大學合作、40 篇文章的 SEO 飛輪、EaseLens 交叉授粉、referral credits（介紹朋友，兩邊都拿額度）。founder 側不是靠廣告買量，是靠這些低成本入口。</p>
-  <div class="note"><div class="nh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>HITL 與高流量的矛盾</div><p>Phase 1 的 HITL 刻意限制流量（試點與案例庫，還不是 PLG）。PLG 只有在 Phase 2 自動化通過 golden-set 品質門檻後才開。流量的宣稱永遠是「自動化之後」，絕不與 HITL 同時成立。</p></div>
-</div></section>
-
-<!-- ROADMAP -->
-<section id="road"><div class="wrap reveal">
-  <div class="kick">三階段路線圖</div>
-  <h2>楔入，自動化，平台化</h2>
-  <div class="note" style="border-color:rgba(251,113,133,.3);background:rgba(251,113,133,.05);margin-top:20px"><div class="nh" style="color:var(--rose)"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Phase 0・法務前置（拆兩顆引擎抓到的炸彈）</div><p>成立法人<strong>當下同步簽 IP assignment</strong>（拆 F-KO-4 條件式一票否決），並<strong>補互補 cofounder</strong>（拆 F11 solo 硬依賴，脫離 knockout 邊緣）。這兩步在收任何一筆錢之前完成。</p></div>
-  <div class="grid3">
-    <div class="phase p1"><div class="pn">PHASE 01・0 至 3 個月</div><h4>楔入並證明價值</h4><ul>
-      <li>引擎沿用 deal-lens skill，只輸出中立層</li><li>intake fork apply.html，快投＋表單兩模式</li><li>HITL 交付：前端像自動，後台跑、寄報告</li><li>計費：免費 Round 01 ＋ US$29 解鎖，Stripe＋ KV／D1 帳本</li><li>機構：精選美國＋小批台灣，手動維護</li><li>目標：3 至 5 個試點 → 量化證言 → 首批付費</li></ul></div>
-    <div class="phase p2"><div class="pn">PHASE 02・3 至 9 個月</div><h4>自動化並訂閱</h4><ul>
-      <li>標準報告前段改即時 Claude API，premium 仍 HITL</li><li>階段分類器、投資人配對成一等模組</li><li>上線 US$29／月、re-score 迴路、餘額與花費上限</li><li>deck 歷史、版本差異、聯絡追蹤、premium 報告</li><li>匿名基準語料（選擇加入），發第一篇趨勢文</li><li>B2B 灘頭：首個加速器／大學 cohort 試點</li></ul></div>
-    <div class="phase p3"><div class="pn">PHASE 03・9 至 18+ 個月</div><h4>兩扇門，一顆引擎</h4><ul>
-      <li>多代理獨立 D／F／V、查核、中立合成</li><li>持續學習把概念護城河變資料護城河</li><li>創辦人側＋投資人側＋加速器側同台一引擎</li><li>數據洞察成獨立基準產品線</li><li>把台灣深化到與美國同等可用，再看東南亞</li></ul></div>
-  </div>
-  <div class="gate"><div class="gh"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>GO / NO-GO 願付閘門（Phase 1 結束）</div><p>對應 D△「出現 PMF 訊號再回看」：若 90 天內，免費 Round 01 用戶轉付費解鎖的比例低於 X%、且 CAC &lt; LTV 不成立，就把 founder 線轉成純 lead-gen，全力押 B2B。這是有日期的檢查點，不是口號。</p></div>
-</div></section>
-
-<!-- MOAT + WALL -->
 <section id="moat"><div class="wrap reveal">
   <div class="kick">誠實的護城河</div>
   <h2>護城河不是分析器，是資料迴路</h2>
@@ -564,11 +587,35 @@ footer{padding:46px 0;border-top:1px solid rgba(255,255,255,.07);color:var(--ink
   </div>
 </div></section>
 
-<!-- GUARDRAILS -->
+<section id="timeline"><div class="wrap reveal">
+  <div class="kick">時間藍圖</div>
+  <h2>從今天，往下鋪到平台</h2>
+  <p class="lead">一條以日期為軸的路線，對應下面的三階段。今天是 2026 年 6 月。</p>
+  <div class="tline">
+    <div class="tmile" style="--ac:var(--sun)"><div class="tdate">2026 Q3（7 至 9 月）<span class="tnow">現在</span></div><div class="ttitle">Phase 1 楔入：sales-led 機構付費試點</div><div class="tbody">沿用 deal-lens 引擎只出中立層，fork apply.html intake，HITL 手動交付。主動線＝親手賣 B2B。<strong>至 2026-09-30 拿到 3 至 5 個機構付費試點（LOI 或預付）</strong>；創辦人計費移到 Phase 2。</div></div>
+    <div class="tmile" style="--ac:var(--sun)"><div class="tdate">2026 Q4（10 至 12 月）</div><div class="ttitle">首批付費 ＋ 案例庫</div><div class="tbody">把試點轉成付費包，建立 case library，談第一個加速器／大學 cohort 授權試點，發第一篇趨勢文章。</div></div>
+    <div class="tmile" style="--ac:var(--earth)"><div class="tdate">2027 H1（1 至 6 月）</div><div class="ttitle">Phase 2 自動化 ＋ 訂閱</div><div class="tbody">標準報告前段改即時 Claude API，premium 仍 HITL；階段分類器與投資人配對成一等模組；上線 US$29／月、re-score 迴路、餘額與花費上限。</div></div>
+    <div class="tmile" style="--ac:var(--earth)"><div class="tdate">2027 H2（7 至 12 月）</div><div class="ttitle">B2B 規模化</div><div class="tbody">加速器／大學 cohort 授權放量（真正的利潤池），匿名基準語料成形，白標給 VC／天使會試水。</div></div>
+    <div class="tmile" style="--ac:var(--violet)"><div class="tdate">2028（H1 起）</div><div class="ttitle">Phase 3 平台：兩扇門一引擎</div><div class="tbody">完整多代理 D／F／V＋查核＋中立合成，創辦人側＋投資人側（EaseLens）＋加速器側同台一引擎，數據與洞察成獨立基準產品線，深化台灣到與美國同等可用。</div></div>
+  </div>
+</div></section>
+
 <section id="guard"><div class="wrap reveal">
   <div class="kick">從 MVP 就要有</div>
   <h2>計費防護</h2>
   <div class="note" style="border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.05)"><div class="nh" style="color:var(--earth)"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>信任的脊樑</div><p>即時額度餘額、門檻警示、硬性上限、「這個動作會花 N 額度，請確認」、idempotency key 防連點重複扣款。最關鍵：<strong style="color:#fff">額度在交付時才扣，失敗自動退回。</strong>焦慮型 founder 會因為帳單嚇到而退訂，這幾道是底線。</p></div>
+</div></section>
+
+<!-- NEXT / ASK -->
+<section id="next"><div class="wrap reveal">
+  <div class="kick">下一步</div>
+  <h2>唯一要證明的事</h2>
+  <p class="lead">這頁所有分析，收束成一個動作：把 F3 從 0 變成可重複的真金白銀。其餘 55 維都是規劃，這一條是測試。</p>
+  <div class="grid3">
+    <div class="card" style="border-color:rgba(251,113,133,.3)"><h3 style="margin-top:0;color:var(--rose)">14 天內</h3><p class="body">取得第一筆 LOI 或預付（加速器／大學 cohort）。</p></div>
+    <div class="card" style="border-color:rgba(251,191,36,.3)"><h3 style="margin-top:0;color:var(--sun)">同步</h3><p class="body">smoke test：把 Round 01 放到 workshop 暖名單面前，要他們當場付費。</p></div>
+    <div class="card" style="border-color:rgba(52,211,153,.3)"><h3 style="margin-top:0;color:var(--green)">至 2026-09-30</h3><p class="body">拿到 3 至 5 個機構付費試點。沒過＝砍 founder 線，全押 B2B（見<a href="#road">GO／NO-GO 閘門</a>）。</p></div>
+  </div>
 </div></section>
 
 <footer><div class="wrap">Trinity｜商業模式藍圖・內部規劃・2026-06-28　｜　同源：index.html（網站）、backend-architecture.html（後台架構）、research/IMPROVEMENT-PLAN.md</div></footer>
