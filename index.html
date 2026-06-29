@@ -1778,8 +1778,8 @@ if(fine&&!RM){
   const sats=[];GX.forEach((L,li)=>{L.dims.forEach((d,i)=>{const el=document.createElement('div');el.className='ts-sat';el.style.setProperty('--ac',LAC[li]);el.style.setProperty('--tw',(2.2+((i*47)%40)/15).toFixed(2)+'s');
     const ga=i*2.39996+li*1.7, rad=70+( (i*37)%82 );const sp=(0.10+((i*53)%40)/300)*(i%2?1:-1);
     field.appendChild(el);const o={el,li,d,ga,rad,sp,x:0,y:0};
-    el.addEventListener('pointerenter',()=>{el.classList.add('lit');tip.style.borderColor=LCOL[li];tip.innerHTML='<div class="tt"><span class="en">'+d[0]+'</span><span class="zh">'+d[1]+'</span></div><div class="tl" style="color:'+LCOL[li]+'"><span class="en">'+L.nm[0]+' lens</span><span class="zh">'+L.nm[1]+'透鏡</span></div>';tip.classList.add('show');posTip(o);});
-    el.addEventListener('pointerleave',()=>{el.classList.remove('lit');tip.classList.remove('show');});
+    el.addEventListener('pointerenter',()=>{el.classList.add('lit');hoverSat=o;tip.style.borderColor=LCOL[li];tip.innerHTML='<div class="tt"><span class="en">'+d[0]+'</span><span class="zh">'+d[1]+'</span></div><div class="tl" style="color:'+LCOL[li]+'"><span class="en">'+L.nm[0]+' lens</span><span class="zh">'+L.nm[1]+'透鏡</span></div>';tip.classList.add('show');posTip(o);});
+    el.addEventListener('pointerleave',()=>{el.classList.remove('lit');if(hoverSat===o)hoverSat=null;tip.classList.remove('show');});
     sats.push(o);});});
   function posTip(o){const tx=o.x+14,ty=o.y+14;tip.style.left=Math.max(6,Math.min(stage.clientWidth-tip.offsetWidth-6,tx))+'px';tip.style.top=Math.max(6,Math.min(stage.clientHeight-tip.offsetHeight-6,ty))+'px';}
   // geometry
@@ -1792,7 +1792,7 @@ if(fine&&!RM){
     core.style.left=CORE.x+'px';core.style.top=CORE.y+'px';}
   geo();addEventListener('resize',()=>{geo();if(state>=1)placeSats(1);});
   // state: 0 none,1 scattered,2 linked,3 done
-  let state=0,beamA=0,coreOn=0,mx=0,my=0,hoverLi=-1,focus=-1,t=0;
+  let state=0,beamA=0,coreOn=0,mx=0,my=0,hoverLi=-1,focus=-1,t=0,hoverSat=null;
   function placeSats(scatter){sats.forEach(o=>{const c=P[o.li];const a=o.ga+t*o.sp*(state>=3?1:0);const rr=o.rad*rScale;const ex=Math.cos(a)*rr,ey=Math.sin(a)*rr*0.78;
     o.x=c.x+ex*scatter;o.y=c.y+ey*scatter;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';});}
   stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-0.5;my=(e.clientY-r.top)/r.height-0.5;},{passive:true});
@@ -1807,6 +1807,9 @@ if(fine&&!RM){
   function flowParticles(ax,ay,bxx,by,phase,col,n,alpha){for(let j=0;j<n;j++){const fp=((t*0.45+phase+j/n)%1);const fx=ax+(bxx-ax)*fp,fy=ay+(by-ay)*fp;const fade=Math.sin(fp*Math.PI);
     bx.globalAlpha=alpha*fade;const r=2.6+1.4*fade;const rg=bx.createRadialGradient(fx,fy,0,fx,fy,r*2.4);rg.addColorStop(0,'#fff');rg.addColorStop(.5,col);rg.addColorStop(1,'rgba(0,0,0,0)');bx.fillStyle=rg;bx.beginPath();bx.arc(fx,fy,r*2.4,0,6.28);bx.fill();}}
   function drawBeams(){bx.clearRect(0,0,W,H);if(beamA<=0&&coreOn<=0&&state<1)return;bx.globalCompositeOperation='lighter';
+    // hovered satellite: draw a small constellation to its nearest same-lens neighbours
+    if(hoverSat&&state>=1){const near=sats.filter(o=>o.li===hoverSat.li&&o!==hoverSat).map(o=>({o,d:Math.hypot(o.x-hoverSat.x,o.y-hoverSat.y)})).sort((a,b)=>a.d-b.d).slice(0,3);
+      bx.strokeStyle=LCOL[hoverSat.li];bx.lineWidth=1.2;near.forEach(n=>{bx.globalAlpha=0.5*Math.max(0,1-n.d/240);bx.beginPath();bx.moveTo(hoverSat.x,hoverSat.y);bx.lineTo(n.o.x,n.o.y);bx.stroke();});}
     // intra-cluster spokes: only for the hovered/focused planet (keeps it clean)
     if(state>=1){const hi=focus>=0?focus:(gather.findIndex(g=>g>0.05));if(hi>=0){const str=Math.max(focus===hi?0.5:0,gather[hi]);sats.forEach(o=>{if(o.li!==hi)return;const c=P[o.li];bx.strokeStyle=LCOL[o.li];bx.globalAlpha=0.18*str*(+o.el.style.opacity||1);bx.lineWidth=1;bx.beginPath();bx.moveTo(c.x,c.y);bx.lineTo(o.x,o.y);bx.stroke();});}}
     const cen={x:(P[0].x+P[1].x+P[2].x)/3,y:(P[0].y+P[1].y+P[2].y)/3};
