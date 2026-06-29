@@ -593,6 +593,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
       <div class="li" data-body="earth"><span class="zh">地球　<b>欲求性</b></span><span class="en">Earth　<b>Desirability</b></span><span class="dot" style="background:#38bdf8"></span></div>
       <div class="li" data-body="moon"><span class="zh">月亮　<b>可行性</b></span><span class="en">Moon　<b>Feasibility</b></span><span class="dot" style="background:#cbd5e1"></span></div>
       <div class="li" data-body="sun"><span class="zh">太陽　<b>存續性</b></span><span class="en">Sun　<b>Viability</b></span><span class="dot" style="background:#fbbf24"></span></div>
+      <div class="li" style="opacity:.7;cursor:default"><span class="zh">55 維度繞行</span><span class="en">55 dimensions in orbit</span><span class="dot" style="background:linear-gradient(90deg,#38bdf8,#cbd5e1,#fbbf24)"></span></div>
     </div>
     <div class="hero-copy">
       <span class="eyebrow"><span class="zh">Innovation Trinity・可行性引擎</span><span class="en">Innovation Trinity · Feasibility Engine</span></span>
@@ -1218,7 +1219,24 @@ let heroBrightness={earth:0,moon:0,sun:0};
         float fres=pow(1.0-max(dot(N,V),0.0),4.0);
         col+=vec3(0.30,0.6,1.0)*fres*(0.25+0.6*lit);col*=1.0+hov*0.4;
         col=aces(col);col=pow(col,vec3(0.4545));gl_FragColor=vec4(col,1.0);}`});
-  const earth=new THREE.Mesh(new THREE.SphereGeometry(1.5,96,96),earthMat);earth.rotation.z=0.41;earth.position.set(0.8,-0.1,0);scene.add(earth);
+  const EARTH_POS=new THREE.Vector3(0.8,-0.1,0);
+  const earth=new THREE.Mesh(new THREE.SphereGeometry(1.5,96,96),earthMat);earth.rotation.z=0.41;earth.position.copy(EARTH_POS);scene.add(earth);
+  // ---- 55 dimension-stars orbiting the planet (D19 / F17 / V19) ----
+  const DIM=[[19,0.22,0.62,0.95],[17,0.80,0.80,0.92],[19,0.05,0.62,0.30]]; // [count, hue, sat, light] per lens
+  const DCOLORS=[new THREE.Color(0x38bdf8),new THREE.Color(0xcbd5e1),new THREE.Color(0xfbbf24)];
+  const dimN=55,dpos=new Float32Array(dimN*3),dcol=new Float32Array(dimN*3),dimOrb=[];let di=0;
+  DIM.forEach((g,li)=>{for(let k=0;k<g[0];k++){const rad=1.95+Math.random()*1.35,incl=(Math.random()-0.5)*1.5,phase=Math.random()*6.283,speed=(0.12+Math.random()*0.12)*(Math.random()<0.5?1:-1),tilt=Math.random()*6.283;
+    dimOrb.push({rad,incl,phase,speed,tilt,li});DCOLORS[li].toArray(dcol,di*3);di++;}});
+  const dgeo=new THREE.BufferGeometry();dgeo.setAttribute('position',new THREE.BufferAttribute(dpos,3));dgeo.setAttribute('color',new THREE.BufferAttribute(dcol,3));
+  const dimStars=new THREE.Points(dgeo,new THREE.PointsMaterial({size:0.13,map:glow('#fff','rgba(200,220,255,.5)'),vertexColors:true,transparent:true,opacity:.95,depthWrite:false,blending:THREE.AdditiveBlending}));
+  scene.add(dimStars);
+  function updateDims(t){for(let i=0;i<dimN;i++){const o=dimOrb[i],a=o.phase+t*o.speed;
+    // circle in local plane, then incline around X by o.incl, then spin plane by o.tilt around Y
+    let px=Math.cos(a)*o.rad, py=0, pz=Math.sin(a)*o.rad;
+    const ci=Math.cos(o.incl),si=Math.sin(o.incl);let y2=py*ci-pz*si, z2=py*si+pz*ci;
+    const ct=Math.cos(o.tilt),st=Math.sin(o.tilt);let x3=px*ct+z2*st, z3=-px*st+z2*ct;
+    dpos[i*3]=EARTH_POS.x+x3;dpos[i*3+1]=EARTH_POS.y+y2;dpos[i*3+2]=EARTH_POS.z+z3;}
+    dgeo.attributes.position.needsUpdate=true;}
   // thin elegant atmosphere shell (rim only, sun-side brighter)
   const atmoMat=new THREE.ShaderMaterial({uniforms:{sunDir:{value:sunDir},uCam:{value:cam.position}},transparent:true,side:THREE.BackSide,blending:THREE.AdditiveBlending,depthWrite:false,
     vertexShader:`varying vec3 vWN;varying vec3 vWP;void main(){vWN=normalize(mat3(modelMatrix)*normal);vWP=(modelMatrix*vec4(position,1.0)).xyz;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
@@ -1292,6 +1310,7 @@ let heroBrightness={earth:0,moon:0,sun:0};
     moon.scale.setScalar(1+hov.moon*0.18);sunGroup.scale.addScalar(hov.sun*0.06);
     earth.rotation.y+=.0009;atmo.rotation.y=earth.rotation.y;
     const a=el*0.4+0.4;moon.position.set(0.8+Math.cos(a)*2.4,-0.1+Math.sin(a)*2.2,Math.sin(a)*0.45);moon.rotation.y+=.006;
+    updateDims(el);dimStars.material.opacity=0.35+0.6*heroBrightness.earth;
     stars1.rotation.y+=.00018;stars2.rotation.y+=.00032;stars2.rotation.x+=.00006;
     stars1.position.x=mx*0.5;stars2.position.x=mx*0.9;stars1.position.y=-my*0.4;
     // drag-to-orbit camera rig (azimuth/elevation around the earth) + gentle parallax
@@ -1303,7 +1322,7 @@ let heroBrightness={earth:0,moon:0,sun:0};
     cam.lookAt(TX,TY,0);
     render();requestAnimationFrame(frame);
   }
-  if(RM){t0=0;setLit('earth',1);setLit('moon',1);setLit('sun',1);sunMat.uniforms.t.value=1;earthMat.uniforms.t.value=1;earth.scale.setScalar(1);sunGroup.scale.setScalar(1);moon.position.set(2.6,0.6,1.4);render();}
+  if(RM){t0=0;setLit('earth',1);setLit('moon',1);setLit('sun',1);sunMat.uniforms.t.value=1;earthMat.uniforms.t.value=1;earth.scale.setScalar(1);sunGroup.scale.setScalar(1);moon.position.set(2.6,0.6,1.4);updateDims(0);render();}
   else requestAnimationFrame(frame);
   addEventListener('resize',()=>{W=mount.clientWidth;H=mount.clientHeight;cam.aspect=W/H;cam.updateProjectionMatrix();renderer.setSize(W,H);if(composer)composer.setSize(W,H);});
 })();
