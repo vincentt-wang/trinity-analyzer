@@ -376,6 +376,39 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
 .sstep p{font-size:var(--fs-lead);color:var(--ink-soft);max-width:34em}
 .sstep.act h3{background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
 @media(max-width:860px){.sstep{min-height:62vh}}
+/* ===== TRINITY SYSTEM (merged: 3 planets scatter into 55 satellites) ===== */
+.ts-stage{position:relative;width:min(95vw,1040px);height:clamp(540px,72vh,680px);margin:36px auto 0}
+.ts-cap{position:relative;min-height:4.4em;text-align:center;margin-bottom:14px;z-index:6}
+.ts-step{position:absolute;inset:0;opacity:0}
+.ts-step b{font-family:var(--font-disp);font-size:clamp(1.3rem,2.4vw,1.7rem);font-weight:700;background:var(--grad-h2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ts-step .sub{display:block;margin-top:5px;font-size:1.04rem;color:var(--ink-dim)}
+.ts-beams{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.ts-field{position:absolute;inset:0;z-index:3}
+.ts-planet{position:absolute;transform:translate(-50%,-50%);width:96px;height:96px;border-radius:50%;display:grid;place-items:center;text-align:center;cursor:pointer;z-index:5;transition:box-shadow .4s}
+.ts-planet .ts-pin{position:absolute;inset:0;border-radius:50%}
+.ts-planet.e .ts-pin{background:radial-gradient(circle at 36% 30%,#bae6fd,#38bdf8 40%,#0369a1 88%);box-shadow:0 0 38px -6px var(--earth)}
+.ts-planet.m .ts-pin{background:radial-gradient(circle at 36% 30%,#f8fafc,#cbd5e1 45%,#64748b 90%);box-shadow:0 0 34px -8px var(--moon)}
+.ts-planet.s .ts-pin{background:radial-gradient(circle at 40% 32%,#fff3c4,#fbbf24 42%,#c2410c 90%);box-shadow:0 0 46px -4px var(--sun)}
+.ts-planet.solo .ts-pin{animation:tsPulse 1.6s ease-in-out infinite}
+@keyframes tsPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+.ts-planet .ts-pc{position:relative;z-index:2}
+.ts-planet .ts-score{font-family:var(--font-disp);font-weight:700;font-size:1.9rem;line-height:1;color:#04121d;text-shadow:0 1px 3px rgba(255,255,255,.4)}
+.ts-plabel{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;font-family:var(--font-disp);font-weight:600;font-size:1.08rem;color:var(--ac)}
+.ts-planet.dim{opacity:.25}
+.ts-sat{position:absolute;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:var(--ac);box-shadow:0 0 8px var(--ac);cursor:pointer;z-index:4;opacity:0}
+.ts-sat:hover,.ts-sat.lit{width:13px;height:13px;box-shadow:0 0 18px var(--ac),0 0 30px var(--ac);z-index:8}
+.ts-sat.dim{opacity:.12!important}
+.ts-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:0;width:128px;height:128px;border-radius:50%;display:grid;place-items:center;text-align:center;z-index:7;
+  background:radial-gradient(circle at 42% 36%,rgba(167,139,250,.55),rgba(56,189,248,.18) 70%);border:1px solid var(--violet);box-shadow:0 0 60px -8px var(--violet);font-family:var(--font-disp);font-weight:700;color:#fff;font-size:1.05rem;line-height:1.2}
+.ts-core::before{content:"";position:absolute;inset:-12px;border-radius:50%;background:var(--grad-trinity);opacity:.5;animation:orbspin 9s linear infinite;-webkit-mask:radial-gradient(transparent 60%,#000 62%);mask:radial-gradient(transparent 60%,#000 62%)}
+.ts-tip{position:absolute;z-index:20;pointer-events:none;background:var(--bg-3);border:1px solid var(--bd-strong);border-radius:11px;padding:10px 14px;max-width:260px;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;box-shadow:0 12px 34px -12px rgba(0,0,0,.85)}
+.ts-tip.show{opacity:1;transform:none}
+.ts-tip .tt{font-weight:600;color:var(--ink);font-size:1.04rem}.ts-tip .tl{font-size:.95rem;margin-top:3px}
+.ts-counts{position:absolute;left:0;right:0;bottom:-4px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;z-index:6}
+.ts-count{font-family:var(--font-disp);font-size:1.05rem;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;opacity:.85;transition:.2s}
+.ts-count:hover,.ts-count.on{opacity:1;text-shadow:0 0 12px currentColor}
+.ts-count .gd{width:11px;height:11px;border-radius:50%}
+@media(max-width:680px){.ts-planet{width:74px;height:74px}.ts-planet .ts-score{font-size:1.5rem}.ts-core{width:104px;height:104px}}
 /* ===== ENGINE PRINCIPLE ===== */
 .eng-stage{position:relative;min-height:540px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:30px}
 .eng-cap{position:relative;min-height:4.6em;width:min(92vw,720px);text-align:center;margin-bottom:26px}
@@ -677,46 +710,34 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
     </div>
   </section>
 
-  <!-- ============ ENGINE PRINCIPLE (independent then cross) ============ -->
-  <section class="block engine-sec" id="engine-principle">
+  <!-- ============ TRINITY SYSTEM (3 planets scatter into 55 satellites) ============ -->
+  <section class="block" id="trinity-system">
     <div class="wrap">
       <div class="reveal">
-        <div class="kicker"><span class="zh">引擎的運作原理</span><span class="en">How the engine computes</span></div>
-        <h2><span class="zh">先各自獨立，再三元交叉</span><span class="en">Independent first, then cross-linked</span></h2>
-        <p class="section-lede"><span class="zh">三個透鏡先在隔離中各自評分，誰也看不到誰，避免互相錨定。算完，才讓它們六個方向交叉校正，最後合成一個判斷。</span><span class="en">Each lens scores in isolation, blind to the others, to avoid anchoring. Only then do they cross-correct in six directions, and synthesize into one verdict.</span></p>
+        <div class="kicker"><span class="en">How the engine computes</span><span class="zh">引擎的運作原理</span></div>
+        <h2><span class="en">Three lenses, fifty-five dimensions, one verdict</span><span class="zh">三個透鏡，五十五個維度，一個判斷</span></h2>
+        <p class="section-lede"><span class="en">Each lens scores in isolation first, blind to the others, to avoid anchoring. Then each blooms into the dimensions that compose it, fifty-five solid algorithms in all, cross-links in six directions, and converges into one verdict. Hover any dimension; click a lens to isolate it.</span><span class="zh">三個透鏡先各自獨立評分，誰也看不到誰，避免互相錨定。接著每個綻開成組成它的維度，總共五十五套扎實演算法，六向交叉，再匯流成一個判斷。滑過任一維度，點任一透鏡可單獨聚焦。</span></p>
       </div>
-    </div>
-    <div class="eng-stage" id="engStage">
-      <div class="eng-cap" id="engCap">
-        <span id="cap1"><b><span class="zh">第一步：各自獨立運算</span><span class="en">Step one: score in isolation</span></b><span class="ec-sub"><span class="zh">三個透鏡看不到彼此，避免互相錨定</span><span class="en">three lenses, blind to each other, no anchoring</span></span></span>
-        <span id="cap2"><b><span class="zh">第二步：三元交叉連動</span><span class="en">Step two: cross-link in six directions</span></b><span class="ec-sub"><span class="zh">D⇄F、F⇄V、V⇄D 互相校正</span><span class="en">D⇄F, F⇄V, V⇄D correct each other</span></span></span>
-        <span id="cap3"><b><span class="zh">第三步：合成一個判斷</span><span class="en">Step three: synthesize one verdict</span></b><span class="ec-sub"><span class="zh">D 是門檻，三者匯流成結論</span><span class="en">D is the gate; the three converge into a call</span></span></span>
-      </div>
-      <div class="eng-field" id="engField">
-        <svg class="eng-links" id="engLinks" preserveAspectRatio="none"></svg>
-        <div class="eng-node e" id="engD"><div class="glab"><span class="zh">欲求性 D</span><span class="en">Desirability</span></div><div class="gnum" data-t="82">0</div><div class="gbadge"><span class="zh">獨立評分</span><span class="en">isolated</span></div></div>
-        <div class="eng-node m" id="engF"><div class="glab"><span class="zh">可行性 F</span><span class="en">Feasibility</span></div><div class="gnum" data-t="71">0</div><div class="gbadge"><span class="zh">獨立評分</span><span class="en">isolated</span></div></div>
-        <div class="eng-node s" id="engV"><div class="glab"><span class="zh">存續性 V</span><span class="en">Viability</span></div><div class="gnum" data-t="58">0</div><div class="gbadge"><span class="zh">獨立評分</span><span class="en">isolated</span></div></div>
-        <div class="eng-core" id="engCore"><span class="zh">合成<br>判斷</span><span class="en">Synthesis</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 55-DIMENSION GALAXY ============ -->
-  <section class="block" id="galaxy">
-    <div class="wrap">
-      <div class="reveal">
-        <div class="kicker"><span class="en">The 55 dimensions</span><span class="zh">55 個維度</span></div>
-        <h2><span class="en">Every star is a solid algorithm</span><span class="zh">每一顆星，都是一套扎實的演算法</span></h2>
-        <p class="section-lede"><span class="en">Trinity scores a startup across 55 weighted dimensions, split across the three lenses. Not vibes, not one prompt. Hover any star to see the dimension behind it; click a lens to isolate it.</span><span class="zh">Trinity 用 55 個加權維度評一家新創，分屬三個透鏡。不是感覺，也不是一句提示詞。滑過任一顆星看背後的維度，點上方任一透鏡可單獨聚焦。</span></p>
-      </div>
-      <div class="reveal">
-        <div class="gx-counts">
-          <span class="gx-count" style="color:var(--earth)"><span class="gd" style="background:var(--earth)"></span><span class="en">Desirability · 19</span><span class="zh">欲求性 · 19</span></span>
-          <span class="gx-count" style="color:var(--moon)"><span class="gd" style="background:var(--moon)"></span><span class="en">Feasibility · 17</span><span class="zh">可行性 · 17</span></span>
-          <span class="gx-count" style="color:var(--sun)"><span class="gd" style="background:var(--sun)"></span><span class="en">Viability · 19</span><span class="zh">存續性 · 19</span></span>
+      <div class="ts-stage reveal" id="tsStage">
+        <div class="ts-cap" id="tsCap">
+          <span class="ts-step" id="tsCap1"><b><span class="en">Step 1 · Each lens scores in isolation</span><span class="zh">第一步・三個透鏡各自獨立評分</span></b><span class="sub"><span class="en">blind to each other, no anchoring</span><span class="zh">看不到彼此，避免互相錨定</span></span></span>
+          <span class="ts-step" id="tsCap2"><b><span class="en">Step 2 · Each blooms into its dimensions</span><span class="zh">第二步・各自綻開成組成的維度</span></b><span class="sub"><span class="en">19 + 17 + 19 = 55 solid algorithms</span><span class="zh">19 ＋ 17 ＋ 19 ＝ 55 套演算法</span></span></span>
+          <span class="ts-step" id="tsCap3"><b><span class="en">Step 3 · Cross-link in six directions</span><span class="zh">第三步・六向交叉校正</span></b><span class="sub"><span class="en">D⇄F, F⇄V, V⇄D correct each other</span><span class="zh">D⇄F、F⇄V、V⇄D 互相校正</span></span></span>
+          <span class="ts-step" id="tsCap4"><b><span class="en">Step 4 · Converge into one verdict</span><span class="zh">第四步・匯流成一個判斷</span></b><span class="sub"><span class="en">D is the gate; the three become a call</span><span class="zh">D 是門檻，三者匯流成結論</span></span></span>
         </div>
-        <div class="gx-stage" id="gxStage"><svg class="gx-svg" id="gxSvg"></svg><div class="gx-tip" id="gxTip"></div></div>
+        <canvas class="ts-beams" id="tsBeams"></canvas>
+        <div class="ts-field" id="tsField">
+          <div class="ts-planet e" id="tsLensD" style="--ac:var(--earth)"><div class="ts-pin"></div><div class="ts-pc"><div class="ts-score" data-t="82">0</div></div><div class="ts-plabel"><span class="en">Desirability</span><span class="zh">欲求性</span></div></div>
+          <div class="ts-planet m" id="tsLensF" style="--ac:var(--moon)"><div class="ts-pin"></div><div class="ts-pc"><div class="ts-score" data-t="71">0</div></div><div class="ts-plabel"><span class="en">Feasibility</span><span class="zh">可行性</span></div></div>
+          <div class="ts-planet s" id="tsLensV" style="--ac:var(--sun)"><div class="ts-pin"></div><div class="ts-pc"><div class="ts-score" data-t="58">0</div></div><div class="ts-plabel"><span class="en">Viability</span><span class="zh">存續性</span></div></div>
+        </div>
+        <div class="ts-core" id="tsCore"><span class="en">Synthesis</span><span class="zh">合成判斷</span></div>
+        <div class="ts-tip" id="tsTip"></div>
+        <div class="ts-counts" id="tsCounts">
+          <span class="ts-count" data-li="0" style="color:var(--earth)"><span class="gd" style="background:var(--earth)"></span><span class="en">Desirability · 19</span><span class="zh">欲求性 · 19</span></span>
+          <span class="ts-count" data-li="1" style="color:var(--moon)"><span class="gd" style="background:var(--moon)"></span><span class="en">Feasibility · 17</span><span class="zh">可行性 · 17</span></span>
+          <span class="ts-count" data-li="2" style="color:var(--sun)"><span class="gd" style="background:var(--sun)"></span><span class="en">Viability · 19</span><span class="zh">存續性 · 19</span></span>
+        </div>
       </div>
     </div>
   </section>
@@ -1716,6 +1737,86 @@ if(fine&&!RM){
     requestAnimationFrame(frame);}
   if(RM){const {cxs,cy,clrx,clry}=geo();GX.forEach((L,li)=>{labels[li].style.left=cxs[li]+'px';labels[li].style.top=(cy-clry-22)+'px';L._seeds.forEach((s,i)=>{const st=stars[clusterStart[li]+i].el;st.style.left=(cxs[li]+Math.cos(s.ang)*clrx*s.rad)+'px';st.style.top=(cy+Math.sin(s.ang)*clry*s.rad)+'px';});lineEls[li].forEach((ln,i)=>{const a=L._seeds[i],b=L._seeds[i+1];ln.setAttribute('x1',cxs[li]+Math.cos(a.ang)*clrx*a.rad);ln.setAttribute('y1',cy+Math.sin(a.ang)*clry*a.rad);ln.setAttribute('x2',cxs[li]+Math.cos(b.ang)*clrx*b.rad);ln.setAttribute('y2',cy+Math.sin(b.ang)*clry*b.rad);ln.setAttribute('opacity','0.13');});});}
   else requestAnimationFrame(frame);
+})();
+
+/* ===== TRINITY SYSTEM (3 planets scatter into 55 satellites) ===== */
+(function(){
+  const stage=document.getElementById('tsStage');if(!stage)return;
+  const beams=document.getElementById('tsBeams'),bx=beams.getContext('2d');
+  const tip=document.getElementById('tsTip'),field=document.getElementById('tsField');
+  const planets=[document.getElementById('tsLensD'),document.getElementById('tsLensF'),document.getElementById('tsLensV')];
+  const core=document.getElementById('tsCore');
+  const LCOL=['#38bdf8','#cbd5e1','#fbbf24'],LAC=['var(--earth)','var(--moon)','var(--sun)'];
+  const GX=[
+   {nm:['Desirability','欲求性'],dims:[['Painkiller vs vitamin','止痛藥 vs 維他命'],['Tar-pit test','Tar Pit 焦油坑檢驗'],['Venture-backable','創投可投性'],['Three eternal markets','三大永恆市場對齊'],['Perfect-market traits','完美市場四特徵'],['Six pain tests','痛點六驗'],['Top-down vs bottom-up','Top-Down vs Bottom-Up'],['Fermi pain cost','痛點量化代價（費米）'],['ICP / HXC specificity','Persona→ICP→HXC 具體度'],['B2B stakeholder matrix','B2B 利益關係人矩陣'],['JTBD three layers','JTBD 三層'],['Five-layer insight','五層洞察'],['TPO scenarios','TPO 場景'],['Perceived-value 3D','感知價值三維'],['Octalysis drivers','八角化驅動力'],['North-star + bowling pin','北極星 2×2＋保齡球'],['Golden intersection','黃金交集'],['Founder-market fit','Founder-Market Fit'],['Geo & policy targeting','瞄準市場地理與政策']]},
+   {nm:['Feasibility','可行性'],dims:[['Stage placement','階段定位'],['PSF→PMF→Scaling gates','三驗證關卡'],['Willingness-to-pay','付費意願驗證'],['PMF three signals','PMF 三訊號'],['Four MVP types','四種 MVP＋Solid Data'],['Technical first-principles','技術合理性（第一性原理）'],['Business Model Canvas loop','BMC 九格閉環'],['Model & multi-side needs','商業模式選擇與各端需求%'],['Ecosystem & competition','生態系角色與競合'],['Five moat types','護城河五型'],['Team three traits','團隊三特質'],['FMF (execution)','Founder-Market Fit（執行面）'],['Technical gross margin','技術性毛利'],['Runway & valley of death','Runway 與死亡谷'],['Riskiest assumption (48hr)','最高風險假設（48hr）'],['Demo-ability','可 demo 程度'],['AI gap positioning','缺口定位 Gap Positioning（AI）']]},
+   {nm:['Viability','存續性'],dims:[['TAM/SAM/SOM + momentum','市場量體 TAM/SAM/SOM＋動能'],['PMF three pillars','PMF 三支柱'],['Six key numbers','六關鍵數字'],['Unit economics','單位經濟'],['Rule of 40','Rule of 40'],['Burn multiple','Burn Multiple'],['Stage / round thresholds','階段與輪次門檻對照'],['Customer-funded (CFA)','CFA 客戶自融資'],['Hormozi value equation','Hormozi 價值公式'],['Pricing strategy','定價策略'],['Break-even point','損益平衡點'],['Multi-method valuation','多元估值交叉'],['Exit paths','退出路徑'],['Liquidation preference','清算優先權影響'],['VC return lens (10x?)','VC 報酬視角（撐得起 10×?）'],['D2C trap / B2B margin','D2C 困境 / B2B 利潤'],['Pitch ten elements','Pitch 十元素完整度'],['Valuation vs comparables','估值合理性（comparables）'],['AI-durable value','價值耐久性 抗模型收斂（AI）']]}];
+  // build satellites
+  const sats=[];GX.forEach((L,li)=>{L.dims.forEach((d,i)=>{const el=document.createElement('div');el.className='ts-sat';el.style.setProperty('--ac',LAC[li]);
+    const ga=i*2.39996+li*1.7, rad=58+( (i*37)%70 );const sp=(0.10+((i*53)%40)/300)*(i%2?1:-1);
+    field.appendChild(el);const o={el,li,d,ga,rad,sp,x:0,y:0};
+    el.addEventListener('pointerenter',()=>{el.classList.add('lit');tip.style.borderColor=LCOL[li];tip.innerHTML='<div class="tt"><span class="en">'+d[0]+'</span><span class="zh">'+d[1]+'</span></div><div class="tl" style="color:'+LCOL[li]+'"><span class="en">'+L.nm[0]+' lens</span><span class="zh">'+L.nm[1]+'透鏡</span></div>';tip.classList.add('show');posTip(o);});
+    el.addEventListener('pointerleave',()=>{el.classList.remove('lit');tip.classList.remove('show');});
+    sats.push(o);});});
+  function posTip(o){const tx=o.x+14,ty=o.y+14;tip.style.left=Math.max(6,Math.min(stage.clientWidth-tip.offsetWidth-6,tx))+'px';tip.style.top=Math.max(6,Math.min(stage.clientHeight-tip.offsetHeight-6,ty))+'px';}
+  // geometry
+  let W,H,P=[],CORE={x:0,y:0};
+  function geo(){W=stage.clientWidth;H=stage.clientHeight;beams.width=W*Math.min(devicePixelRatio,2);beams.height=H*Math.min(devicePixelRatio,2);beams.style.width=W+'px';beams.style.height=H+'px';bx.setTransform(Math.min(devicePixelRatio,2),0,0,Math.min(devicePixelRatio,2),0,0);
+    P=[{x:W*0.24,y:H*0.40},{x:W*0.76,y:H*0.40},{x:W*0.50,y:H*0.76}];CORE={x:W*0.50,y:H*0.52};
+    planets.forEach((pl,i)=>{pl.style.left=P[i].x+'px';pl.style.top=P[i].y+'px';});
+    core.style.left=CORE.x+'px';core.style.top=CORE.y+'px';}
+  geo();addEventListener('resize',()=>{geo();if(state>=1)placeSats(1);});
+  // state: 0 none,1 scattered,2 linked,3 done
+  let state=0,beamA=0,coreOn=0,mx=0,my=0,hoverLi=-1,focus=-1,t=0;
+  function placeSats(scatter){sats.forEach(o=>{const c=P[o.li];const a=o.ga+t*o.sp*(state>=3?1:0);const ex=Math.cos(a)*o.rad,ey=Math.sin(a)*o.rad*0.78;
+    o.x=c.x+ex*scatter;o.y=c.y+ey*scatter;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';});}
+  stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-0.5;my=(e.clientY-r.top)/r.height-0.5;},{passive:true});
+  stage.addEventListener('pointerleave',()=>{mx=0;my=0;});
+  document.querySelectorAll('#tsCounts .ts-count').forEach(c=>{c.addEventListener('click',()=>{const li=+c.dataset.li;focus=(focus===li?-1:li);document.querySelectorAll('#tsCounts .ts-count').forEach((z,zi)=>z.classList.toggle('on',focus===zi));applyFocus();});});
+  planets.forEach((pl,li)=>pl.addEventListener('click',()=>{focus=(focus===li?-1:li);document.querySelectorAll('#tsCounts .ts-count').forEach((z,zi)=>z.classList.toggle('on',focus===zi));applyFocus();}));
+  function applyFocus(){sats.forEach(o=>o.el.classList.toggle('dim',focus>=0&&o.li!==focus));planets.forEach((pl,li)=>pl.classList.toggle('dim',focus>=0&&li!==focus));}
+  function drawBeams(){bx.clearRect(0,0,W,H);if(beamA<=0&&coreOn<=0)return;bx.globalCompositeOperation='lighter';
+    const pairs=[[0,1],[1,2],[2,0]];
+    pairs.forEach(([a,b],k)=>{const g=bx.createLinearGradient(P[a].x,P[a].y,P[b].x,P[b].y);g.addColorStop(0,LCOL[a]);g.addColorStop(1,LCOL[b]);bx.strokeStyle=g;bx.globalAlpha=beamA*0.5;bx.lineWidth=2;bx.beginPath();bx.moveTo(P[a].x,P[a].y);bx.lineTo(P[b].x,P[b].y);bx.stroke();
+      // flowing dot
+      if(state>=2){const fp=((t*0.4+k*0.33)%1);const fx=P[a].x+(P[b].x-P[a].x)*fp,fy=P[a].y+(P[b].y-P[a].y)*fp;bx.globalAlpha=beamA;bx.fillStyle='#fff';bx.beginPath();bx.arc(fx,fy,3,0,6.28);bx.fill();
+      const fp2=((t*0.4+k*0.33+0.5)%1);const gx=P[b].x+(P[a].x-P[b].x)*fp2,gy=P[b].y+(P[a].y-P[b].y)*fp2;bx.beginPath();bx.arc(gx,gy,3,0,6.28);bx.fill();}});
+    // core links
+    if(coreOn>0){P.forEach((p,i)=>{bx.strokeStyle=LCOL[i];bx.globalAlpha=coreOn*0.55;bx.lineWidth=2;bx.beginPath();bx.moveTo(p.x,p.y);bx.lineTo(CORE.x,CORE.y);bx.stroke();
+      const fp=((t*0.5+i*0.33)%1);const fx=p.x+(CORE.x-p.x)*fp,fy=p.y+(CORE.y-p.y)*fp;bx.globalAlpha=coreOn;bx.fillStyle='#fff';bx.beginPath();bx.arc(fx,fy,3,0,6.28);bx.fill();});}
+    bx.globalAlpha=1;bx.globalCompositeOperation='source-over';}
+  let onscreen=true;new IntersectionObserver(es=>es.forEach(e=>onscreen=e.isIntersecting),{threshold:0}).observe(stage);
+  function loop(){if(!document.hidden&&onscreen){t+=0.01;const par=(li)=>({x:mx*(14+li*6),y:my*10});
+    if(state>=1){sats.forEach(o=>{const c=P[o.li],pp=par(o.li);const a=o.ga+t*o.sp*(state>=3?1:0.15);const ex=Math.cos(a)*o.rad,ey=Math.sin(a)*o.rad*0.78;o.x=c.x+ex+pp.x;o.y=c.y+ey+pp.y;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';});}
+    drawBeams();}
+    requestAnimationFrame(loop);}
+  function cu(el,tv){if(window.gsap){const o={v:0};gsap.to(o,{v:tv,duration:1.2,ease:'power2.out',onUpdate:()=>el.textContent=Math.round(o.v)});}else el.textContent=tv;}
+  function endState(){state=3;beamA=1;coreOn=1;sats.forEach(o=>{o.el.style.opacity='1';});planets.forEach(p=>p.querySelector('.ts-score').textContent=p.querySelector('.ts-score').dataset.t);core.style.opacity='1';core.style.transform='translate(-50%,-50%) scale(1)';document.getElementById('tsCap4').style.opacity='1';placeSats(1);drawBeams();}
+  if(RM||!window.gsap||!window.ScrollTrigger){endState();onscreen=true;requestAnimationFrame(loop);return;}
+  gsap.registerPlugin(ScrollTrigger);gsap.set('#tsCap2,#tsCap3,#tsCap4',{opacity:0});gsap.set('#tsCap1',{opacity:1});gsap.set(core,{xPercent:-50,yPercent:-50,scale:.4,opacity:0});
+  // start sats at planet centers
+  sats.forEach(o=>{o.x=P[o.li].x;o.y=P[o.li].y;o.el.style.left=o.x+'px';o.el.style.top=o.y+'px';});
+  requestAnimationFrame(loop);
+  ScrollTrigger.create({trigger:stage,start:'top 62%',once:true,onEnter:()=>{
+    planets.forEach(p=>{p.classList.add('solo');cu(p.querySelector('.ts-score'),+p.querySelector('.ts-score').dataset.t);});
+    const tl=gsap.timeline({delay:1.25});
+    tl.to('#tsCap1',{opacity:0,y:-12,filter:'blur(6px)',duration:.45,ease:'power2.in'})
+      .add(()=>{planets.forEach(p=>p.classList.remove('solo'));state=1;})
+      .fromTo('#tsCap2',{opacity:0,y:14,filter:'blur(6px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.5},'<')
+      .to(sats.map(o=>o.el),{opacity:1,duration:.6,stagger:{each:0.01,from:'random'},ease:'power2.out'},'<')
+      .fromTo({s:0},{s:0},{s:1,duration:1.0,ease:'power2.inOut',onUpdate:function(){placeSats(this.targets()[0].s);}},'<')
+      .to({},{duration:.4})
+      .to('#tsCap2',{opacity:0,y:-12,filter:'blur(6px)',duration:.45,ease:'power2.in'})
+      .fromTo('#tsCap3',{opacity:0,y:14,filter:'blur(6px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.5},'<')
+      .add(()=>{state=2;})
+      .to({a:0},{a:1,duration:.8,ease:'power2.inOut',onUpdate:function(){beamA=this.targets()[0].a;}},'<')
+      .to({},{duration:.5})
+      .to('#tsCap3',{opacity:0,y:-12,filter:'blur(6px)',duration:.45,ease:'power2.in'})
+      .fromTo('#tsCap4',{opacity:0,y:14,filter:'blur(6px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.5},'<')
+      .add(()=>{state=3;})
+      .to(core,{opacity:1,scale:1,duration:.7,ease:'back.out(1.6)'},'<')
+      .to({c:0},{c:1,duration:.8,ease:'power2.inOut',onUpdate:function(){coreOn=this.targets()[0].c;}},'<');
+  }});
 })();
 
 /* ===== ECOSYSTEM ORBIT ===== */
