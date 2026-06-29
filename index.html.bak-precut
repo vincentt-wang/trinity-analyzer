@@ -238,13 +238,11 @@ h2{font-family:var(--font-disp);font-weight:700;font-size:var(--fs-h2);line-heig
 .rail{display:flex;align-items:flex-start;gap:6px;overflow-x:auto;padding:10px 2px 18px}
 .rnode{flex:none;display:flex;flex-direction:column;align-items:center;gap:9px;min-width:96px;position:relative;opacity:.4;transition:opacity .4s}
 .rnode.on{opacity:1}
-.rnode::after{content:"";position:absolute;top:13px;left:calc(50% + 18px);width:calc(100% - 30px);height:2px;background:linear-gradient(90deg,var(--earth),var(--sun)) no-repeat;background-size:0% 100%;background-color:rgba(255,255,255,.1);transition:background-size .4s var(--ease-out)}
-.rnode.done::after{background-size:100% 100%}
+.rnode::after{content:"";position:absolute;top:13px;left:calc(50% + 18px);width:calc(100% - 30px);height:2px;background:rgba(255,255,255,.12)}
 .rnode:last-child::after{display:none}
-.rnode .dot{position:relative;width:28px;height:28px;border-radius:50%;border:2px solid var(--bd);background:var(--bg-2);display:grid;place-items:center;z-index:1;transition:var(--d-base)}
-.rnode.on .dot{border-color:var(--earth);box-shadow:var(--glow-earth);transform:scale(1.12)}
-.rnode.on .dot::before{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--earth);opacity:0;animation:tsPing 1s var(--ease-out) infinite}
-.rnode.done .dot{background:var(--earth);border-color:var(--earth);transform:none}
+.rnode .dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--bd);background:var(--bg-2);display:grid;place-items:center;z-index:1;transition:var(--d-base)}
+.rnode.on .dot{border-color:var(--earth);box-shadow:var(--glow-earth)}
+.rnode.done .dot{background:var(--earth);border-color:var(--earth)}
 .rnode .dot svg{width:14px;height:14px;color:#04121d;opacity:0}
 .rnode.done .dot svg{opacity:1}
 .rnode .rl{font-family:var(--mono);font-size:1rem;color:var(--ink-soft);text-align:center;white-space:nowrap}
@@ -623,7 +621,7 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
   <div class="menu">
     <span class="menu-ind" id="menuInd"></span>
     <button data-view="home" class="active"><span class="zh">首頁</span><span class="en">Home</span></button>
-    <button data-view="analyze"><span class="zh">免費自評</span><span class="en">Free check</span></button>
+    <button data-view="analyze"><span class="zh">分析</span><span class="en">Analyze</span></button>
     <button data-view="insight"><span class="zh">Insight</span><span class="en">Insight</span></button>
     <button class="lang" id="langBtn">中</button>
   </div>
@@ -638,15 +636,15 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
       <div class="li" data-body="earth"><span class="zh">地球　<b>欲求性</b></span><span class="en">Earth　<b>Desirability</b></span><span class="dot" style="background:#38bdf8"></span></div>
       <div class="li" data-body="moon"><span class="zh">月亮　<b>可行性</b></span><span class="en">Moon　<b>Feasibility</b></span><span class="dot" style="background:#cbd5e1"></span></div>
       <div class="li" data-body="sun"><span class="zh">太陽　<b>存續性</b></span><span class="en">Sun　<b>Viability</b></span><span class="dot" style="background:#fbbf24"></span></div>
-      <div class="li" style="opacity:.7;cursor:default"><span class="zh">三透鏡，一個判斷</span><span class="en">Three lenses, one verdict</span><span class="dot" style="background:linear-gradient(90deg,#38bdf8,#cbd5e1,#fbbf24)"></span></div>
+      <div class="li" style="opacity:.7;cursor:default"><span class="zh">55 維度繞行</span><span class="en">55 dimensions in orbit</span><span class="dot" style="background:linear-gradient(90deg,#38bdf8,#cbd5e1,#fbbf24)"></span></div>
     </div>
     <div class="hero-copy">
       <span class="eyebrow"><span class="zh">Innovation Trinity・可行性引擎</span><span class="en">Innovation Trinity · Feasibility Engine</span></span>
-      <h1><span class="zh">誠實看清你的生意，<br>現在站在哪、下一步該做什麼</span><span class="en">See where your business<br>really stands, and what's next</span></h1>
-      <p class="lede"><span class="zh">寫給創辦人，也寫給任何認真想把生意看清楚、變得更好的人。把構想餵進三元引擎，幾分鐘拿到誠實判決：你在哪個階段、最該先補哪裡。免費開始。</span><span class="en">For founders, and anyone serious about understanding their business. Feed your idea to the Trinity engine and in minutes get an honest read: your stage, and what to fix first. Free to start.</span></p>
+      <h1><span class="zh">從一個點子，<br>到一個可投資的新創</span><span class="en">From an idea<br>to an investable startup</span></h1>
+      <p class="lede"><span class="zh">太陽、月亮、地球，對應存續性、可行性、欲求性。把你的構想餵進三元引擎，看清它現在站在哪裡，該找誰。</span><span class="en">Sun, Moon and Earth map to Viability, Feasibility and Desirability. Feed your idea to the Trinity engine and see where it really stands, and who to talk to next.</span></p>
       <div class="hero-cta">
-        <button class="btn btn-primary" data-go="analyze"><span class="zh">免費評估我的生意</span><span class="en">Assess my business free</span></button>
-        <a class="btn btn-ghost" href="#worked"><span class="zh">先看它怎麼跑</span><span class="en">See how it works</span></a>
+        <button class="btn btn-primary" data-go="analyze"><span class="zh">分析我的構想</span><span class="en">Analyze my idea</span></button>
+        <button class="btn btn-ghost" data-go="insight"><span class="zh">先讀 Insight</span><span class="en">Read Insight first</span></button>
       </div>
     </div>
     <div class="scroll-hint"></div>
@@ -679,16 +677,40 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
           <div class="stat"><b><span class="zh">第一步</span><span class="en">Step one</span></b><span class="zh">不知道往哪走，先輸在起跑</span><span class="en">unsure where to even start</span></div>
         </div>
       </div>
-      <p class="section-lede reveal" style="margin-top:18px"><span class="zh">好點子很多，活下來的少：CB Insights 解剖顯示約 <strong style="color:var(--earth)">35% 的新創死於沒有市場需求</strong>。先看清自己缺哪一塊，比埋頭做更省命。</span><span class="en">Many good ideas, few survive: CB Insights post-mortems put <strong style="color:var(--earth)">~35% of failures on no market need</strong>. Seeing which piece you are missing beats building blind.</span></p>
+      <div class="evid reveal">
+        <div class="evid-card">
+          <div class="evh"><span class="en">Why startups actually die</span><span class="zh">新創真正的死因</span></div>
+          <div class="evs"><span class="en">CB Insights post-mortems · 2024 · n=431</span><span class="zh">CB Insights 失敗解剖 · 2024 · n=431</span></div>
+          <div class="evbar" style="--ac:var(--sun)"><div class="ebl"><span><span class="en">Ran out of cash</span><span class="zh">資金燒完</span></span><span class="ev-v" data-v="70">0%</span></div><div class="ebt"><div class="ebf" data-w="70"></div></div></div>
+          <div class="evbar" style="--ac:var(--earth)"><div class="ebl"><span><span class="en">No market need / weak PMF</span><span class="zh">沒市場需求／PMF 弱</span></span><span class="ev-v" data-v="43">0%</span></div><div class="ebt"><div class="ebf" data-w="43"></div></div></div>
+          <div class="evbar" style="--ac:var(--moon)"><div class="ebl"><span><span class="en">Outcompeted / bad timing</span><span class="zh">被競爭／時機錯</span></span><span class="ev-v" data-v="29">0%</span></div><div class="ebt"><div class="ebf" data-w="29"></div></div></div>
+          <div class="evbar" style="--ac:var(--sun)"><div class="ebl"><span><span class="en">Flawed unit economics</span><span class="zh">單位經濟有缺陷</span></span><span class="ev-v" data-v="19">0%</span></div><div class="ebt"><div class="ebf" data-w="19"></div></div></div>
+        </div>
+        <div class="evid-card">
+          <div class="evh"><span class="en">The fundraising grind</span><span class="zh">募資的磨耗</span></div>
+          <div class="evs"><span class="en">DocSend founder benchmarks</span><span class="zh">DocSend 創辦人基準</span></div>
+          <div class="evtrio">
+            <div class="et"><span class="en2" data-v="60">0</span><span class="el2"><span class="en">investors contacted</span><span class="zh">接觸的投資人</span></span></div>
+            <div class="et"><span class="en2" data-v="40">0</span><span class="el2"><span class="en">meetings taken</span><span class="zh">開過的會</span></span></div>
+            <div class="et"><span class="en2" data-v="12">0</span><span class="el2"><span class="en">weeks on the road</span><span class="zh">奔波的週數</span></span></div>
+          </div>
+        </div>
+        <div class="evid-card">
+          <div class="evh"><span class="en">The Series A crunch</span><span class="zh">A 輪窄門</span></div>
+          <div class="evs"><span class="en">Carta · seed cohorts reaching Series A</span><span class="zh">Carta · 種子輪走到 A 輪</span></div>
+          <div class="evbig"><span data-v="9">0</span>%</div>
+          <div class="evbig-l"><span class="en">of recent seed-funded startups reach Series A, down from roughly 40% a few years ago.</span><span class="zh">近期拿到種子輪的新創才走到 A 輪，幾年前還有約 40%。</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="block">
     <div class="wrap">
       <div class="reveal">
-        <div class="kicker"><span class="zh">評什麼</span><span class="en">What it checks</span></div>
-        <h2><span class="zh">一門生意，三件事要同時成立</span><span class="en">Three things every business has to get right</span></h2>
-        <p class="section-lede"><span class="zh">欲求性、可行性、存續性。三件事要同時站得住，少一個，系統都會告訴你，並指出下一步。</span><span class="en">Desirability, feasibility, viability. All three have to hold at once. Miss one and the system tells you, and points to the next step.</span></p>
+        <div class="kicker"><span class="zh">引擎怎麼想</span><span class="en">How the engine thinks</span></div>
+        <h2><span class="zh">三個天體，三個問題</span><span class="en">Three bodies, three questions</span></h2>
+        <p class="section-lede"><span class="zh">一個可投資的新創，三件事要同時成立。少一個，系統都會告訴你。</span><span class="en">An investable startup needs three things to hold at once. Miss one and the system tells you.</span></p>
       </div>
       <div class="lens-row">
         <div class="lens earth reveal" id="lens-earth"><div class="orb"></div><div class="tag"><span class="zh">地球・欲求性</span><span class="en">Earth · Desirability</span></div><h3><span class="zh">有人真的要嗎</span><span class="en">Does anyone want it</span></h3><p><span class="zh">從人出發。我們的家、我們的市場，痛點夠真、夠多人有，他們才會用、會付錢。</span><span class="en">Start from people. Our home, our market: is the pain real enough and shared by enough of them to use and pay.</span></p><div class="q"><span class="zh">「這是不是一個真實的需求？」</span><span class="en">"Is this a real need?"</span></div></div>
@@ -699,10 +721,66 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
   </section>
 
   <!-- ============ TRINITY SYSTEM (3 planets scatter into 55 satellites) ============ -->
-  <!-- trinity-system section removed (2C simplification) -->
+  <section class="block" id="trinity-system">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker"><span class="en">How the engine computes</span><span class="zh">引擎的運作原理</span></div>
+        <h2><span class="en">Three lenses, fifty-five dimensions, one verdict</span><span class="zh">三個透鏡，五十五個維度，一個判斷</span></h2>
+        <p class="section-lede"><span class="en">Each lens scores in isolation first, blind to the others, to avoid anchoring. Then each blooms into the dimensions that compose it, fifty-five solid algorithms in all, cross-links in six directions, and converges into one verdict. Hover any dimension; click a lens to isolate it.</span><span class="zh">三個透鏡先各自獨立評分，誰也看不到誰，避免互相錨定。接著每個綻開成組成它的維度，總共五十五套扎實演算法，六向交叉，再匯流成一個判斷。滑過任一維度，點任一透鏡可單獨聚焦。</span></p>
+      </div>
+      <div class="ts-stage reveal" id="tsStage">
+        <div class="ts-cap" id="tsCap">
+          <span class="ts-step" id="tsCap1"><b><span class="en">Step 1 · Each lens scores in isolation</span><span class="zh">第一步・三個透鏡各自獨立評分</span></b><span class="sub"><span class="en">blind to each other, no anchoring</span><span class="zh">看不到彼此，避免互相錨定</span></span></span>
+          <span class="ts-step" id="tsCap2"><b><span class="en">Step 2 · Each blooms into its dimensions</span><span class="zh">第二步・各自綻開成組成的維度</span></b><span class="sub"><span class="en">19 + 17 + 19 = 55 solid algorithms</span><span class="zh">19 ＋ 17 ＋ 19 ＝ 55 套演算法</span></span></span>
+          <span class="ts-step" id="tsCap3"><b><span class="en">Step 3 · Cross-link in six directions</span><span class="zh">第三步・六向交叉校正</span></b><span class="sub"><span class="en">D⇄F, F⇄V, V⇄D correct each other</span><span class="zh">D⇄F、F⇄V、V⇄D 互相校正</span></span></span>
+          <span class="ts-step" id="tsCap4"><b><span class="en">Step 4 · Converge into one verdict</span><span class="zh">第四步・匯流成一個判斷</span></b><span class="sub"><span class="en">D is the gate; the three become a call</span><span class="zh">D 是門檻，三者匯流成結論</span></span></span>
+        </div>
+        <canvas class="ts-beams" id="tsBeams"></canvas>
+        <div class="ts-field" id="tsField">
+          <div class="ts-planet e" id="tsLensD" style="--ac:var(--earth)"><div class="ts-pin"></div><div class="ts-pc"><div class="ts-score" data-t="82">0</div></div><div class="ts-plabel"><span class="en">Desirability</span><span class="zh">欲求性</span></div></div>
+          <div class="ts-planet m" id="tsLensF" style="--ac:var(--moon)"><div class="ts-pin"></div><div class="ts-pc"><div class="ts-score" data-t="71">0</div></div><div class="ts-plabel"><span class="en">Feasibility</span><span class="zh">可行性</span></div></div>
+          <div class="ts-planet s" id="tsLensV" style="--ac:var(--sun)"><div class="ts-pin"></div><div class="ts-pc"><div class="ts-score" data-t="58">0</div></div><div class="ts-plabel"><span class="en">Viability</span><span class="zh">存續性</span></div></div>
+        </div>
+        <div class="ts-core" id="tsCore"><span class="en">Synthesis</span><span class="zh">合成判斷</span></div>
+        <div class="ts-tip" id="tsTip"></div>
+        <div class="ts-counts" id="tsCounts">
+          <span class="ts-count" data-li="0" style="color:var(--earth)"><span class="gd" style="background:var(--earth)"></span><span class="en">Desirability · 19</span><span class="zh">欲求性 · 19</span></span>
+          <span class="ts-count" data-li="1" style="color:var(--moon)"><span class="gd" style="background:var(--moon)"></span><span class="en">Feasibility · 17</span><span class="zh">可行性 · 17</span></span>
+          <span class="ts-count" data-li="2" style="color:var(--sun)"><span class="gd" style="background:var(--sun)"></span><span class="en">Viability · 19</span><span class="zh">存續性 · 19</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ============ MATH MODELS ============ -->
-  <!-- math section removed (2C simplification) -->
+  <section class="block" id="math">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker"><span class="en">The math under the hood</span><span class="zh">引擎底下的數學</span></div>
+        <h2><span class="en">Real models, not a single prompt</span><span class="zh">真的有數學模型，不是一句提示詞</span></h2>
+        <p class="section-lede"><span class="en">The same quantitative engine a fund uses: Fermi market sizing, Monte-Carlo return distributions, sensitivity tornados, and bear / base / bull scenarios. Here it is, running.</span><span class="zh">和基金在用的同一套量化引擎：費米市場估算、蒙地卡羅報酬分布、敏感度龍捲風、Bear／Base／Bull 情境。在這裡，跑給你看。</span></p>
+      </div>
+      <div class="math-grid reveal">
+        <div class="mathcard" id="mcFermi"><div class="mh"><span class="en">Fermi market sizing</span><span class="zh">費米市場估算</span></div><div class="ms"><span class="en">TAM decomposed into factors you can defend</span><span class="zh">把 TAM 拆成可以辯護的因子</span></div>
+          <div class="fermi-chain" id="fermiChain"></div><div class="fermi-out"><span class="en">Estimated TAM</span><span class="zh">估計 TAM</span><b id="fermiOut">NT$0</b></div></div>
+        <div class="mathcard" id="mcMonte"><div class="mh"><span class="en">Monte-Carlo returns</span><span class="zh">蒙地卡羅報酬</span></div><div class="ms"><span class="en">10,000 outcomes; where do P10 / P50 / P90 land</span><span class="zh">一萬次結果；P10／P50／P90 落在哪</span></div>
+          <canvas id="mcCanvas"></canvas>
+          <div class="mc-axis"><span>0x</span><span>5x</span><span>10x</span><span>15x+</span></div>
+          <div class="mc-pcts" id="mcPcts">
+            <div class="mc-p" style="--ac:var(--rose)"><div class="mp-l">P10</div><div class="mp-v" data-v="0">0×</div><div class="mp-s"><span class="en">downside</span><span class="zh">下檔</span></div></div>
+            <div class="mc-p" style="--ac:var(--earth)"><div class="mp-l">P50</div><div class="mp-v" data-v="0">0×</div><div class="mp-s"><span class="en">median</span><span class="zh">中位</span></div></div>
+            <div class="mc-p" style="--ac:var(--sun)"><div class="mp-l">P90</div><div class="mp-v" data-v="0">0×</div><div class="mp-s"><span class="en">upside</span><span class="zh">上檔</span></div></div>
+          </div>
+          <div class="mc-legend"><span><i style="background:var(--rose)"></i><span class="en">&lt;1x loss</span><span class="zh">&lt;1x 虧損</span></span><span><i style="background:var(--earth)"></i>1–10x</span><span><i style="background:var(--sun)"></i>&ge;10x</span></div></div>
+        <div class="mathcard" id="mcTor"><div class="mh"><span class="en">Sensitivity tornado</span><span class="zh">敏感度龍捲風</span></div><div class="ms"><span class="en">Which lens swings the verdict most</span><span class="zh">哪個透鏡最能左右裁決</span></div>
+          <div style="margin-top:8px"><div class="tor-row e"><div class="tlab"><span class="en">Desirability</span><span class="zh">欲求性</span></div><div class="tor-track"><div class="tor-fill" data-w="78"></div></div><div class="tv">±7.8</div></div>
+          <div class="tor-row s"><div class="tlab"><span class="en">Viability</span><span class="zh">存續性</span></div><div class="tor-track"><div class="tor-fill" data-w="61"></div></div><div class="tv">±6.1</div></div>
+          <div class="tor-row m"><div class="tlab"><span class="en">Feasibility</span><span class="zh">可行性</span></div><div class="tor-track"><div class="tor-fill" data-w="44"></div></div><div class="tv">±4.4</div></div></div></div>
+        <div class="mathcard" id="mcScen"><div class="mh"><span class="en">Bear / Base / Bull</span><span class="zh">情境 Bear／Base／Bull</span></div><div class="ms"><span class="en">Scale every score ×0.8 / ×1.0 / ×1.15, re-run the verdict</span><span class="zh">把每個分數 ×0.8／×1.0／×1.15 重跑裁決</span></div>
+          <div class="scen-row" id="scenRow"></div></div>
+      </div>
+    </div>
+  </section>
 
   <section class="block">
     <div class="wrap">
@@ -802,10 +880,41 @@ footer{border-top:1px solid rgba(255,255,255,.07);padding:50px 0;margin-top:40px
   </section>
 
   <!-- ============ ECOSYSTEM ============ -->
-  <!-- ecosystem section removed (2C simplification) -->
+  <section class="block" id="ecosystem">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker"><span class="en">The ecosystem</span><span class="zh">你的生態系</span></div>
+        <h2><span class="en">One engine, the whole orbit around you</span><span class="zh">一顆引擎，串起你身邊的整個軌道</span></h2>
+        <p class="section-lede"><span class="en">A startup is never alone. Trinity reads your idea and points you at the right role in the ecosystem, and how each one actually opens.</span><span class="zh">新創從來不是孤軍。Trinity 讀你的構想，指向生態系裡對的角色，以及每個角色實際怎麼打開。</span></p>
+      </div>
+      <div class="eco-stage reveal" id="ecoStage">
+        <svg class="eco-svg" id="ecoSvg"></svg>
+        <div class="eco-core"><span class="en">Trinity<br>engine</span><span class="zh">Trinity<br>引擎</span></div>
+        <div class="eco-founder eco-node" style="--ac:var(--violet)"><div class="nd"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="nl"><span class="en">Founder (you)</span><span class="zh">創辦人（你）</span></div></div>
+      </div>
+      <div class="eco-readout" id="ecoReadout"></div>
+      <div class="eco-foot reveal"><span class="en">Trinity reads your idea and points you at the right role. It does not introduce you. Direct introductions are not offered yet; future intro partners: EvoScale, GVA, Bonhoe Capital.</span><span class="zh">Trinity 讀你的構想，指向對的角色。它不替你引薦。目前尚未提供直接引薦，未來引薦夥伴：EvoScale、GVA、Bonhoe Capital。</span></div>
+    </div>
+  </section>
 
   <!-- ============ WHERE YOU FIT ============ -->
-  <!-- fit section removed (2C simplification) -->
+  <section class="fit-sec" id="fit">
+    <div class="fit-inner">
+      <div class="reveal">
+        <div class="kicker"><span class="en">Where you fit</span><span class="zh">你的定位</span></div>
+        <h2><span class="en">Your analysis, turned into a move</span><span class="zh">把分析變成一步棋</span></h2>
+        <p class="section-lede"><span class="en">Trinity places you on the funding track, names the investor type that weights your strongest lens, and shortlists real institutions to contact, with how to approach and the realistic exit.</span><span class="zh">Trinity 把你放上募資軌道，指出最看重你最強透鏡的投資人類型，列出可直接聯絡的真實機構，附上如何接觸與實際的退出路徑。</span></p>
+      </div>
+      <div class="fit-track reveal"><div class="track-rail" id="trackRail"></div><div class="track-band" id="trackBand"></div></div>
+      <div id="fitType" class="reveal"></div>
+      <div class="fit-cols reveal">
+        <div class="fit-col"><div class="fit-col-h"><span class="flag-dot us"></span><span class="en">United States</span><span class="zh">美國</span></div><div class="fit-list" id="fitListUS"></div></div>
+        <div class="fit-col"><div class="fit-col-h"><span class="flag-dot tw"></span><span class="en">Taiwan</span><span class="zh">台灣</span></div><div class="fit-list" id="fitListTW"></div></div>
+      </div>
+      <div class="appr-grid reveal" id="fitApproach"></div>
+      <div class="fit-gantt reveal"><div class="gantt-head"><span class="en">Your next 8 weeks to outreach</span><span class="zh">通往募資的接下來 8 週</span></div><div id="fitGantt"></div></div>
+    </div>
+  </section>
 </div>
 
 <!-- ============ ANALYZE ============ -->
